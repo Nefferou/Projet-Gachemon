@@ -1,12 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+
 import './SCSS/index.scss';
-import App from './App';
+import Login from './Page/Login';
+import Register from './Page/Register';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path={"/*"} element={<Navigate to="/login" />} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
