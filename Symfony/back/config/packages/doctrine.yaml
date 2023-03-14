@@ -1,6 +1,6 @@
 doctrine:
     dbal:
-        url: '%env(resolve:DATABASE_URL)%'
+        url: 'mysql://gachemon_4753:2hIRhTkN40aQC6fMHaqQ@6e47588a-b60b-469c-9203-a01c9b09af7a.gachemon-4753.mysql.a.osc-fr1.scalingo-dbs.com:30966/gachemon_4753?useSSL=true&verifyServerCertificate=false'
 
         # IMPORTANT: You MUST configure your server version,
         # either here or in the DATABASE_URL env var (see .env file)
