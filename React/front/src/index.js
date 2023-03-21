@@ -9,12 +9,10 @@ import App from './App';
 import theme from './theme';
 
 import { ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ThemeProvider theme={theme}>
-    <CssBaseline />
     <React.StrictMode>
       <BrowserRouter>
         <Routes>
