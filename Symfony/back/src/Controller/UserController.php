@@ -10,6 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Expr\List_;
 
 class UserController extends AbstractController
 {
@@ -17,7 +18,8 @@ class UserController extends AbstractController
     #[Route('/api/user', name: 'api_user',methods: ['GET'])]
     public function actionConnection(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {   
-        $parameters = json_decode($request->getContent(), true);
+        if($parameters = json_decode($request->getContent(), true) != null){
+        
         $repo = $entityManager->getRepository(User::class);
         $user = $repo->verifyAccount($parameters['username'],$parameters['password']);
         if(is_null($user)){
@@ -27,6 +29,12 @@ class UserController extends AbstractController
         }
 
         return new JsonResponse($this->serializeUser($user), Response::HTTP_OK, ['accept' => 'json'], true);
+        }else{
+            $repo = $entityManager->getRepository(User::class);
+            $user = $repo->findAllUsers();
+            $this->serializeArrayUser($user);
+            return new JsonResponse($this->serializeUser($user), Response::HTTP_OK, ['accept' => 'json'], true);
+        }
     }
 
     #[Route('/api/user', name: 'api_user',methods: ['Post'])]
@@ -56,5 +64,13 @@ class UserController extends AbstractController
             'password' => $user->getPassword(),
             'id_profile' => $user->getIdProfile()
         );
+    }
+    private function serializeArrayUser(List_ $users)
+    {
+        $listUser = array();
+        foreach ($users as $user) {
+            $listUser += json_encode($this->serializeUser($user));
+        }
+        return $listUser;
     }
 }
