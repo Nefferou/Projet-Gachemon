@@ -25,8 +25,7 @@ class UserController extends AbstractController
                 'error' => 'Wrong Account'
             ], Response::HTTP_NOT_FOUND);
         }
-        $repo->save($user);
-        $repo->flush();
+
         return new JsonResponse($this->serializeUser($user), Response::HTTP_OK, ['accept' => 'json'], true);
     }
 
@@ -44,7 +43,8 @@ class UserController extends AbstractController
                 'error' => 'Not Acceptable'
             ], Response::HTTP_NOT_ACCEPTABLE);
         }
-
+        $repo->save($user);
+        $repo->flush();
         return new JsonResponse($this->serializeUser($user),Response::HTTP_CREATED, ['accept' => 'json'], true);
     }
 
