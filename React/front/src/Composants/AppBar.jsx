@@ -5,12 +5,11 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 
-import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
-
-function AppBar({value, setValue}) {
+function AppBar({value, setValue, changePage}) {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    changePage(event.target.label);
   };
 
   return (
