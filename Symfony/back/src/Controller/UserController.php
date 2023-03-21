@@ -8,9 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpParser\Node\Expr\List_;
 
 class UserController extends AbstractController
 {
@@ -31,9 +29,8 @@ class UserController extends AbstractController
         return new JsonResponse($this->serializeUser($user), Response::HTTP_OK, ['accept' => 'json'], true);
         }else{
             $repo = $entityManager->getRepository(User::class);
-            $user = $repo->findAllUsers();
-            $this->serializeArrayUser($user);
-            return new JsonResponse($this->serializeUser($user), Response::HTTP_OK, ['accept' => 'json'], true);
+            $users = $repo->findAllUsers();
+            return new JsonResponse(json_encode($this->serializeArrayUser($users)), Response::HTTP_OK, ['accept' => 'json'], true);
         }
     }
 
@@ -66,11 +63,11 @@ class UserController extends AbstractController
             'id_profile' => $user->getIdProfile()
         );
     }
-    private function serializeArrayUser(List_ $users)
+    private function serializeArrayUser(Array $users)
     {
         $listUser = array();
         foreach ($users as $user) {
-            $listUser += json_encode($this->serializeUser($user));
+            array_push($listUser,json_encode($this->serializeUser($user)));
         }
         return $listUser;
     }
