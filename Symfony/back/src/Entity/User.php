@@ -20,6 +20,9 @@ class User
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $id_profile = null;
 
     public function getId(): ?int
@@ -51,6 +54,18 @@ class User
         return $this;
     }
 
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+    
     public function getIdProfile(): ?string
     {
         return $this->id_profile;

@@ -44,7 +44,7 @@ class UserController extends AbstractController
         $repo = $entityManager->getRepository(User::class);
         $user = new User();
         $id_profile = $repo->findLastIdPlayer();
-        $user->setUsername($parameters['username'])->setPassword($parameters['password'])->setIdProfile($id_profile+1);
+        $user->setUsername($parameters['username'])->setPassword($parameters['password'])->setEmail($parameters['email'])->setIdProfile($id_profile+1);
         
         if(is_null($user)){
             return new JsonResponse([
@@ -62,6 +62,7 @@ class UserController extends AbstractController
         return array(
             'username' => $user->getUsername(),
             'password' => $user->getPassword(),
+            'email' => $user->getEmail(),
             'id_profile' => $user->getIdProfile()
         );
     }
