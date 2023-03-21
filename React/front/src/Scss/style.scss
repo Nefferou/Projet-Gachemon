@@ -1,5 +1,5 @@
 #login {
-    background-color: rgba(169, 169, 169, 0.902);
+    background-color: #a9a9a9e6;
     border-radius: 10px;
     
     padding: 3%;
@@ -32,3 +32,90 @@
         }
     }
 }
+
+/*Pokedex*/
+#pokedex{
+    display: flex;
+    flex-direction: column;
+}
+
+.line{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2vh;
+}
+
+/*Box*/
+#pokemonBox {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    height: 10%;
+    margin: 0.8%;
+
+    button{
+        border: solid black 2px;
+        border-radius: 5px;
+        background-color: rgba(169, 169, 169, 0.902);
+    }
+
+    button:hover{
+        background-color: rgb(163, 163, 163);
+    }
+
+    h1 {
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    img {
+        width: 65%;
+        height: 65%;
+        align-self: center;
+    }
+}
+
+#pokemonBox > p {
+    align-self: flex-start;
+    padding-left: 2vh;
+    font-size: small;
+}
+
+/*Dialog*/
+#pokemonBoxDialog{
+    text-align: center;
+
+    button p {
+        font-size: large;
+        font-weight: bolder;
+    }
+
+    img{
+        width: 25%;
+    }
+
+    ul{
+        padding: 0;
+        margin:auto
+    }
+}
+
+div > nav > ul{
+    justify-content: space-around;
+}
+
+.type {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+
+    p {
+        margin-top: 0;
+        margin-bottom: 0.5vh;
+        font-weight: bold;
+        text-align: center;
+    }
+}
+
