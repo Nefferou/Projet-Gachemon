@@ -15,7 +15,7 @@ use PhpParser\Node\Expr\List_;
 class UserController extends AbstractController
 {
 
-    #[Route('/api/user', name: 'api_user',methods: ['GET'])]
+    #[Route('/api/user', name: 'api_user_connection',methods: ['GET'])]
     public function actionConnection(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {   
         if($parameters = json_decode($request->getContent(), true) != null){
@@ -37,7 +37,7 @@ class UserController extends AbstractController
         }
     }
 
-    #[Route('/api/user', name: 'api_user',methods: ['Post'])]
+    #[Route('/api/user', name: 'api_user_register',methods: ['Post'])]
     public function actionRegister(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {   
         $parameters = json_decode($request->getContent(), true);
