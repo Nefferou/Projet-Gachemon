@@ -1,16 +1,18 @@
 import React from 'react';
+import { useState } from 'react';
 import './SCSS/App.scss';
 
 import AppBar from "./Composants/AppBar"
+import Header from "./Composants/Header"
 
 function App() {
 
-  const [value, setValue] = React.useState(0);
-  
+  const [value, setValue] = useState(1);
+
   return (
     <div className="App">
-      <div>Salut</div>
-      
+      <Header value={value} />
+
       <div hidden={value !== 0}>
          Super
       </div>
@@ -21,7 +23,7 @@ function App() {
         Banger
       </div>
 
-      <AppBar value={value} setValue={setValue} />
+      <AppBar value={value} setValue={setValue}/>
     </div>
   );
 }

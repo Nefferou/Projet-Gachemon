@@ -14,7 +14,7 @@ function AppBar({value, setValue, changePage}) {
 
   return (
     <div id='appBar'>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '98%', padding: '1%',paddingBottom: '0%', bgcolor: 'darkgrey' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', borderRadius: '5px', width: '96%', padding: '1%', margin: '1%', marginBottom: '0%', paddingBottom: '0%', bgcolor: '#a9a9a9e6'}}>
         <Tabs value={value} onChange={handleChange} >
             <Tab label="Gatcha" />
             <Tab label="Histoire"/>
