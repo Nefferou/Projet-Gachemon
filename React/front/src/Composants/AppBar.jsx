@@ -10,7 +10,7 @@ function AppBar({value, setValue, changePage}) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
     changePage(event.target.label);
-  };
+  } ;
 
   return (
     <div id='appBar'>
