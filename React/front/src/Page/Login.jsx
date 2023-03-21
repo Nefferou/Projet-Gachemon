@@ -1,5 +1,5 @@
 import React from "react";
-import "../SCSS/style.scss";
+import "../Scss/style.scss";
 
 import TextField from "@mui/material/TextField"
 import Link from "@mui/material/Link"

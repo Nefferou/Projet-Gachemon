@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-import "../SCSS/style.scss"
-import "../SCSS/type.scss"
+import "../Scss/style.scss"
+import "../Scss/type.scss"
 import { List, ListItemText, Pagination } from "@mui/material";
 import Type from "./Type"
 

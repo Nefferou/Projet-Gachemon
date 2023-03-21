@@ -1,5 +1,5 @@
 import React from 'react';
-import "../SCSS/style.scss";
+import "../Scss/style.scss";
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';

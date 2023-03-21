@@ -1,7 +1,7 @@
 import {React, useState} from "react"
 import PokemonBoxDialog from "./PokemonBoxDialog";
-import "../SCSS/style.scss"
-import "../SCSS/type.scss"
+import "../Scss/style.scss"
+import "../Scss/type.scss"
 import Dialog from '@mui/material/Dialog';
 import Type from "./Type"
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import './SCSS/App.scss';
+import './Scss/App.scss';
 
 import AppBar from "./Composants/AppBar"
 import Header from "./Composants/Header"
