@@ -14,8 +14,9 @@ class UserController extends AbstractController
 {
 
     #[Route('/api/user', name: 'api_user_connection',methods: ['GET'])]
-    public function actionConnection(Request $request, EntityManagerInterface $entityManager): JsonResponse
-    {   
+    public function actionConnection(EntityManagerInterface $entityManager): JsonResponse
+    {           
+        $request = Request::createFromGlobals();
         if($parameters = json_decode($request->getContent(), true) != null){
         
         $repo = $entityManager->getRepository(User::class);
@@ -35,13 +36,21 @@ class UserController extends AbstractController
     }
 
     #[Route('/api/user', name: 'api_user_register',methods: ['Post'])]
-    public function actionRegister(Request $request, EntityManagerInterface $entityManager): JsonResponse
+    public function actionRegister(EntityManagerInterface $entityManager): JsonResponse
     {   
-        $parameters = json_decode($request->getContent(), true);
+        $request = Request::createFromGlobals();
+        $content = $request->getContent();
+
+        // Decode the JSON string to an associative array
+        $data = json_decode($content, true);
+        $username = $data['username'];
+        $password = $data['password'];
+        $email = $data['email'];
         $repo = $entityManager->getRepository(User::class);
         $user = new User();
         $id_profile = $repo->findLastIdPlayer();
-        $user->setUsername($parameters['username'])->setPassword($parameters['password'])->setEmail($parameters['email'])->setIdProfile($id_profile+1);
+        return new JsonResponse($data,Response::HTTP_CREATED, ['accept' => 'json'], true);
+        $user->setUsername($request->get('username'))->setPassword($request->get('password'))->setEmail($request->get('email'))->setIdProfile($id_profile+1);
         
         if(is_null($user)){
             return new JsonResponse([
