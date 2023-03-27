@@ -29,7 +29,7 @@ class UserController extends AbstractController
         return new JsonResponse(json_encode($this->serializeUser($user)), Response::HTTP_OK, ['accept' => 'json'], true);
     }
 
-    #[Route('/api/user', name: 'api_user_register',methods: ['Post'])]
+    #[Route('/api/user', name: 'api_user_register',methods: ['POST'])]
     public function actionRegister(EntityManagerInterface $entityManager): JsonResponse
     {   
         $request = Request::createFromGlobals();
