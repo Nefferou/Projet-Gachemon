@@ -27,6 +27,7 @@ function Login() {
     }
 
     return (
+        <div className="center">
         <Stack id="login" spacing={2}>
             <ThemeProvider theme={theme}>
                 <h1>Login</h1>
@@ -36,6 +37,7 @@ function Login() {
                 <Link href="/register">Register me</Link>
             </ThemeProvider>
         </Stack>
+        </div>
     );
 }
 

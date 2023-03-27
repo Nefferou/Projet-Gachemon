@@ -32,6 +32,7 @@ function Register() {
             .catch(error => console.error(error));
     }
     return (
+        <div className="center">
         <Stack id="register" spacing={2}>
             <ThemeProvider theme={theme}>
                 <h1>Register</h1>
@@ -42,6 +43,7 @@ function Register() {
             <Button variant="contained" onClick={handleRegister}>Create Account</Button>
             </ThemeProvider>
         </Stack>
+        </div>
     );
 }
 
