@@ -49,7 +49,7 @@ class UserController extends AbstractController
                 'error' => 'Not Acceptable'
             ], Response::HTTP_NOT_ACCEPTABLE);
         }
-        $repo->save($user);
+        $repo->save($user,true);
         return new JsonResponse(json_encode($this->serializeUser($user)),Response::HTTP_CREATED, ['accept' => 'json'], true);
     }
 
