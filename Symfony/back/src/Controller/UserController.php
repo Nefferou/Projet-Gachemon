@@ -1,16 +1,16 @@
+<?php
+namespace App\Controller;
 
-    <?php
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\HttpFoundation\JsonResponse;
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\Routing\Annotation\Route;
-    use App\Entity\User;
-    use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 
-    class UserController extends AbstractController
-    {
-
+class UserController extends AbstractController
+{
         #[Route('/api/user', name: 'api_user_connection', methods: ['GET'])]
         public function actionConnection(EntityManagerInterface $entityManager): JsonResponse
         {
@@ -53,6 +53,12 @@
             return new JsonResponse(json_encode($this->serializeUser($user)), Response::HTTP_CREATED, ['accept' => 'json'], true);
         }
 
+        public function serializeUser(User $user){
+            return array([
+                "username" => $user->getUsername(),
+                "password" => $user->getPassword()
+            ]);
+        }
 
 
     }
