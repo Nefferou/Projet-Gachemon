@@ -54,13 +54,5 @@
         }
 
 
-        private function serializeUser(User $user)
-        {
-            return array(
-                'username' => $user->getUsername(),
-                'password' => $user->getPassword(),
-                'email' => $user->getEmail(),
-                'id_profile' => $user->getIdProfile()
-            );
-        }
+
     }
