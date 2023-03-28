@@ -38,11 +38,14 @@ class UserRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
     public function verifyAccount($username,$password): ?User
     {
         return $this->createQueryBuilder('u')
-            ->where('u.username = '.$username)
-            ->andWhere('u.password ='.$password)
+            ->where('u.username = :username')
+            ->andWhere('u.password = :password')
+            ->setParameter('username', $username)
+            ->setParameter('password', $password)
             ->getQuery()
             ->getOneOrNullResult()
         ;

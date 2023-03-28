@@ -1,17 +1,17 @@
-<?php
+    <?php
 
-namespace App\Controller;
+    namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\User;
-use Doctrine\ORM\EntityManagerInterface;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\JsonResponse;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Routing\Annotation\Route;
+    use App\Entity\User;
+    use Doctrine\ORM\EntityManagerInterface;
 
-class UserController extends AbstractController
-{
+    class UserController extends AbstractController
+    {
 
     #[Route('/api/user', name: 'api_user_connection',methods: ['GET'])]
     public function actionConnection(EntityManagerInterface $entityManager): JsonResponse
