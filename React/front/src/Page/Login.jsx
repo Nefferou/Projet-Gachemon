@@ -33,7 +33,7 @@ function Login() {
                 <h1>Login</h1>
                 <TextField id="outlined-basic" label="Username" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} />
                 <TextField id="outlined-basic" label="Password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} type="password" />
-                <Button onClick={handleLogin}> Login </Button>
+                <Button variant="contained" onClick={handleLogin}> Login </Button>
                 <Link href="/register">Register me</Link>
             </ThemeProvider>
         </Stack>
