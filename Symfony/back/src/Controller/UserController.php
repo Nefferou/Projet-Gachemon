@@ -18,7 +18,7 @@ class UserController extends AbstractController
             $parameters = json_decode($request->getContent(), true);
 
             $repo = $entityManager->getRepository(User::class);
-            $user = $repo->verifyAccount($parameters['username'], $parameters['password']);
+            $user = $repo->verifyAccount($parameters['username'], $parameters['password'])[0];
             if (is_null($user)) {
                 return new JsonResponse([
                     'error' => 'Wrong Account'

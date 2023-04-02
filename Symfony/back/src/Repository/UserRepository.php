@@ -39,7 +39,7 @@ class UserRepository extends ServiceEntityRepository
         }
     }
 
-    public function verifyAccount($username,$password): ?User
+    public function verifyAccount($username,$password): ?array
     {
         return $this->createQueryBuilder('u')
             ->where('u.username = :username')
@@ -47,7 +47,7 @@ class UserRepository extends ServiceEntityRepository
             ->setParameter('username', $username)
             ->setParameter('password', $password)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
 
@@ -57,7 +57,7 @@ class UserRepository extends ServiceEntityRepository
             ->select('`u`.`id_profile`')
             ->orderBy('`u`.`id_profile`','Desc')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
     public function findAllUsers(): array
