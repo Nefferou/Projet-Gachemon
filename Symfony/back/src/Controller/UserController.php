@@ -18,7 +18,7 @@ class UserController extends AbstractController
             $parameters = json_decode($request->getContent(), true);
 
             $repo = $entityManager->getRepository(User::class);
-            $user = $repo->verifyAccount($parameters['username'], $parameters['password'])[0];
+            $user = $repo->verifyAccountByUsernameAndPassword($parameters['username'], $parameters['password'])[0];
             if (is_null($user)) {
                 return new JsonResponse([
                     'error' => 'Wrong Account'
@@ -40,7 +40,7 @@ class UserController extends AbstractController
             $email = $data['email'];
             $repo = $entityManager->getRepository(User::class);
             $user = new User();
-            $id_profile = $repo->findLastIdPlayer()[0]['id_profile'];
+            $id_profile = $repo->findLastIdPlayer()['id_profile'];
             $user->setUsername($username)->setPassword($password)->setEmail($email)->setIdProfile($id_profile + 1);
 
             if (is_null($user)) {
@@ -50,6 +50,23 @@ class UserController extends AbstractController
             }
             $repo->save($user, true);
             return new JsonResponse(json_encode($this->serializeUser($user)), Response::HTTP_CREATED, ['accept' => 'json'], true);
+        }
+
+        #[Route('/api/user/email', name: 'api_user_email', methods: ['GET'])]
+        public function actionVerification(EntityManagerInterface $entityManager): JsonResponse
+        {
+            $request = Request::createFromGlobals();
+            $parameters = json_decode($request->getContent(), true);
+
+            $repo = $entityManager->getRepository(User::class);
+            $user = $repo->verifyAccountByEmail($parameters['email']);
+            if (is_null($user)) {
+                return new JsonResponse([
+                    'error' => 'Wrong Account'
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            return new JsonResponse(json_encode($this->serializeUser($user)), Response::HTTP_OK, ['accept' => 'json'], true);
         }
 
         public function serializeUser(User $user){
