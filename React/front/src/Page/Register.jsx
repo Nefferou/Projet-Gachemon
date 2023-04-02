@@ -8,11 +8,13 @@ import { Button } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import theme from "../theme";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 function Register() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+        const navigate = useNavigate();
 
     const handleRegister = () => {
         const data = {
@@ -20,14 +22,14 @@ function Register() {
             email:email,
             password: password
         }
+
         axios.post('https://gachemon.osc-fr1.scalingo.io/api/user',JSON.stringify(data),{
             headers: {
               'Content-Type': 'application/json'
             }
           })
             .then(response => {
-                console.log(response.data);
-                console.log(data);
+                navigate("/login");
             })
             .catch(error => console.error(error));
     }
