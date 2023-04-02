@@ -41,7 +41,6 @@ class UserController extends AbstractController
             $repo = $entityManager->getRepository(User::class);
             $user = new User();
             $id_profile = $repo->findLastIdPlayer()[0]['id_profile'];
-            return new JsonResponse($data, Response::HTTP_CREATED, ['accept' => 'json'], true);
             $user->setUsername($username)->setPassword($password)->setEmail($email)->setIdProfile($id_profile + 1);
 
             if (is_null($user)) {

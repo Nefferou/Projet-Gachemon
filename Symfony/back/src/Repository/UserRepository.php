@@ -51,15 +51,15 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
 
-    public function findLastIdPlayer(): ?int
+    public function findLastIdPlayer(): ?array
     {
         return $this->createQueryBuilder('u')
-            ->select('`u`.`id_profile`')
-            ->orderBy('`u`.`id_profile`','Desc')
+            ->select('u.id_profile')
+            ->orderBy('u.id_profile', 'DESC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
+    
     public function findAllUsers(): array
     {
         return $this->createQueryBuilder('u')
