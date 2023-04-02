@@ -42,7 +42,7 @@ function Register() {
                 <TextField id="outlined-basic" label="Email" variant="outlined" onChange={(e) => setEmail(e.target.value)}/>
                 <TextField id="outlined-basic" label="Password" variant="outlined" onChange={(e) => setPassword(e.target.value)} type="password" />
                 <TextField id="outlined-basic" label="Confirm password" variant="outlined" type="password" />
-            <Button variant="contained" onClick={handleRegister}>Create Account</Button>
+                <Button variant="contained" onClick={handleRegister}>Create Account</Button>
             </ThemeProvider>
         </Stack>
         </div>
