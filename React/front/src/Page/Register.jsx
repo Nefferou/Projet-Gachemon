@@ -24,7 +24,11 @@ function Register() {
         const jsonBody = {
             email: email
         }
-        axios.get(`https://gachemon.osc-fr1.scalingo.io/api/user/email`, JSON.stringify(jsonBody))
+        axios.post(`https://gachemon.osc-fr1.scalingo.io/api/user/email`, JSON.stringify(jsonBody),{
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
             .then(response => {
                 if (response.data.length > 0) {
                     setEmailExists(true);

@@ -18,7 +18,12 @@ function Login() {
             username: username,
             password: password
         }
-        axios.get('https://gachemon.osc-fr1.scalingo.io/api/user',JSON.stringify(data))
+        console.log(data);
+        axios.post('https://gachemon.osc-fr1.scalingo.io/api/user/all',JSON.stringify(data),{
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
             .then(response => {
                 console.log(response.data);
                 console.log(data);
