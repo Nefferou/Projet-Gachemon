@@ -38,25 +38,51 @@ class UserRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    public function verifyAccount($username,$password): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->where('u.username = '.$username)
-            ->andWhere('u.password ='.$password)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
 
-    public function findLastIdPlayer(): ?int
+    public function verifyAccountByUsernameAndPassword($username, $password)
+    {
+        $query = $this->createQueryBuilder('u')
+        ->where('u.username = :username')
+        ->andWhere('u.password = :password')
+        ->setParameter('username', $username)
+        ->setParameter('password', $password)
+        ->getQuery()
+        ->getResult();
+        if(sizeof($query) == 0){
+            return null;
+        }
+        $result = $query[0];
+        $user = new User();
+        $user->setUsername($result->getUsername())->setPassword($result->getPassword())->setIdProfile($result->getIdProfile());
+        return $user;
+    }
+    
+    public function verifyAccountByEmail($email): ?User
+    {
+        $query = $this->createQueryBuilder('u')
+            ->where('u.email = :email')
+            ->setParameter('email', $email)
+            ->getQuery()
+            ->getResult();
+        if(sizeof($query) == 0){
+            return null;
+        }
+        $result = $query[0];
+        $user = new User();
+        $user->setUsername($result->getUsername())->setPassword($result->getPassword())->setIdProfile($result->getIdProfile());
+        return $user;
+    }
+    
+
+    public function findLastIdPlayer(): ?array
     {
         return $this->createQueryBuilder('u')
-            ->select('`u`.`id_profile`')
-            ->orderBy('`u`.`id_profile`','Desc')
+            ->select('u.id_profile')
+            ->orderBy('u.id_profile', 'DESC')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
+    
     public function findAllUsers(): array
     {
         return $this->createQueryBuilder('u')

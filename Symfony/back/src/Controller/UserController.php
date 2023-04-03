@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,63 +11,69 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserController extends AbstractController
 {
-
-    #[Route('/api/user', name: 'api_user_connection',methods: ['GET'])]
-    public function actionConnection(Request $request, EntityManagerInterface $entityManager): JsonResponse
-    {   
-        if($parameters = json_decode($request->getContent(), true) != null){
-        
-        $repo = $entityManager->getRepository(User::class);
-        $user = $repo->verifyAccount($parameters['username'],$parameters['password']);
-        if(is_null($user)){
-            return new JsonResponse([
-                'error' => 'Wrong Account'
-            ], Response::HTTP_NOT_FOUND);
-        }
-
-        return new JsonResponse($this->serializeUser($user), Response::HTTP_OK, ['accept' => 'json'], true);
-        }else{
+        #[Route('/api/user/all', name: 'api_user_connection', methods: ['POST'])]
+        public function actionConnection(EntityManagerInterface $entityManager): JsonResponse
+        {
+            $request = Request::createFromGlobals();
+            $parameters = json_decode($request->getContent(), true);
             $repo = $entityManager->getRepository(User::class);
-            $users = $repo->findAllUsers();
-            return new JsonResponse(json_encode($this->serializeArrayUser($users)), Response::HTTP_OK, ['accept' => 'json'], true);
-        }
-    }
+            $user = $repo->verifyAccountByUsernameAndPassword($parameters['username'], $parameters['password']);
+            if (is_null($user)) {
+                return new JsonResponse([
+                    'error' => 'Wrong Account'
+                ], Response::HTTP_NOT_FOUND);
+            }
 
-    #[Route('/api/user', name: 'api_user_register',methods: ['Post'])]
-    public function actionRegister(Request $request, EntityManagerInterface $entityManager): JsonResponse
-    {   
-        $parameters = json_decode($request->getContent(), true);
-        $repo = $entityManager->getRepository(User::class);
-        $user = new User();
-        $id_profile = $repo->findLastIdPlayer();
-        $user->setUsername($parameters['username'])->setPassword($parameters['password'])->setEmail($parameters['email'])->setIdProfile($id_profile+1);
-        
-        if(is_null($user)){
-            return new JsonResponse([
-                'error' => 'Not Acceptable'
-            ], Response::HTTP_NOT_ACCEPTABLE);
+            return new JsonResponse(json_encode($this->serializeUser($user)), Response::HTTP_OK, ['accept' => 'json'], true);
         }
-        $repo->save($user);
-        $repo->flush();
-        return new JsonResponse($this->serializeUser($user),Response::HTTP_CREATED, ['accept' => 'json'], true);
-    }
 
-    
-    private function serializeUser(User $user)
-    {
-        return array(
-            'username' => $user->getUsername(),
-            'password' => $user->getPassword(),
-            'email' => $user->getEmail(),
-            'id_profile' => $user->getIdProfile()
-        );
-    }
-    private function serializeArrayUser(Array $users)
-    {
-        $listUser = array();
-        foreach ($users as $user) {
-            array_push($listUser,json_encode($this->serializeUser($user)));
+        #[Route('/api/user', name: 'api_user_register', methods: ['Post'])]
+        public function actionRegister(EntityManagerInterface $entityManager): JsonResponse
+        {
+            $request = Request::createFromGlobals();
+            $content = $request->getContent();
+
+            $data = json_decode($content, true);
+            $username = $data['username'];
+            $password = $data['password'];
+            $email = $data['email'];
+            $repo = $entityManager->getRepository(User::class);
+            $user = new User();
+            $id_profile = $repo->findLastIdPlayer()['id_profile'];
+            $user->setUsername($username)->setPassword($password)->setEmail($email)->setIdProfile($id_profile + 1);
+
+            if (is_null($user)) {
+                return new JsonResponse([
+                    'error' => 'Not Acceptable'
+                ], Response::HTTP_NOT_ACCEPTABLE);
+            }
+            $repo->save($user, true);
+            return new JsonResponse(json_encode($this->serializeUser($user)), Response::HTTP_CREATED, ['accept' => 'json'], true);
         }
-        return $listUser;
+
+        #[Route('/api/user/email', name: 'api_user_email', methods: ['POST'])]
+        public function actionVerification(EntityManagerInterface $entityManager): JsonResponse
+        {
+            $request = Request::createFromGlobals();
+            $parameters = json_decode($request->getContent(), true);
+
+            $repo = $entityManager->getRepository(User::class);
+            $user = $repo->verifyAccountByEmail($parameters['email']);
+            if (is_null($user)) {
+                return new JsonResponse([
+                    'error' => 'Wrong Account'
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            return new JsonResponse(json_encode($this->serializeUser($user)), Response::HTTP_OK, ['accept' => 'json'], true);
+        }
+
+        public function serializeUser(User $user){
+            return array([
+                "username" => $user->getUsername(),
+                "password" => $user->getPassword()
+            ]);
+        }
+
+
     }
-}
