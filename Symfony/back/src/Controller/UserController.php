@@ -11,14 +11,13 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserController extends AbstractController
 {
-        #[Route('/api/user', name: 'api_user_connection', methods: ['GET'])]
+        #[Route('/api/user/all', name: 'api_user_connection', methods: ['POST'])]
         public function actionConnection(EntityManagerInterface $entityManager): JsonResponse
         {
             $request = Request::createFromGlobals();
             $parameters = json_decode($request->getContent(), true);
-
             $repo = $entityManager->getRepository(User::class);
-            $user = $repo->verifyAccountByUsernameAndPassword($parameters['username'], $parameters['password'])[0];
+            $user = $repo->verifyAccountByUsernameAndPassword($parameters['username'], $parameters['password']);
             if (is_null($user)) {
                 return new JsonResponse([
                     'error' => 'Wrong Account'
@@ -52,7 +51,7 @@ class UserController extends AbstractController
             return new JsonResponse(json_encode($this->serializeUser($user)), Response::HTTP_CREATED, ['accept' => 'json'], true);
         }
 
-        #[Route('/api/user/email', name: 'api_user_email', methods: ['GET'])]
+        #[Route('/api/user/email', name: 'api_user_email', methods: ['POST'])]
         public function actionVerification(EntityManagerInterface $entityManager): JsonResponse
         {
             $request = Request::createFromGlobals();

@@ -39,26 +39,38 @@ class UserRepository extends ServiceEntityRepository
         }
     }
 
-    public function verifyAccountByUsernameAndPassword($username, $password): ?User
+    public function verifyAccountByUsernameAndPassword($username, $password)
     {
-        return $this->createQueryBuilder('u')
-            ->where('u.username = :username')
-            ->andWhere('u.password = :password')
-            ->setParameter('username', $username)
-            ->setParameter('password', $password)
-            ->getQuery()
-            ->getResult()[0]
-        ;
+        $query = $this->createQueryBuilder('u')
+        ->where('u.username = :username')
+        ->andWhere('u.password = :password')
+        ->setParameter('username', $username)
+        ->setParameter('password', $password)
+        ->getQuery()
+        ->getResult();
+        if(sizeof($query) == 0){
+            return null;
+        }
+        $result = $query[0];
+        $user = new User();
+        $user->setUsername($result->getUsername())->setPassword($result->getPassword())->setIdProfile($result->getIdProfile());
+        return $user;
     }
     
     public function verifyAccountByEmail($email): ?User
     {
-        return $this->createQueryBuilder('u')
+        $query = $this->createQueryBuilder('u')
             ->where('u.email = :email')
             ->setParameter('email', $email)
             ->getQuery()
-            ->getResult()[0]
-        ;
+            ->getResult();
+        if(sizeof($query) == 0){
+            return null;
+        }
+        $result = $query[0];
+        $user = new User();
+        $user->setUsername($result->getUsername())->setPassword($result->getPassword())->setIdProfile($result->getIdProfile());
+        return $user;
     }
     
 
