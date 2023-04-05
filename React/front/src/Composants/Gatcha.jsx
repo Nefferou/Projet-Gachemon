@@ -67,12 +67,12 @@ function Gatcha() {
                 {/* <Button variant="contained" disabled={load ? true : false} onClick={invoqueSix} onClose={handleClose} >Invoquer 6</Button> */}
             </div>
             <Dialog open={open} onClose={handleClose} >
-                {items != null ? <div id="pokemonBoxDialog">
+                {items != null ? <div>
                     <p>No.{items[rand].id}</p>
                     <h1>{items[rand].names['fr']}</h1>
                     <img src={items[rand].image} alt="" />
                     <Type typeOne={items[rand].types[0]} typeTwo={items[rand].types[1]} />
-                </div> : null}
+                </div> : <p>Loading</p>}
             </Dialog>
         </div>
     );
