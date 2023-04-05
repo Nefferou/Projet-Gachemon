@@ -8,6 +8,7 @@ import Pokedex from './Composants/Pokedex';
 
 import { ThemeProvider } from "@emotion/react";
 import theme from "./theme";
+import Gatcha from './Composants/Gatcha';
 
 function App() {
 
@@ -35,7 +36,7 @@ function App() {
       <Header value={value} changeSearch={setSearch} />
 
       <div hidden={value !== 0}>
-         Super
+         <Gatcha />
       </div>
       <div hidden={value !== 1}>
         Cool

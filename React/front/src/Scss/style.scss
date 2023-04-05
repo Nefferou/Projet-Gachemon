@@ -124,3 +124,23 @@ div > nav > ul{
     }
 }
 
+#Gatcha {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+
+    img {
+        width: 30%;
+    }
+
+    .GatchaButton {
+        display: flex;
+        justify-content: center;
+
+        button {
+            font-size: larger;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+    }
+}
