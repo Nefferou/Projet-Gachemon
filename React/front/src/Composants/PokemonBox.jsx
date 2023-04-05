@@ -27,9 +27,6 @@ function PokemonBox({id, name, sprite, type1, type2}) {
                 <img src={sprite} alt="" />
                 <Type typeOne={type1} typeTwo={type2} />
             </button>
-            <Dialog open={open} onClose={handleClose} fullWidth>
-                <PokemonBoxDialog id={ids} changeId={setIds}/>
-            </Dialog>
         </div>
     );
 }
