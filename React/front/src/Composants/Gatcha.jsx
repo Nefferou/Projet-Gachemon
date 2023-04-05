@@ -2,12 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "../Scss/style.scss";
 
-import Type from "./Type";
-
 import Button from '@mui/material/Button';
 
 import Gatchamon from "../Ressources/Gatchamon.png"
 import { Dialog } from "@mui/material";
+import Invoque from "./Invoque";
 
 function Gatcha() {
 
@@ -19,7 +18,6 @@ function Gatcha() {
     const [load, isLoad] = useState(false);
 
     useEffect(function () {
-        isLoad(true)
         fetch("https://pokedex-jgabriele.vercel.app/pokemons.json")
         .then(res => res.json())
         .then(
@@ -33,12 +31,6 @@ function Gatcha() {
     const invoqueOne = () => {
 
         setRand(Math.floor(Math.random() * (151 - 1 + 1)) + 1);
-        // tabInvoque.push(<div>
-        //                     <p>No.{items[rand].id}</p>
-        //                     <h1>{items[rand].names['fr']}</h1>
-        //                     <img src={items[rand].image} alt="" />
-        //                     <Type typeOne={items[rand].types[0]} typeTwo={items[rand].types[1]} />
-        //                 </div>)
         setOpen(true);
     }
 
@@ -67,12 +59,7 @@ function Gatcha() {
                 {/* <Button variant="contained" disabled={load ? true : false} onClick={invoqueSix} onClose={handleClose} >Invoquer 6</Button> */}
             </div>
             <Dialog open={open} onClose={handleClose} >
-                {items != null ? <div>
-                    <p>No.{items[rand].id}</p>
-                    <h1>{items[rand].names['fr']}</h1>
-                    <img src={items[rand].image} alt="" />
-                    <Type typeOne={items[rand].types[0]} typeTwo={items[rand].types[1]} />
-                </div> : <p>Loading</p>}
+                {load === true ? null : <Invoque item={items[rand]} />}
             </Dialog>
         </div>
     );
