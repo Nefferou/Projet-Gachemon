@@ -11,11 +11,12 @@ import { Dialog } from "@mui/material";
 
 function Gatcha() {
 
-    const [nbInvoque, setNbInvoque] = useState(1);
+    // const tabInvoque = [];
+    const [rand, setRand] = useState(0);
     const [open, setOpen] = useState(false);
 
     const [items, setItems] = useState([]);
-    const [load, isLoad] = useState(true);
+    const [load, isLoad] = useState(false);
 
     useEffect(function () {
         isLoad(true)
@@ -23,22 +24,34 @@ function Gatcha() {
         .then(res => res.json())
         .then(
             (result) => {
-            isLoad(false)
             setItems(result)
-            console.log(result[nbInvoque])
+            isLoad(false)
             }
         )
     }, [])
 
     const invoqueOne = () => {
-        setNbInvoque(1);
+
+        setRand(Math.floor(Math.random() * (151 - 1 + 1)) + 1);
+        // tabInvoque.push(<div>
+        //                     <p>No.{items[rand].id}</p>
+        //                     <h1>{items[rand].names['fr']}</h1>
+        //                     <img src={items[rand].image} alt="" />
+        //                     <Type typeOne={items[rand].types[0]} typeTwo={items[rand].types[1]} />
+        //                 </div>)
         setOpen(true);
     }
 
-    const invoqueSix = () => {
-        setNbInvoque(6);
-        setOpen(true);
-    }
+    // const invoqueSix = () => {
+
+    //     let rand = 0;
+    //     for(let i = 0; i < 6; i++){
+    //         rand = Math.floor(Math.random() * (151 - 1 + 1)) + 1;
+    //         tabInvoque.push(<PokemonBox key={items[rand].id} id={items[rand].id} name={items[rand].names['fr']} sprite={items[rand].image} type1={items[rand].types[0]} type2={items[rand].types[1]} all={items[rand]} />)
+    //     }
+    //     setOpen(true);
+    //     console.log(tabInvoque)
+    // }
 
     const handleClose = () => {
         setOpen(false);
@@ -50,17 +63,16 @@ function Gatcha() {
                 <img alt="" src={Gatchamon} />
             </div>
             <div className="GatchaButton">
-                <Button variant="contained" onClick={invoqueOne} onClose={handleClose} >Invoquer 1</Button>
-                <Button variant="contained" onClick={invoqueSix} onClose={handleClose} >Invoquer 6</Button>
+                <Button variant="contained" disabled={load ? true : false} onClick={invoqueOne} onClose={handleClose} >Invoquer 1</Button>
+                {/* <Button variant="contained" disabled={load ? true : false} onClick={invoqueSix} onClose={handleClose} >Invoquer 6</Button> */}
             </div>
             <Dialog open={open} onClose={handleClose} >
-                {load ? <p>Loading...</p> : 
-                <div id="pokemonBox">
-                    <p>No.{items[nbInvoque].id}</p>
-                    <h1>{items[nbInvoque].names['fr']}</h1>
-                    <img src={items[nbInvoque].image} alt="" />
-                    <Type typeOne={items[nbInvoque].types[0]} typeTwo={items[nbInvoque].types[1]} />
-                </div>}
+                {items != null ? <div>
+                    <p>No.{items[rand].id}</p>
+                    <h1>{items[rand].names['fr']}</h1>
+                    <img src={items[rand].image} alt="" />
+                    <Type typeOne={items[rand].types[0]} typeTwo={items[rand].types[1]} />
+                </div> : <p>Loading</p>}
             </Dialog>
         </div>
     );
