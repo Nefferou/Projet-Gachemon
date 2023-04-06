@@ -25,8 +25,7 @@ function Login() {
             }
         })
             .then(response => {
-                console.log(response.data);
-                console.log(data);
+                navigate("/app");
             })
             .catch(error => console.error(error));
     }
