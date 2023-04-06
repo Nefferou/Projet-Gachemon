@@ -8,10 +8,12 @@ import { ThemeProvider } from "@emotion/react";
 import theme from "../theme";
 import { Button } from "@material-ui/core";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleLogin = () => {
         const data = {
@@ -25,8 +27,7 @@ function Login() {
             }
         })
             .then(response => {
-                console.log(response.data);
-                console.log(data);
+                navigate("/app");
             })
             .catch(error => console.error(error));
     }
