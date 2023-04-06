@@ -39,7 +39,7 @@ function App() {
          <Gatcha />
       </div>
       <div hidden={value !== 1}>
-        Cool
+        EN COURS ....
       </div>
       <div hidden={value !== 2}>
         {load ? <div className='loading'>Loading ...</div> :

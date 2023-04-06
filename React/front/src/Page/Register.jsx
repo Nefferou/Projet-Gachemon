@@ -55,7 +55,7 @@ function Register() {
                 }
             })
                 .then(response => {
-                    navigate("/login");
+                    navigate("/app");
                 })
                 .catch(error => console.error(error));
         }
