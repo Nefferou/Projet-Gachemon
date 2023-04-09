@@ -45,7 +45,7 @@ function App() {
       <Gatcha pokemons={items} />}
       </div>
       <div hidden={value !== 1}>
-        Cool
+        EN COURS ....
       </div>
       <div hidden={value !== 2}>
         {load ? <Box sx={{ display: 'flex', justifyContent: 'center' }}>
