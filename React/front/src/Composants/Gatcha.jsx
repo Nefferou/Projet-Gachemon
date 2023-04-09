@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import "../Scss/style.scss";
+import "../Scss/Gatcha.scss";
 
 import Button from '@mui/material/Button';
 

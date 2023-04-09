@@ -1,5 +1,5 @@
 import React from "react"
-import "../Scss/style.scss"
+import "../Scss/Pokedex.scss"
 
 import PokemonBox from "./PokemonBox";
 
@@ -11,9 +11,11 @@ function Pokedex({pokemons, search}) {
     const pokedex = [];
     const tab = [];
 
+    
     pokemons.forEach((pokemon) =>{
-        if(pokemon.names['fr'].toLowerCase().includes(search.toLowerCase()) || pokemon.types[0].toUpperCase().includes(search.toUpperCase()) || (pokemon.types[1] ? pokemon.types[1].toUpperCase().includes(search.toUpperCase()) : false)){
-            pokedex.push(<PokemonBox key={pokemon.id} id={pokemon.id} name={pokemon.names['fr']} sprite={pokemon.image} type1={pokemon.types[0]} type2={pokemon.types[1]} all={pokemon}/>)
+        if(pokemon.name.toLowerCase().includes(search.toLowerCase()) || pokemon.apiTypes[0].name.toUpperCase().includes(search.toUpperCase()) || (pokemon.apiTypes.length === 2 ? pokemon.apiTypes[1].name.toUpperCase().includes(search.toUpperCase()) : false)){
+            pokedex.push(<PokemonBox key={pokemon.id} pokemon={pokemon}/>)
+
         }
     })
     

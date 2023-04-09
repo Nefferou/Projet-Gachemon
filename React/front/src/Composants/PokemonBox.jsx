@@ -1,17 +1,18 @@
 import {React} from "react"
-import "../Scss/style.scss"
-import "../Scss/type.scss"
-import Type from "./Type"
+import "../Scss/Pokedex.scss"
 
-function PokemonBox({id, name, sprite, type1, type2}) {
+function PokemonBox({pokemon}) {
 
     return (
         <div id="pokemonBox">
             <button>
-                <p>No.{id}</p>
-                <h1>{name}</h1>
-                <img src={sprite} alt="" />
-                <Type typeOne={type1} typeTwo={type2} />
+                <p>No.{pokemon.pokedexId}</p>
+                <h1>{pokemon.name}</h1>
+                <img src={pokemon.image} alt="" />
+                <div>
+                    <img src={pokemon.apiTypes[0].image} alt="" />
+                    {pokemon.apiTypes.length === 2 ? <img src={pokemon.apiTypes[1].image} alt="" /> : null}
+                </div>
             </button>
         </div>
     );

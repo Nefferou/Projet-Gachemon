@@ -1,0 +1,40 @@
+/*Dialog*/
+#pokemonBoxDialog{
+    text-align: center;
+    margin: 25px;
+
+    button p {
+        font-size: large;
+        font-weight: bolder;
+    }
+
+    img{
+        width: 100%;
+    }
+
+    ul{
+        padding: 0;
+        margin:auto
+    }
+}
+
+#Gatcha {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+
+    img {
+        width: 30%;
+    }
+
+    .GatchaButton {
+        display: flex;
+        justify-content: center;
+
+        button {
+            font-size: larger;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+    }
+}

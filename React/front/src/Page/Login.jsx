@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../Scss/style.scss";
+import "../Scss/App.scss";
 
 import TextField from "@mui/material/TextField"
 import Link from "@mui/material/Link"

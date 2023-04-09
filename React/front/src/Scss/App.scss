@@ -8,37 +8,45 @@
   height: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+//Login
+#login {
+  background-color: #a9a9a9e6;
+  border-radius: 10px;
+  
+  padding: 3%;
+  margin-left: 40%;
+  margin-right: 40%;
+
+  text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+//Register
+#register {
+  background-color: rgba(169, 169, 169, 0.9);
+  border-radius: 10px;
+  
+  padding: 3%;
+  margin-left: 40%;
+  margin-right: 40%;
+
+  text-align: center;
+  vertical-align: middle;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.center {
+  height: 60%;
+  padding-top: 10%;
+  padding-bottom: 10%;
 }
 
-.App-link {
-  color: #61dafb;
-}
+//AppBar
+#appBar {
+  div>div>div>div {
+      display: flex;
+      justify-content: space-around;
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+      button {
+          font-size: x-large;
+      }
   }
 }
