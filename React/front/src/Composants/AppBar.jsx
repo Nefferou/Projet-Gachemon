@@ -1,15 +1,14 @@
 import React from 'react';
-import "../Scss/style.scss";
+import "../Scss/App.scss";
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 
-function AppBar({value, setValue, changePage}) {
+function AppBar({value, setValue}) {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    changePage(event.target.label);
   } ;
 
   return (
