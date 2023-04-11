@@ -50,3 +50,24 @@
       }
   }
 }
+
+.headerInfo {
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+
+  background-color: #721a1ae6;
+  border-radius: 20px;
+
+  padding-left: 2px;
+  padding-right: 2px;
+
+  button {
+    padding: 5px;
+  }
+
+  p {
+    margin: 0%;
+    padding: 5px;
+  }
+}
