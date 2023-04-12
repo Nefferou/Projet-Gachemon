@@ -10,29 +10,31 @@ import Invoque from "./Invoque";
 
 function Gatcha({pokemons}) {
 
-    // const tabInvoque = [];
     const [rand, setRand] = useState(0);
-    const [open, setOpen] = useState(false);
+    const randS = [0, 0, 0, 0, 0, 0];
+
+    const [load, isLoad] = useState(false);
+
+    const [openO, setOpenO] = useState(false);
+    const [openS, setOpenS] = useState(false);
 
     const invoqueOne = () => {
-
         setRand(Math.floor(Math.random() * (897 - 1 + 1)) + 1);
-        setOpen(true);
+        setOpenO(true);
     }
 
-    // const invoqueSix = () => {
-
-    //     let rand = 0;
-    //     for(let i = 0; i < 6; i++){
-    //         rand = Math.floor(Math.random() * (151 - 1 + 1)) + 1;
-    //         tabInvoque.push(<PokemonBox key={items[rand].id} id={items[rand].id} name={items[rand].names['fr']} sprite={items[rand].image} type1={items[rand].types[0]} type2={items[rand].types[1]} all={items[rand]} />)
-    //     }
-    //     setOpen(true);
-    //     console.log(tabInvoque)
-    // }
+    const invoqueSix = () => {
+        isLoad(true)
+        for(let i = 0; i < 6; i++){
+             randS[i] = Math.floor(Math.random() * (897 - 1 + 1)) + 1;
+        }
+        setOpenS(true);
+        isLoad(false);
+    }
 
     const handleClose = () => {
-        setOpen(false);
+        setOpenO(false);
+        setOpenS(false);
     };
 
     return (
@@ -42,11 +44,23 @@ function Gatcha({pokemons}) {
             </div>
             <div className="GatchaButton">
                 <Button variant="contained" onClick={invoqueOne} onClose={handleClose} >Invoquer 1</Button>
-                {/* <Button variant="contained" disabled={load ? true : false} onClick={invoqueSix} onClose={handleClose} >Invoquer 6</Button> */}
+                <Button variant="contained" onClick={() => invoqueSix()} onClose={handleClose} >Invoquer 6</Button>
             </div>
-            <Dialog open={open} onClose={handleClose} >
+            <Dialog open={openO} onClose={handleClose} >
                 <Invoque item={pokemons[rand]} />
             </Dialog>
+            <Dialog open={openS} onClose={handleClose} >
+                {load ? <p>Loading ...</p> : 
+                <div>
+                    <Invoque item={pokemons[randS[0]]} />
+                    <Invoque item={pokemons[randS[1]]} />
+                    <Invoque item={pokemons[randS[2]]} />
+                    <Invoque item={pokemons[randS[3]]} />
+                    <Invoque item={pokemons[randS[4]]} />
+                    <Invoque item={pokemons[randS[5]]} />
+                </div>}
+            </Dialog>
+            
         </div>
     );
 }

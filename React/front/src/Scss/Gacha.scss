@@ -1,21 +1,22 @@
 /*Dialog*/
 #pokemonBoxDialog{
     text-align: center;
-    margin: 25px;
+    margin: 1%;
 
-    button p {
+    p {
         font-size: large;
+        margin: 1%;
         font-weight: bolder;
     }
 
-    img{
-        width: 100%;
+    h1 {
+        margin: 0%;
     }
 
-    ul{
-        padding: 0;
-        margin:auto
+    img{
+        width: 50%;
     }
+
 }
 
 #Gatcha {
@@ -36,5 +37,17 @@
             margin-left: 10%;
             margin-right: 10%;
         }
+    }
+}
+
+#type {
+
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+
+    img {
+        width: 25%;
+        height: 25%;
     }
 }
