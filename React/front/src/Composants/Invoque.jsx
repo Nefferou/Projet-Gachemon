@@ -1,4 +1,5 @@
 import React from "react";
+import "../Scss/Gacha.scss";
 
 function Invoque({item}) {
     return (
