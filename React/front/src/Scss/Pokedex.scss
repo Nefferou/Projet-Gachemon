@@ -17,7 +17,7 @@
     display: flex;
     flex-direction: column;
     width: 15%;
-    height: 10%;
+    height: 100%;
     margin: 0.8%;
 
     button{
@@ -33,6 +33,7 @@
     h1 {
         margin-bottom: 0;
         margin-top: 0;
+        font-size: x-large;
     }
 
     img {
@@ -48,8 +49,12 @@
     
         img {
             width: 25%;
-            margin: 5%
+            margin: 5%;
         }
+    }
+
+    .stats {
+        margin: 5px;
     }
 }
 
