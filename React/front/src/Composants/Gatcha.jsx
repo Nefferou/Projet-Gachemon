@@ -3,6 +3,7 @@ import { useState } from "react";
 import "../Scss/Gacha.scss";
 
 import Button from '@mui/material/Button';
+import Grid from "@mui/material/Grid";
 
 import Gatchamon from "../Ressources/Gatchamon.png"
 import { Dialog } from "@mui/material";
@@ -27,7 +28,7 @@ function Gatcha({pokemons}) {
         let random;
         for(let i = 0; i < 6; i++){
             random = Math.floor(Math.random() * (897 - 1 + 1)) + 1;
-            randS.push(<Invoque key={random} item={pokemons[random]} />)
+            randS.push(<Grid item xs={4}><Invoque key={random} item={pokemons[random]} /></Grid>)
         }
         if(randS.length === 6){
             console.log("yes");
@@ -55,7 +56,9 @@ function Gatcha({pokemons}) {
                 <Invoque item={pokemons[rand]} />*
             </Dialog> 
             <Dialog className="dialogOpen" open={openS} onClose={handleClose} >
-                {randS.map(pokemon => pokemon)}
+                <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                    {randS.map(pokemon => pokemon)}
+                </Grid>
             </Dialog>
         </div>
     );
