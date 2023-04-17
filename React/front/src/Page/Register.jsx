@@ -12,7 +12,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
 function Register() {
-    
+
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -57,7 +57,7 @@ function Register() {
                 }
             })
                 .then(response => {
-                    navigate("/app");
+                    navigate("/login");
                 })
                 .catch(error => console.error(error));
         }
