@@ -13,7 +13,7 @@ function Pokedex({pokemons, search}) {
 
     
     pokemons.forEach((pokemon) =>{
-        if(pokemon.name.toLowerCase().includes(search.toLowerCase()) || pokemon.apiTypes[0].name.toUpperCase().includes(search.toUpperCase()) || (pokemon.apiTypes.length === 2 ? pokemon.apiTypes[1].name.toUpperCase().includes(search.toUpperCase()) : false)){
+        if(pokemon.name.toLowerCase().includes(search.toLowerCase()) || pokemon.apiTypes[0].name.toLowerCase().includes(search.toLowerCase()) || (pokemon.apiTypes.length === 2 ? pokemon.apiTypes[1].name.toLowerCase().includes(search.toLowerCase()) : false)){
             pokedex.push(<PokemonBox key={pokemon.id} pokemon={pokemon}/>)
 
         }
