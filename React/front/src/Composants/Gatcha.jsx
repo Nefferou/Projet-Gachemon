@@ -1,52 +1,46 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import "../Scss/style.scss";
+import { useState } from "react";
+import "../Scss/Gacha.scss";
 
 import Button from '@mui/material/Button';
+import Grid from "@mui/material/Grid";
 
 import Gatchamon from "../Ressources/Gatchamon.png"
 import { Dialog } from "@mui/material";
 import Invoque from "./Invoque";
 
-function Gatcha() {
+function Gatcha({pokemons}) {
 
-    // const tabInvoque = [];
     const [rand, setRand] = useState(0);
-    const [open, setOpen] = useState(false);
+    const [randS, setRandS] = useState([]);
 
-    const [items, setItems] = useState([]);
-    const [load, isLoad] = useState(false);
+    //const [load, isLoad] = useState(true);
 
-    useEffect(function () {
-        fetch("https://pokedex-jgabriele.vercel.app/pokemons.json")
-        .then(res => res.json())
-        .then(
-            (result) => {
-            setItems(result)
-            isLoad(false)
-            }
-        )
-    }, [])
+    const [openO, setOpenO] = useState(false);
+    const [openS, setOpenS] = useState(false);
 
     const invoqueOne = () => {
-
-        setRand(Math.floor(Math.random() * (151 - 1 + 1)) + 1);
-        setOpen(true);
+        setRand(Math.floor(Math.random() * (897 - 1 + 1)) + 1);
+        setOpenO(true);
     }
 
-    // const invoqueSix = () => {
-
-    //     let rand = 0;
-    //     for(let i = 0; i < 6; i++){
-    //         rand = Math.floor(Math.random() * (151 - 1 + 1)) + 1;
-    //         tabInvoque.push(<PokemonBox key={items[rand].id} id={items[rand].id} name={items[rand].names['fr']} sprite={items[rand].image} type1={items[rand].types[0]} type2={items[rand].types[1]} all={items[rand]} />)
-    //     }
-    //     setOpen(true);
-    //     console.log(tabInvoque)
-    // }
+    const invoqueSix = () => {
+        let random;
+        for(let i = 0; i < 6; i++){
+            random = Math.floor(Math.random() * (897 - 1 + 1)) + 1;
+            randS.push(<Grid item xs={4}><Invoque key={random} item={pokemons[random]} /></Grid>)
+        }
+        if(randS.length === 6){
+            console.log("yes");
+            setOpenS(true);
+        }
+    }
 
     const handleClose = () => {
-        setOpen(false);
+        setOpenO(false);
+        setOpenS(false);
+
+        setRandS([]);
     };
 
     return (
@@ -55,11 +49,16 @@ function Gatcha() {
                 <img alt="" src={Gatchamon} />
             </div>
             <div className="GatchaButton">
-                <Button variant="contained" disabled={load ? true : false} onClick={invoqueOne} onClose={handleClose} >Invoquer 1</Button>
-                {/* <Button variant="contained" disabled={load ? true : false} onClick={invoqueSix} onClose={handleClose} >Invoquer 6</Button> */}
+                <Button variant="contained" onClick={invoqueOne} onClose={handleClose} >Invoquer 1</Button>
+                <Button variant="contained" onClick={invoqueSix} onClose={handleClose} >Invoquer 6</Button>
             </div>
-            <Dialog open={open} onClose={handleClose} >
-                {load === true ? null : <Invoque item={items[rand]} />}
+            <Dialog className="dialogOpen" open={openO} onClose={handleClose} >
+                <Invoque item={pokemons[rand]} />*
+            </Dialog> 
+            <Dialog className="dialogOpen" open={openS} onClose={handleClose} >
+                <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                    {randS.map(pokemon => pokemon)}
+                </Grid>
             </Dialog>
         </div>
     );

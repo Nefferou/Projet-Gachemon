@@ -1,14 +1,16 @@
 import React from "react";
-
-import Type from "./Type";
+import "../Scss/Gacha.scss";
 
 function Invoque({item}) {
     return (
         <div id="pokemonBoxDialog">
-            <p>No.{item.id}</p>
-            <h1>{item.names['fr']}</h1>
+            <p>No.{item.pokedexId}</p>
+            <h1>{item.name}</h1>
             <img src={item.image} alt="" />
-            <Type typeOne={item.types[0]} typeTwo={item.types[1]} />
+            <div id="type">
+                <img src={item.apiTypes[0].image} alt="" />
+                {item.apiTypes.length === 2 ? <img src={item.apiTypes[1].image} alt="" /> : null}
+            </div>
         </div>
     );
 }
