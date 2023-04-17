@@ -39,7 +39,7 @@ class UserController extends AbstractController
             $email = $data['email'];
             $repo = $entityManager->getRepository(User::class);
             $user = new User();
-            $id_profile = $repo->findLastIdPlayer()['id_profile'];
+            $id_profile = $repo->findLastIdPlayer()[0]['id_profile'];
             $user->setUsername($username)->setPassword($password)->setEmail($email)->setIdProfile($id_profile + 1);
 
             if (is_null($user)) {
