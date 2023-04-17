@@ -3,6 +3,10 @@
     text-align: center;
     margin: 1%;
 
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
     p {
         font-size: large;
         margin: 1%;
@@ -52,7 +56,28 @@
 }
 
 .dialogOpen {
-    div {
-        
+    div>div {
+        background-color: rgba($color: #000000, $alpha: 0);
+        align-items: center;
+        #pokemonBoxDialog {
+            align-items: center;
+            background-color: rgba(169, 169, 169, 0.902);
+            border: solid black 2px;
+            padding: 2%;
+            border-radius: 5px;
+        }
+        div>div {
+                width: 70%;
+                height: 50%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                #pokemonBoxDialog {
+                    background-color: rgba(169, 169, 169, 0.902);
+                    border: solid black 2px;
+                    padding: 2%;
+                    border-radius: 5px;
+                }
+            }        
     }
 }
