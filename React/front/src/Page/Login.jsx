@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../Scss/style.scss";
+import "../Scss/App.scss";
 
 import TextField from "@mui/material/TextField"
 import Link from "@mui/material/Link"
@@ -8,10 +8,12 @@ import { ThemeProvider } from "@emotion/react";
 import theme from "../theme";
 import { Button } from "@material-ui/core";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleLogin = () => {
         const data = {
@@ -19,14 +21,13 @@ function Login() {
             password: password
         }
         console.log(data);
-        axios.post('https://gachemon.osc-fr1.scalingo.io/api/user/all',JSON.stringify(data),{
+        axios.post('https://gachemonapi.osc-fr1.scalingo.io/api/user/all',JSON.stringify(data),{
             headers: {
                 'Content-Type': 'application/json'
             }
         })
             .then(response => {
-                console.log(response.data);
-                console.log(data);
+                navigate("/app");
             })
             .catch(error => console.error(error));
     }

@@ -1,0 +1,65 @@
+/*Pokedex*/
+#pokedex{
+    display: flex;
+    flex-direction: column;
+}
+
+.line{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2vh;
+}
+
+/*Box*/
+#pokemonBox {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    height: 100%;
+    margin: 0.8%;
+
+    button{
+        border: solid black 2px;
+        border-radius: 5px;
+        background-color: rgba(169, 169, 169, 0.902);
+    }
+
+    button:hover{
+        background-color: rgb(163, 163, 163);
+    }
+
+    h1 {
+        margin-bottom: 0;
+        margin-top: 0;
+        font-size: x-large;
+    }
+
+    img {
+        width: 65%;
+        height: 65%;
+        align-self: center;
+    }
+
+    div {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+    
+        img {
+            width: 25%;
+            margin: 5%;
+        }
+    }
+
+    .stats {
+        margin: 5px;
+    }
+}
+
+#pokemonBox > p {
+    align-self: flex-start;
+    padding-left: 2vh;
+    font-size: small;
+}

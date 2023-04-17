@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../Scss/style.scss";
+import "../Scss/App.scss";
 
 import TextField from "@mui/material/TextField"
 import Stack from "@mui/material/Stack"
@@ -24,7 +24,7 @@ function Register() {
         const jsonBody = {
             email: email
         }
-        axios.post(`https://gachemon.osc-fr1.scalingo.io/api/user/email`, JSON.stringify(jsonBody),{
+        axios.post(`https://gachemonapi.osc-fr1.scalingo.io/api/user/email`, JSON.stringify(jsonBody),{
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -49,13 +49,13 @@ function Register() {
                 password: password
             }
     
-            axios.post('https://gachemon.osc-fr1.scalingo.io/api/user',JSON.stringify(data),{
+            axios.post('https://gachemonapi.osc-fr1.scalingo.io/api/user',JSON.stringify(data),{
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
                 .then(response => {
-                    navigate("/login");
+                    navigate("/app");
                 })
                 .catch(error => console.error(error));
         }

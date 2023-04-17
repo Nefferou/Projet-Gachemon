@@ -5,7 +5,9 @@ html, body {
 
 body {
   background-image: url("../Ressources/Pokeball.jpg");
-  background-size: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 #root {
