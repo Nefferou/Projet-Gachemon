@@ -28,6 +28,13 @@ class User
     #[ORM\Column(length: 250000)]
     private ?string $pc = null;
 
+    public function setId($id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
