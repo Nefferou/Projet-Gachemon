@@ -22,8 +22,18 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $id_profile = null;
+    #[ORM\Column]
+    private ?float $cryptokemons = null;
+
+    #[ORM\Column(length: 250000)]
+    private ?string $pc = null;
+
+    public function setId($id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -65,15 +75,27 @@ class User
 
         return $this;
     }
-    
-    public function getIdProfile(): ?string
+
+    public function getCryptokemons(): ?float
     {
-        return $this->id_profile;
+        return $this->cryptokemons;
     }
 
-    public function setIdProfile(string $id_profile): self
+    public function setCryptokemons(float $cryptokemons): self
     {
-        $this->id_profile = $id_profile;
+        $this->cryptokemons = $cryptokemons;
+
+        return $this;
+    }
+
+    public function getPc(): ?string
+    {
+        return $this->pc;
+    }
+
+    public function setPc(string $pc): self
+    {
+        $this->pc = $pc;
 
         return $this;
     }
