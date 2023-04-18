@@ -20,14 +20,14 @@ function Login() {
             username: username,
             password: password
         }
-        axios.post('https://gachemonapi.osc-fr1.scalingo.io/api/user/login',JSON.stringify(data),{
+        axios.post('https://gachemon.osc-fr1.scalingo.io/api/user/login',JSON.stringify(data),{
             headers: {
                 'Content-Type': 'application/json'
             }
         })
             .then(response => {
+                sessionStorage.setItem("user", JSON.stringify(response.data[0]));
                 navigate("/app");
-                console.log(response)
             })
             .catch(error => console.error(error));
     }

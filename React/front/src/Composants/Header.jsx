@@ -10,7 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
 
-export default function MenuAppBar({value, changeSearch}) {
+export default function MenuAppBar({value, changeSearch, user}) {
 
   return (
     <div>
@@ -20,7 +20,7 @@ export default function MenuAppBar({value, changeSearch}) {
               <IconButton size="medium" color="inherit">
                   <AccountCircle />
               </IconButton>
-              <p>Admin</p>
+              <p>{user.username}</p>
             </div>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 {value === 0 ? "Gatcha" 
@@ -37,7 +37,7 @@ export default function MenuAppBar({value, changeSearch}) {
               </div>}
             </Typography>
             <div className='headerInfo'>
-              <p>1000000</p>
+              <p>{user.Cryptokemons}</p>
               <IconButton color="inherit">
                   <CatchingPokemonIcon />
               </IconButton>
