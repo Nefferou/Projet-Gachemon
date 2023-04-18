@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react';
 import './Scss/App.scss';
 import soon from './Ressources/enCours.gif'
 
-import { useSession } from 'next-auth/react'
-
 import AppBar from "./Composants/AppBar"
 import Header from "./Composants/Header"
 import Pokedex from './Composants/Pokedex';
@@ -16,7 +14,7 @@ import Gatcha from './Composants/Gatcha';
 import { Box } from '@mui/system';
 import { CircularProgress } from '@mui/material';
 
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function App() {
 
@@ -26,9 +24,9 @@ function App() {
   const [items, setItems] = useState([]);
   const [load, isLoad] = useState(true);
 
-  const { data: session } = useSession();
+  const [user, setUser] = useState(JSON.parse(sessionStorage.getItem('user')))
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(function () {
     isLoad(true)
@@ -44,10 +42,11 @@ function App() {
 
   return (
     <div className="App">
-      {session !== null ?
-      console.log(session) :
+      {user === null ?
+      navigate("/login") :
       <ThemeProvider theme={theme}>
-      <Header value={value} changeSearch={setSearch} />
+
+      <Header value={value} changeSearch={setSearch} user={user} />
 
       <div hidden={value !== 0}>
         {load ? 
@@ -56,9 +55,11 @@ function App() {
         </Box> : 
         <Gatcha pokemons={items} value={value} />}
       </div>
+
       <div style={{backgroundColor: "black"}} hidden={value !== 1}>
         <img src={soon} alt='en cours'/>
       </div>
+
       <div hidden={value !== 2}>
         {load ? <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                   <CircularProgress />
@@ -67,6 +68,7 @@ function App() {
       </div>
 
       <AppBar value={value} setValue={setValue}/>
+
       </ThemeProvider>}
     </div>
   );

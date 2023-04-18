@@ -26,9 +26,7 @@ function Login() {
             }
         })
             .then(response => {
-                console.log(response.data);
-                sessionStorage.setItem("session", response.data);
-                console.log(sessionStorage.getItem("session"));
+                sessionStorage.setItem("user", JSON.stringify(response.data[0]));
                 navigate("/app");
             })
             .catch(error => console.error(error));

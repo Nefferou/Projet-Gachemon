@@ -49,7 +49,7 @@ function Register() {
                 password: password
             }
     
-            axios.post('https://gachemonapi.osc-fr1.scalingo.io/api/user',JSON.stringify(data),{
+            axios.post('https://gachemon.osc-fr1.scalingo.io/api/user',JSON.stringify(data),{
                 headers: {
                     'Content-Type': 'application/json'
                 }
