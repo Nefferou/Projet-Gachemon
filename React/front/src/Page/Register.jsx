@@ -32,15 +32,13 @@ function Register() {
             }
         })
             .then(response => {
-                if (response.data.length > 0) {
-                    setEmailExists(true);
-                    setErrorMessage("This email address is already registered.");
-                } else {
                     setEmailExists(false);
                     setErrorMessage(null);
-                }
             })
-            .catch(error => console.error(error));
+            .catch(error =>{
+                setEmailExists(true);
+                setErrorMessage("This email address is already registered.");
+            });
     }
 
     const handleRegister = () => {
