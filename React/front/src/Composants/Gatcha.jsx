@@ -38,7 +38,6 @@ function Gatcha({pokemons, value}) {
             randS.push(<Grid key={random} item xs={4}><Invoque key={random} item={pokemons[random]} /></Grid>)
         }
         if(randS.length === 6){
-            console.log("yes");
             setOpenS(true);
         }
     }
