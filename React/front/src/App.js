@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import './Scss/App.scss';
+import soon from './Ressources/enCours.gif'
 
 import { useSession } from 'next-auth/react'
 
@@ -55,8 +56,8 @@ function App() {
         </Box> : 
         <Gatcha pokemons={items} value={value} />}
       </div>
-      <div hidden={value !== 1}>
-        <h1 style={{color: "white"}}>Coming soon</h1>
+      <div style={{backgroundColor: "black"}} hidden={value !== 1}>
+        <img src={soon} alt='en cours'/>
       </div>
       <div hidden={value !== 2}>
         {load ? <Box sx={{ display: 'flex', justifyContent: 'center' }}>
