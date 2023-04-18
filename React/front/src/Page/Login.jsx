@@ -21,7 +21,7 @@ function Login() {
             password: password
         }
         console.log(data);
-        axios.post('https://gachemonapi.osc-fr1.scalingo.io/api/user/all',JSON.stringify(data),{
+        axios.post('https://gachemonapi.osc-fr1.scalingo.io/api/user/login',JSON.stringify(data),{
             headers: {
                 'Content-Type': 'application/json'
             }
