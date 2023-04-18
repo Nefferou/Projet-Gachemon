@@ -59,7 +59,7 @@ class UserRepository extends ServiceEntityRepository
         return $user;
     }
     
-    public function verifyAccountByEmail($email): ?User
+    public function verifyAccountByEmail($email): bool
     {
         $query = $this->createQueryBuilder('u')
             ->where('u.email = :email')
@@ -67,13 +67,9 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
         if(sizeof($query) == 0){
-            return null;
+            return false;
         }
-        $result = $query[0];
-        $user = new User();
-        $user->setId($result->getId())->setUsername($result->getUsername())->setPassword($result->getPassword())
-        ->setPc($result->getPc())->setCryptokemons($result->getCryptokemons());
-        return $user;
+        return true;
     }
     
 

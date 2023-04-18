@@ -47,24 +47,23 @@ class UserController extends AbstractController
                 ], Response::HTTP_NOT_ACCEPTABLE);
             }
             $repoUser->save($user, true);
-            return new JsonResponse(json_encode($this->serializeUser($user)), Response::HTTP_CREATED, ['accept' => 'json'], true);
+            return new JsonResponse("Création du compte réussie", Response::HTTP_CREATED, ['accept' => 'json'], true);
         }
 
         #[Route('/api/user/email', name: 'api_user_email', methods: ['POST'])]
-        public function actionVerification(EntityManagerInterface $entityManager): JsonResponse
+        public function actionVerification(EntityManagerInterface $entityManager): Response
         {
             $request = Request::createFromGlobals();
             $parameters = json_decode($request->getContent(), true);
 
             $repo = $entityManager->getRepository(User::class);
             $user = $repo->verifyAccountByEmail($parameters['email']);
-            if (is_null($user)) {
-                return new JsonResponse([
-                    'error' => 'Wrong Account'
-                ], Response::HTTP_NOT_FOUND);
+            if (($user)) {
+                return new Response(
+                    'Email already used', Response::HTTP_NOT_ACCEPTABLE);
+            }else{
+                return new Response('Email not used', Response::HTTP_ACCEPTED);
             }
-
-            return new Response();
         }
 
         public function showUser(User $user){
