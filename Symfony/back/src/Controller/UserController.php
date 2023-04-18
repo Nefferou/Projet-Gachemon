@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Profile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,8 +24,10 @@ class UserController extends AbstractController
                     'error' => 'Wrong Account'
                 ], Response::HTTP_NOT_FOUND);
             }
+            $profile = $entityManager->getRepository(Profile::class);
+            $profile->findOneBySomeField($user->getIdProfile());
 
-            return new JsonResponse(json_encode($this->serializeUser($user)), Response::HTTP_OK, ['accept' => 'json'], true);
+            return new JsonResponse(json_encode($profile), Response::HTTP_OK, ['accept' => 'json'], true);
         }
 
         #[Route('/api/user', name: 'api_user_register', methods: ['Post'])]
@@ -37,17 +40,18 @@ class UserController extends AbstractController
             $username = $data['username'];
             $password = $data['password'];
             $email = $data['email'];
-            $repo = $entityManager->getRepository(User::class);
+            $repoUser = $entityManager->getRepository(User::class);
             $user = new User();
-            $id_profile = $repo->findLastIdPlayer()[0]['id_profile'];
-            $user->setUsername($username)->setPassword($password)->setEmail($email)->setIdProfile($id_profile + 1);
-
+            $profile_id = $repoUser->findLastIdPlayer()[0]->getProfileId() + 1;
+            $user->setUsername($username)->setPassword($password)->setEmail($email)->setProfileId($profile_id);
+            $repoProfile = $entityManager->getRepository(Profile::class);
             if (is_null($user)) {
                 return new JsonResponse([
                     'error' => 'Not Acceptable'
                 ], Response::HTTP_NOT_ACCEPTABLE);
             }
-            $repo->save($user, true);
+            $repoUser->save($user, true);
+            $repoProfile->save($profile, true);
             return new JsonResponse(json_encode($this->serializeUser($user)), Response::HTTP_CREATED, ['accept' => 'json'], true);
         }
 

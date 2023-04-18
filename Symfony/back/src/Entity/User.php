@@ -23,7 +23,8 @@ class User
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $id_profile = null;
+    #[ORM\OneToOne(mappedBy: 'id', cascade: ['persist', 'remove'])]
+    private ?Profile $profile_id = null;
 
     public function getId(): ?int
     {
@@ -68,13 +69,22 @@ class User
     
     public function getIdProfile(): ?string
     {
-        return $this->id_profile;
+        return $this->profile_id;
     }
 
-    public function setIdProfile(string $id_profile): self
+    public function getProfileId(): ?Profile
     {
-        $this->id_profile = $id_profile;
+        return $this->profile_id;
+    }
 
+    public function setProfileId(int $profile_id): self
+    {
+        $new_profile = new Profile();
+        $new_profile->setId($profile_id)
+        ->setUserId($this)
+        ->setPc("")
+        ->setCryptokemon(10.0);
+        $this->profile_id = $new_profile;
         return $this;
     }
 }
