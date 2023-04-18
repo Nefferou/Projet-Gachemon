@@ -4,6 +4,7 @@ import "../Scss/App.scss";
 import TextField from "@mui/material/TextField"
 import Stack from "@mui/material/Stack"
 import { Button } from "@mui/material";
+import Link from "@mui/material/Link";
 
 import { ThemeProvider } from "@emotion/react";
 import theme from "../theme";
@@ -11,6 +12,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
 function Register() {
+
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -55,7 +57,7 @@ function Register() {
                 }
             })
                 .then(response => {
-                    navigate("/app");
+                    navigate("/login");
                 })
                 .catch(error => console.error(error));
         }
@@ -72,6 +74,7 @@ function Register() {
                 <TextField id="outlined-basic" label="Password" variant="outlined" onChange={(e) => setPassword(e.target.value)} type="password" />
                 <TextField id="outlined-basic" label="Confirm password" variant="outlined" type="password" />
                 <Button variant="contained" onClick={handleRegister}>Create Account</Button>
+                <Link href="/login">Login</Link>
             </ThemeProvider>
         </Stack>
         </div>
