@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use PhpParser\Node\Expr\Cast\String_;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -53,7 +54,7 @@ class UserRepository extends ServiceEntityRepository
         }
         $result = $query[0];
         $user = new User();
-        $user->setUsername($result->getUsername())->setPassword($result->getPassword())->setIdProfile($result->getIdProfile());
+        $user->setUsername($result->getUsername())->setPassword($result->getPassword())->setProfileId($result->getIdProfile());
         return $user;
     }
     
@@ -69,7 +70,7 @@ class UserRepository extends ServiceEntityRepository
         }
         $result = $query[0];
         $user = new User();
-        $user->setUsername($result->getUsername())->setPassword($result->getPassword())->setIdProfile($result->getIdProfile());
+        $user->setUsername($result->getUsername())->setPassword($result->getPassword())->setProfileId($result->getIdProfile());
         return $user;
     }
     
@@ -77,21 +78,12 @@ class UserRepository extends ServiceEntityRepository
     public function findLastIdPlayer(): ?array
     {
         return $this->createQueryBuilder('u')
-            ->select('u.id_profile')
-            ->orderBy('u.id_profile', 'DESC')
-            ->getQuery()
-            ->getResult();
-    }
-    
-    public function findAllUsers(): array
-    {
-        return $this->createQueryBuilder('u')
-            ->orderBy('u.id', 'ASC')
+            ->orderBy('u.id', 'DESC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
-    }
+            ->getResult();
+        }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */
