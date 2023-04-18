@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserController extends AbstractController
 {
-        #[Route('/api/user/all', name: 'api_user_connection', methods: ['POST'])]
+        #[Route('/api/user/login', name: 'api_user_connection', methods: ['POST'])]
         public function actionConnection(EntityManagerInterface $entityManager): JsonResponse
         {
             $request = Request::createFromGlobals();

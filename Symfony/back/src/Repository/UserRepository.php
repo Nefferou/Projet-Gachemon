@@ -54,7 +54,7 @@ class UserRepository extends ServiceEntityRepository
         }
         $result = $query[0];
         $user = new User();
-        $user->setUsername($result->getUsername())->setPassword($result->getPassword())->setProfileId($result->getIdProfile());
+        $user->setUsername($result->getUsername())->setPassword($result->getPassword());
         return $user;
     }
     
@@ -70,7 +70,7 @@ class UserRepository extends ServiceEntityRepository
         }
         $result = $query[0];
         $user = new User();
-        $user->setUsername($result->getUsername())->setPassword($result->getPassword())->setProfileId($result->getIdProfile());
+        $user->setUsername($result->getUsername())->setPassword($result->getPassword());
         return $user;
     }
     
