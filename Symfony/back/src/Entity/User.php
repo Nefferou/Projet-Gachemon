@@ -22,6 +22,12 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
+    #[ORM\Column]
+    private ?float $cryptokemons = null;
+
+    #[ORM\Column(length: 250000)]
+    private ?string $pc = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +65,30 @@ class User
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getCryptokemons(): ?float
+    {
+        return $this->cryptokemons;
+    }
+
+    public function setCryptokemons(float $cryptokemons): self
+    {
+        $this->cryptokemons = $cryptokemons;
+
+        return $this;
+    }
+
+    public function getPc(): ?string
+    {
+        return $this->pc;
+    }
+
+    public function setPc(string $pc): self
+    {
+        $this->pc = $pc;
 
         return $this;
     }
