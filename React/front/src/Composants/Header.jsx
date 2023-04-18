@@ -20,7 +20,7 @@ export default function MenuAppBar({value, changeSearch}) {
               <IconButton size="medium" color="inherit">
                   <AccountCircle />
               </IconButton>
-              <p>LeNomDuMec</p>
+              <p>Admin</p>
             </div>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 {value === 0 ? "Gatcha" 
@@ -37,7 +37,7 @@ export default function MenuAppBar({value, changeSearch}) {
               </div>}
             </Typography>
             <div className='headerInfo'>
-              <p>150 350</p>
+              <p>1000000</p>
               <IconButton color="inherit">
                   <CatchingPokemonIcon />
               </IconButton>
