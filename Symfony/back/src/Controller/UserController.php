@@ -24,10 +24,8 @@ class UserController extends AbstractController
                     'error' => 'Wrong Account'
                 ], Response::HTTP_NOT_FOUND);
             }
-            $profile = $entityManager->getRepository(Profile::class);
-            $profile->findOneBySomeField($user->getIdProfile());
 
-            return new JsonResponse(json_encode($profile), Response::HTTP_OK, ['accept' => 'json'], true);
+            return new JsonResponse(json_encode($this->showUser($user)), Response::HTTP_OK, ['accept' => 'json'], true);
         }
 
         #[Route('/api/user', name: 'api_user_register', methods: ['Post'])]
@@ -66,7 +64,16 @@ class UserController extends AbstractController
                 ], Response::HTTP_NOT_FOUND);
             }
 
-            return new JsonResponse(json_encode($this->serializeUser($user)), Response::HTTP_OK, ['accept' => 'json'], true);
+            return new Response();
+        }
+
+        public function showUser(User $user){
+            return array([
+                "id" => $user->getId(),
+                "username" => $user->getUsername(),
+                "Pc" => $user->getPc(),
+                "Cryptokemons" => $user->getCryptokemons()
+            ]);
         }
 
         public function serializeUser(User $user){
