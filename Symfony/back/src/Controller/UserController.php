@@ -42,9 +42,7 @@ class UserController extends AbstractController
             $email = $data['email'];
             $repoUser = $entityManager->getRepository(User::class);
             $user = new User();
-            $profile_id = $repoUser->findLastIdPlayer()[0]->getProfileId() + 1;
-            $user->setUsername($username)->setPassword($password)->setEmail($email)->setProfileId($profile_id);
-            $repoProfile = $entityManager->getRepository(Profile::class);
+            $user->setUsername($username)->setPassword($password)->setEmail($email);
             if (is_null($user)) {
                 return new JsonResponse([
                     'error' => 'Not Acceptable'
