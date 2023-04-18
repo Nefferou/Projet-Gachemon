@@ -3,7 +3,7 @@ import "../Scss/Gacha.scss";
 
 function Invoque({item}) {
     return (
-        <div id="pokemonBoxDialog">
+        <div className="pokemonBoxDialog">
             <p>No.{item.pokedexId}</p>
             <h1>{item.name}</h1>
             <img src={item.image} alt="" />
