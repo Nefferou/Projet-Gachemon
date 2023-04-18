@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import Grow from "@mui/material/Grow";
 
 
-function PokemonBox({pokemon}) {
+function PokemonBox({pokemon, value}) {
 
     const [isVisible, setIsVisible] = useState(false);
 
@@ -20,7 +20,7 @@ function PokemonBox({pokemon}) {
 
     return (
         <div id="pokemonBox" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <Grow in={pokemon !== null} {...(pokemon !== null ? { timeout: 1000 } : {})}>
+            <Grow in={value === 2} {...(value === 2 ? { timeout: 1000 } : {})}>
                 <button>
                     <p>No.{pokemon.pokedexId}</p>
                     <h1>{pokemon.name}</h1>

@@ -32,13 +32,13 @@ function App() {
   useEffect(function () {
     isLoad(true)
     fetch("https://pokebuildapi.fr/api/v1/pokemon")
-      .then(res => res.json())
-      .then(
-        (result) => {
-          isLoad(false)
-          setItems(result)
-        }
-      )
+    .then(res => res.json())
+    .then(
+      (result) => {
+        isLoad(false)
+        setItems(result)
+      }
+    )
   }, [])
 
   return (
@@ -53,7 +53,7 @@ function App() {
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <CircularProgress />
         </Box> : 
-        <Gatcha pokemons={items} />}
+        <Gatcha pokemons={items} value={value} />}
       </div>
       <div hidden={value !== 1}>
         <h1 style={{color: "white"}}>Coming soon</h1>
@@ -62,7 +62,7 @@ function App() {
         {load ? <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                   <CircularProgress />
                 </Box> :
-        <Pokedex pokemons={items} search={search}/>}
+        <Pokedex pokemons={items} search={search} value={value} />}
       </div>
 
       <AppBar value={value} setValue={setValue}/>

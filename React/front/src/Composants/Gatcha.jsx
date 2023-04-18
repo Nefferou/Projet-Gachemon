@@ -10,7 +10,7 @@ import Gatchamon from "../Ressources/Gatchamon.png"
 import { Dialog } from "@mui/material";
 import Invoque from "./Invoque";
 
-function Gatcha({pokemons}) {
+function Gatcha({pokemons, value}) {
 
     const [rand, setRand] = useState(0);
     const [randS, setRandS] = useState([]);
@@ -52,16 +52,16 @@ function Gatcha({pokemons}) {
 
     return (
         <div id="Gatcha">
-            <Grow in={pokemons !== null} {...(pokemons !== null ? { timeout: 1000 } : {})}>
+            <Grow in={value === 0} {...(value === 0 ? { timeout: 1000 } : {})}>
                 <div>
                     <img alt="" src={Gatchamon} />
                 </div>
             </Grow>
             <div className="GatchaButton">
-                <Grow in={pokemons !== null} {...(pokemons !== null ? { timeout: 1000 } : {})}>
+                <Grow in={value === 0} {...(value === 0 ? { timeout: 1000 } : {})}>
                     <Button variant="contained" onClick={invoqueOne} onClose={handleClose} >Invoquer 1</Button>
                 </Grow>
-                <Grow in={pokemons !== null} {...(pokemons !== null ? { timeout: 1000 } : {})}>
+                <Grow in={value === 0} {...(value === 0 ? { timeout: 1000 } : {})}>
                     <Button variant="contained" onClick={invoqueSix} onClose={handleClose} >Invoquer 6</Button>
                 </Grow>
             </div>
