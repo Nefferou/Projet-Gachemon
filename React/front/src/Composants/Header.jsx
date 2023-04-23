@@ -9,15 +9,21 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
+import { useNavigate } from 'react-router-dom';
 
 export default function MenuAppBar({value, changeSearch, user}) {
+  const navigate = useNavigate();
 
+  const handleProfile = () => {
+    navigate("/profile");
+  }
+  
   return (
     <div>
       <AppBar position="static">
         <Toolbar>
-          <div className='headerInfo'>
-              <IconButton size="medium" color="inherit">
+          <div className='headerInfo' >
+              <IconButton size="medium" color="inherit" onClick={handleProfile}>
                   <AccountCircle />
               </IconButton>
               <p>{user.username}</p>
