@@ -40,7 +40,7 @@ class UserController extends AbstractController
             $email = $data['email'];
             $repoUser = $entityManager->getRepository(User::class);
             $user = new User();
-            $user->setUsername($username)->setPassword($password)->setEmail($email)->setPc("")->setCryptokemons(10.0);
+            $user->setUsername($username)->setPassword($password)->setEmail($email)->setPc("{}")->setCryptokemons(10.0);
             if (is_null($user)) {
                 return new JsonResponse([
                     'error' => 'Not Acceptable'
