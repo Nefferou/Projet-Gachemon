@@ -3,47 +3,26 @@ import "../Scss/Pokedex.scss"
 
 import PokemonBox from "./PokemonBox";
 
-import { List } from "@mui/material";
+import { Grid } from "@mui/material";
 
 function Pokedex({pokemons, search, value}) {
 
-    let i = 0;
     const pokedex = [];
-    const tab = [];
-
     
     pokemons.forEach((pokemon) =>{
         if(pokemon.name.toLowerCase().includes(search.toLowerCase()) || pokemon.apiTypes[0].name.toLowerCase().includes(search.toLowerCase()) || (pokemon.apiTypes.length === 2 ? pokemon.apiTypes[1].name.toLowerCase().includes(search.toLowerCase()) : false)){
-            pokedex.push(<PokemonBox key={pokemon.id} pokemon={pokemon} value={value} />)
+            pokedex.push(<Grid item xs={2}><PokemonBox key={pokemon.id} pokemon={pokemon} value={value} /></Grid>)
 
         }
-    })
-    
-    pokedex.forEach(() => {
-        if(i % 6 === 0){
-            tab.push(<Line key={i} pokemons={pokedex.slice(i, i+6)}/>)
-        }
-        i++
     })
 
     return (
         <div id="pokedex">
-            <List id="list" sx={{width: '100%', overflow: 'auto', height: 650}}subheader={<li />}>
-                <li>
-                    {tab}
-                </li>
-            </List>
+            <Grid container spacing={2} sx={{width: '100%', overflow: 'auto', height: 650}}>
+                {pokedex}
+            </Grid>
         </div>
     );
-}
-
-function Line({pokemons}) {
-    
-    return (
-        <div className="line">
-            {pokemons.map((pokemon) => pokemon)}
-        </div>
-    )
 }
 
 export default Pokedex;

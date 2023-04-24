@@ -66,10 +66,14 @@ function Gatcha({pokemons, value}) {
             </div>
             <Dialog className="dialogOpen" open={openO} onClose={handleClose} >
                 <Invoque item={pokemons[rand]} />
+                <Button variant="contained" onClick={handleClose}>Close</Button>
             </Dialog> 
             <Dialog className="dialogOpen" open={openS} onClose={handleClose} >
-                <Grid container rowSpacing={5} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                     {randS.map(pokemon => pokemon)}
+                    <Grid item xs={12}>
+                        <Button variant="contained" onClick={handleClose}>Close</Button>
+                    </Grid>
                 </Grid>
             </Dialog>
         </div>
