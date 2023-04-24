@@ -70,8 +70,8 @@ class UserController extends AbstractController
             return array([
                 "id" => $user->getId(),
                 "username" => $user->getUsername(),
-                "Pc" => $user->getPc(),
-                "Cryptokemons" => $user->getCryptokemons()
+                "pc" => $user->getPc(),
+                "cryptokemons" => $user->getCryptokemons()
             ]);
         }
 
