@@ -24,7 +24,7 @@ function App() {
   const [items, setItems] = useState([]);
   const [load, isLoad] = useState(true);
 
-  const [user, setUser] = useState(JSON.parse(sessionStorage.getItem('user')))
+  const user = useState(JSON.parse(sessionStorage.getItem('user')))
 
   const navigate = useNavigate();
 
@@ -42,11 +42,11 @@ function App() {
 
   return (
     <div className="App">
-      {user === null ?
+      {user === undefined ?
       navigate("/login") :
       <ThemeProvider theme={theme}>
 
-      <Header value={value} changeSearch={setSearch} user={user} />
+      <Header value={value} changeSearch={setSearch} user={user[0]} />
 
       <div hidden={value !== 0}>
         {load ? 
