@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
 
-use App\Entity\Profile;
+use App\Security\JwtTokenGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,63 +9,74 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
-
 class UserController extends AbstractController
 {
-        #[Route('/api/user/login', name: 'api_user_connection', methods: ['POST'])]
-        public function actionConnection(EntityManagerInterface $entityManager): JsonResponse
-        {
-            $request = Request::createFromGlobals();
-            $parameters = json_decode($request->getContent(), true);
-            $repo = $entityManager->getRepository(User::class);
-            $user = $repo->verifyAccountByUsernameAndPassword($parameters['username'], $parameters['password']);
-            if (is_null($user)) {
-                return new JsonResponse([
-                    'error' => 'Wrong Account'
-                ], Response::HTTP_NOT_FOUND);
-            }
+    private $jwtTokenGenerator;
 
-            return new JsonResponse(json_encode($this->showUser($user)), Response::HTTP_OK, ['accept' => 'json'], true);
+    public function __construct(JwtTokenGenerator $jwtTokenGenerator)
+    {
+        $this->jwtTokenGenerator = $jwtTokenGenerator;
+    }
+
+    #[Route('/api/user/login', name: 'api_user_connection', methods: ['POST'])]
+    public function actionConnection(EntityManagerInterface $entityManager): JsonResponse
+    {
+        $request = Request::createFromGlobals();
+        $parameters = json_decode($request->getContent(), true);
+        $repo = $entityManager->getRepository(User::class);
+        $user = $repo->verifyAccountByUsernameAndPassword($parameters['username'], $parameters['password']);
+        if (is_null($user)) {
+            return new JsonResponse([
+                'error' => 'Wrong Account'
+            ], Response::HTTP_NOT_FOUND);
         }
 
-        #[Route('/api/user', name: 'api_user_register', methods: ['Post'])]
-        public function actionRegister(EntityManagerInterface $entityManager): JsonResponse
-        {
-            $request = Request::createFromGlobals();
-            $content = $request->getContent();
+        //Création du token JWT pour l'utilisateur
+        $token = $this->jwtTokenGenerator->generateToken($user);
+        return new JsonResponse(json_encode($this->showUser($user)), Response::HTTP_OK, ['accept' => 'json', 'Authorization' => 'Bearer '.$token], true);
+    }
 
-            $data = json_decode($content, true);
-            $username = $data['username'];
-            $password = $data['password'];
-            $email = $data['email'];
-            $repoUser = $entityManager->getRepository(User::class);
-            $user = new User();
-            $user->setUsername($username)->setPassword($password)->setEmail($email)->setPc("{\"pokemonFav\":\"\",\"pokemons\":[]}")->setCryptokemons(10.0);
-            if (is_null($user)) {
-                return new JsonResponse([
-                    'error' => 'Not Acceptable'
-                ], Response::HTTP_NOT_ACCEPTABLE);
-            }
-            $repoUser->save($user, true);
-            return new JsonResponse("Création du compte réussie", Response::HTTP_CREATED, ['accept' => 'json'], true);
+    #[Route('/api/user', name: 'api_user_register', methods: ['POST'])]
+    public function actionRegister(EntityManagerInterface $entityManager): JsonResponse
+    {
+        $request = Request::createFromGlobals();
+        $content = $request->getContent();
+
+        $data = json_decode($content, true);
+        $username = $data['username'];
+        $password = $data['password'];
+        $email = $data['email'];
+        $repoUser = $entityManager->getRepository(User::class);
+        $user = new User();
+        $user->setUsername($username)->setPassword($password)->setEmail($email)->setPc("{\"pokemonFav\":\"\",\"pokemons\":[]}")->setCryptokemons(10.0);
+        if (is_null($user)) {
+            return new JsonResponse([
+                'error' => 'Not Acceptable'
+            ], Response::HTTP_NOT_ACCEPTABLE);
         }
+        $repoUser->save($user, true);
 
-        #[Route('/api/user/email', name: 'api_user_email', methods: ['POST'])]
-        public function actionVerification(EntityManagerInterface $entityManager): Response
-        {
-            $request = Request::createFromGlobals();
-            $parameters = json_decode($request->getContent(), true);
+        //Création du token JWT pour l'utilisateur
+        $token = $this->jwtTokenGenerator->generateToken($user);
 
-            $repo = $entityManager->getRepository(User::class);
-            $user = $repo->verifyAccountByEmail($parameters['email']);
-            if (($user)) {
-                return new Response(
-                    'Email already used', Response::HTTP_NOT_ACCEPTABLE);
-            }else{
-                return new Response('Email not used', Response::HTTP_ACCEPTED);
-            }
+        return new JsonResponse(json_encode(['message' => 'Création du compte réussie', 'token' => $token]), Response::HTTP_CREATED, ['accept' => 'json', 'Authorization' => 'Bearer '.$token], true);
+    }
+
+    #[Route('/api/user/email', name: 'api_user_email', methods: ['POST'])]
+    public function actionVerification(EntityManagerInterface $entityManager): Response
+    {
+        $request = Request::createFromGlobals();
+        $parameters = json_decode($request->getContent(), true);
+
+        $repo = $entityManager->getRepository(User::class);
+        $user = $repo->verifyAccountByEmail($parameters['email']);
+        if (($user)) {
+            return new Response(
+                'Email already used', Response::HTTP_NOT_ACCEPTABLE);
+        }else{
+            return new Response('Email not used', Response::HTTP_ACCEPTED);
         }
-
+    }
         public function showUser(User $user){
             return array([
                 "id" => $user->getId(),
@@ -81,6 +92,5 @@ class UserController extends AbstractController
                 "password" => $user->getPassword()
             ]);
         }
-
 
     }
