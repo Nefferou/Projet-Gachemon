@@ -55,6 +55,7 @@ function Register() {
                 }
             })
                 .then(response => {
+                    sessionStorage.setItem("token",response.data.token);
                     navigate("/login");
                 })
                 .catch(error => console.error(error));
