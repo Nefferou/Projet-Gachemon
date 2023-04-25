@@ -41,7 +41,7 @@ class UserController extends AbstractController
             ], Response::HTTP_NOT_FOUND);
         }
         $token = $this->jwtTokenGenerator->generateToken($user);
-        return new JsonResponse(json_encode($this->showUser($user)), Response::HTTP_OK, ['accept' => 'json', 'Authorization' => 'Bearer '.$token], true);
+        return new JsonResponse(json_encode(['user' => $this->showUser($user), 'token' => $token]), Response::HTTP_OK, ['accept' => 'json', 'Authorization' => 'Bearer '.$token], true);
     }
 
     #[Route('/api/user', name: 'api_user_register', methods: ['POST'])]
