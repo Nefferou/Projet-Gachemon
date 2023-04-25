@@ -140,7 +140,7 @@ class UserController extends AbstractController
     #[Route('/api/pc/update', name: 'api_update_pc', methods: ['POST'])]
     public function actionUpdatePc(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $token = $request->headers->get('token');
+        $token = $request->headers->get('Authorization');
         if (!$token) {
             return new Response('No token provided', Response::HTTP_BAD_REQUEST);
         }

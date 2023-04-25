@@ -26,7 +26,7 @@ function Login() {
             }
         })
             .then(response => {
-                sessionStorage.setItem("token",response.data.token);
+                sessionStorage.setItem("token","Bearer ".response.data.token);
                 sessionStorage.setItem("user", JSON.stringify(response.data.user[0]));
                 navigate("/app");
             })
