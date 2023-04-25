@@ -1,0 +1,12 @@
+lexik_jwt_authentication:
+    secret_key: '%env(JWT_SECRET_KEY)%'
+    user_identity_field: id
+    encoder:
+        # token encoder/decoder service - default implementation based on the lcobucci/jwt library
+        service:            lexik_jwt_authentication.encoder.lcobucci
+    token_extractors:
+        # look for a token as Authorization Header
+        authorization_header:
+            enabled: true
+            prefix:  Bearer
+            name:    Authorization

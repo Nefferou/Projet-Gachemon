@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
+use Firebase\JWT\JWT;
 use Doctrine\ORM\EntityManagerInterface;
 class UserController extends AbstractController
 {
@@ -23,6 +24,15 @@ class UserController extends AbstractController
     {
         $request = Request::createFromGlobals();
         $parameters = json_decode($request->getContent(), true);
+        if(
+            !isset($parameters['username']) ||
+            !isset($parameters['password'])
+        ){
+            return new JsonResponse([
+                'error' => 'Missing parameters'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
         $repo = $entityManager->getRepository(User::class);
         $user = $repo->verifyAccountByUsernameAndPassword($parameters['username'], $parameters['password']);
         if (is_null($user)) {
@@ -30,8 +40,6 @@ class UserController extends AbstractController
                 'error' => 'Wrong Account'
             ], Response::HTTP_NOT_FOUND);
         }
-
-        //Création du token JWT pour l'utilisateur
         $token = $this->jwtTokenGenerator->generateToken($user);
         return new JsonResponse(json_encode($this->showUser($user)), Response::HTTP_OK, ['accept' => 'json', 'Authorization' => 'Bearer '.$token], true);
     }
@@ -77,10 +85,26 @@ class UserController extends AbstractController
             return new Response('Email not used', Response::HTTP_ACCEPTED);
         }
     }
+    #[Route('/api/token/verify', name: 'api_utoken_verify', methods: ['POST'])]
+    public function actionVerificationToken(Request $request): Response
+    {
+        $token = $request->headers->get('token');
+        if (!$token) {
+            return new Response('No token provided', Response::HTTP_BAD_REQUEST);
+        }
+    
+        if ($this->jwtTokenGenerator->verifyToken($token)) {
+            return new Response('Token valid', Response::HTTP_ACCEPTED);
+        } else {
+            return new Response('Token invalid', Response::HTTP_NOT_ACCEPTABLE);
+        }
+    }
+    
         public function showUser(User $user){
             return array([
                 "id" => $user->getId(),
                 "username" => $user->getUsername(),
+                "email" => $user->getEmail(),
                 "pc" => $user->getPc(),
                 "cryptokemons" => $user->getCryptokemons()
             ]);
