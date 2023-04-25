@@ -18,7 +18,10 @@ function Register() {
     const [password, setPassword] = useState("");
 
     const [emailExists, setEmailExists] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(null);
+    const [usernameExists, setUsernameExists] = useState(false);
+
+    const [errorMessageEmail, setErrorMessageEmail] = useState(null);
+    const [errorMessageUsername, setErrorMessageUsername] = useState(null);
 
     const navigate = useNavigate();
 
@@ -33,23 +36,43 @@ function Register() {
         })
             .then(response => {
                     setEmailExists(false);
-                    setErrorMessage(null);
+                    setErrorMessageEmail(null);
             })
             .catch(error =>{
                 setEmailExists(true);
-                setErrorMessage("This email address is already registered.");
+                setErrorMessageEmail("This email address is already registered.");
+            });
+    }
+
+    const checkUsernameExists = () =>{
+        const jsonBody = {
+            username: username
+        }
+        axios.post(`https://gachemon.osc-fr1.scalingo.io/api/user/username`, JSON.stringify(jsonBody),{
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                setUsernameExists(false);
+                setErrorMessageUsername(null);
+            })
+            .catch(error =>{
+                setUsernameExists(true);
+                setErrorMessageUsername("This username is already registered.");
+                console.log(error);
             });
     }
 
     const handleRegister = () => {
-        if (!emailExists) {
+        if (!emailExists && !usernameExists) {
             const data = {
                 username: username,
                 email:email,
                 password: password
             }
     
-            axios.post('https://gachemon.osc-fr1.scalingo.io/api/user',JSON.stringify(data),{
+            axios.post('https://gachemon.osc-fr1.scalingo.io/api/user/register',JSON.stringify(data),{
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -67,9 +90,10 @@ function Register() {
         <Stack id="register" spacing={2}>
             <ThemeProvider theme={theme}>
                 <h1>Register</h1>
-                <TextField id="outlined-basic" label="Username" variant="outlined" onChange={(e) => setUsername(e.target.value)}/>
-                <TextField id="outlined-basic" label="Email" variant="outlined" onChange={(e) => setEmail(e.target.value)} onBlur={checkEmailExists}/>
-                {errorMessage && <p className="error">{errorMessage}</p>}
+                <TextField id="outlined-basic" label="Username" variant="outlined" onChange={(e) => setUsername(e.target.value)} onBlur={checkUsernameExists}/>
+                {errorMessageUsername && <p className="error">{errorMessageUsername}</p>}
+                <TextField id="outlined-basic" type={"email"} label="Email" variant="outlined" onChange={(e) => setEmail(e.target.value)} onBlur={checkEmailExists}/>
+                {errorMessageEmail && <p className="error">{errorMessageUsername}</p>}
                 <TextField id="outlined-basic" label="Password" variant="outlined" onChange={(e) => setPassword(e.target.value)} type="password" />
                 <TextField id="outlined-basic" label="Confirm password" variant="outlined" type="password" />
                 <Button variant="contained" onClick={handleRegister}>Create Account</Button>

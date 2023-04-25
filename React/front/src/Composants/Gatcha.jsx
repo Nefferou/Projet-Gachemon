@@ -5,12 +5,13 @@ import "../Scss/Gacha.scss";
 import Button from '@mui/material/Button';
 import Grid from "@mui/material/Grid";
 import Grow from "@mui/material/Grow";
+import axios from 'axios';
 
 import Gatchamon from "../Ressources/Gatchamon.png"
 import { Dialog } from "@mui/material";
 import Invoque from "./Invoque";
 
-function Gatcha({pokemons, value}) {
+function Gatcha({pokemons, value, user, token}) {
 
     const [rand, setRand] = useState(0);
     const [randS, setRandS] = useState([]);
@@ -26,17 +27,45 @@ function Gatcha({pokemons, value}) {
         }, index * 1000);
     });
 
+    const postPc=()=>{
+        const jsonBody = {
+            pc: user.pc,
+            token: token
+        }
+        axios.post(`https://gachemon.osc-fr1.scalingo.io/api/pc/update`, JSON.stringify(jsonBody),{
+            headers: {
+                'Content-Type': 'application/json',
+                'token': jsonBody['token']
+            }
+        }).then(response => {
+            console.log(response);
+        })
+        .catch(error =>{
+            console.log(error);
+        });
+
+    }
+
     const invoqueOne = () => {
-        setRand(Math.floor(Math.random() * (897 - 1 + 1)) + 1);
+        const random = Math.floor(Math.random() * (897 - 1 + 1)) + 1;
+        setRand(random);
+        const pc = JSON.parse(user.pc);
+        pc.pokemons.push(pokemons[random].id);
+        user.pc = pc;
+        postPc();
         setOpenO(true);
     }
 
     const invoqueSix = () => {
         let random;
+        const pc = JSON.parse(user.pc);
         for(let i = 0; i < 6; i++){
             random = Math.floor(Math.random() * (897 - 1 + 1)) + 1;
             randS.push(<Grid key={random} item xs={4}><Invoque key={random} item={pokemons[random]} /></Grid>)
+            pc.pokemons.push(pokemons[random].id);
         }
+        user.pc = pc;
+        postPc();
         if(randS.length === 6){
             setOpenS(true);
         }
