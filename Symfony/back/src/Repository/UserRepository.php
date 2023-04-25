@@ -55,7 +55,7 @@ class UserRepository extends ServiceEntityRepository
         $result = $query[0];
         $user = new User();
         $user->setId($result->getId())->setUsername($result->getUsername())->setPassword($result->getPassword())
-        ->setPc($result->getPc())->setCryptokemons($result->getCryptokemons());
+        ->setPc($result->getPc())->setCryptokemons($result->getCryptokemons())->setEmail($result->getEmail());
         return $user;
     }
     
