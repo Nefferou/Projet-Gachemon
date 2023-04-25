@@ -1,6 +1,5 @@
 /*Pokedex*/
 #pokedex{
-    
     div {
         margin: 0%;
     }
@@ -27,7 +26,7 @@
     h1 {
         margin-bottom: 0;
         margin-top: 0;
-        font-size: x-large;
+        font-size: 30px;
     }
 
     img {
@@ -50,10 +49,4 @@
     .stats {
         margin: 5px;
     }
-}
-
-#pokemonBox > p {
-    align-self: flex-start;
-    padding-left: 2vh;
-    font-size: small;
 }
