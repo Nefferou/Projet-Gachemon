@@ -54,24 +54,29 @@ class UserController extends AbstractController
     public function actionRegister(EntityManagerInterface $entityManager): JsonResponse
     {
         $request = Request::createFromGlobals();
-        $content = $request->getContent();
+        $data = json_decode($request->getContent(), true);
         if (
             !isset($data['username']) ||
-            !isset($$data['password']) ||
-            !isset($data['email'])
-        ) {
+            !isset($data['password']) ||
+            !isset($data['email'])) {
             return new JsonResponse([
                 'error' => 'Missing parameters'
             ], Response::HTTP_BAD_REQUEST);
         }
-        $repo = $entityManager->getRepository(User::class);
-        $user = $repo->verifyAccountByUsernameAndPassword($data['username'], $data['password']);
-        $data = json_decode($content, true);
         $username = $data['username'];
         $password = $data['password'];
         $email = $data['email'];
+
+
         $repoUser = $entityManager->getRepository(User::class);
+        if(!is_null($repoUser->verifyAccountByUsernameAndPassword($data['username'], $data['password']))){
+            return new JsonResponse([
+                'error' => 'Account already exist'
+            ], Response::HTTP_NOT_ACCEPTABLE);
+        }
+
         $user = new User();
+        
         $user->setUsername($username)->setPassword($password)->setEmail($email)->setPc("{\"pokemonFav\":\"\",\"pokemons\":[]}")->setCryptokemons(10.0);
         if (is_null($user)) {
             return new JsonResponse([

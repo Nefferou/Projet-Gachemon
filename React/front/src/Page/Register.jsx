@@ -60,7 +60,6 @@ function Register() {
             .catch(error =>{
                 setUsernameExists(true);
                 setErrorMessageUsername("This username is already registered.");
-                console.log(error);
             });
     }
 
