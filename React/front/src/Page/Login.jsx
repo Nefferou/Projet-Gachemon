@@ -26,7 +26,8 @@ function Login() {
             }
         })
             .then(response => {
-                sessionStorage.setItem("user", JSON.stringify(response.data[0]));
+                sessionStorage.setItem("token",response.data.token);
+                sessionStorage.setItem("user", JSON.stringify(response.data.user[0]));
                 navigate("/app");
             })
             .catch(error => console.error(error));

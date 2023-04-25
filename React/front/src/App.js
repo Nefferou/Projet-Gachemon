@@ -24,7 +24,9 @@ function App() {
   const [items, setItems] = useState([]);
   const [load, isLoad] = useState(true);
 
-  const user = useState(JSON.parse(sessionStorage.getItem('user')))
+  const user = useState(
+    JSON.parse(
+      sessionStorage.getItem("user")))  
 
   const navigate = useNavigate();
 

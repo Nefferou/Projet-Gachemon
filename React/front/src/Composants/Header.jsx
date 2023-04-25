@@ -37,7 +37,7 @@ export default function MenuAppBar({value, changeSearch, user}) {
               </div>}
             </Typography>
             <div className='headerInfo'>
-              <p>{user.Cryptokemons}</p>
+              <p>{user.cryptokemons}</p>
               <IconButton color="inherit">
                   <CatchingPokemonIcon />
               </IconButton>
