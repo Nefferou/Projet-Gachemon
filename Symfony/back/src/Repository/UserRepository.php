@@ -23,13 +23,14 @@ class UserRepository extends ServiceEntityRepository
     }
 
     public function save(User $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
+{
+    $this->getEntityManager()->merge($entity);
 
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+    if ($flush) {
+        $this->getEntityManager()->flush();
     }
+}
+
 
     public function remove(User $entity, bool $flush = false): void
     {

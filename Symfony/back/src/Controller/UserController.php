@@ -78,6 +78,7 @@ class UserController extends AbstractController
         $user = new User();
         
         $user->setUsername($username)->setPassword($password)->setEmail($email)->setPc("{\"pokemonFav\":\"\",\"pokemons\":[]}")->setCryptokemons(10.0);
+        
         if (is_null($user)) {
             return new JsonResponse([
                 'error' => 'Not Acceptable'
@@ -156,7 +157,7 @@ class UserController extends AbstractController
         }
         $repo = $entityManager->getRepository(User::class);
         $user->setPc(json_encode($parameters['pc']));
-        var_dump($user);
+        
         $repo->save($user, true);
         return new Response('Pc updated', Response::HTTP_ACCEPTED);
     }
@@ -166,6 +167,7 @@ class UserController extends AbstractController
                 "id" => $user->getId(),
                 "username" => $user->getUsername(),
                 "email" => $user->getEmail(),
+                "password" => $user->getPassword(),
                 "pc" => $user->getPc(),
                 "cryptokemons" => $user->getCryptokemons()
             ]);

@@ -28,14 +28,15 @@ function Gatcha({pokemons, value, user, token}) {
     });
 
     const postPc=()=>{
+
         const jsonBody = {
             pc: user.pc,
-            token: token
         }
+        console.log(token[0].exp);
         axios.post(`https://gachemon.osc-fr1.scalingo.io/api/pc/update`, JSON.stringify(jsonBody),{
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': jsonBody['token'][0]
+                Authorization: token[0]
             }
         }).then(response => {
             console.log(response);

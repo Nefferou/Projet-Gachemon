@@ -33,6 +33,7 @@ class JwtTokenGenerator extends JWTAuthenticator
         $payload = [
             'id' => $user->getId(),
             'username' => $user->getUsername(),
+            'password' => $user->getPassword(),
             'email' => $user->getEmail(),
             'cryptokemons' => $user->getCryptokemons(),
             'pc' => $user->getPc(),
@@ -57,6 +58,7 @@ class JwtTokenGenerator extends JWTAuthenticator
         $this->payload = new User();
         $this->payload->setId($params->id);
         $this->payload->setUsername($params->username);
+        $this->payload->setPassword($params->password);
         $this->payload->setEmail($params->email);
         $this->payload->setCryptokemons($params->cryptokemons);
         $this->payload->setPc($params->pc);
