@@ -23,13 +23,14 @@ class UserRepository extends ServiceEntityRepository
     }
 
     public function save(User $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->persist($entity);
+{
+    $this->getEntityManager()->merge($entity);
 
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+    if ($flush) {
+        $this->getEntityManager()->flush();
     }
+}
+
 
     public function remove(User $entity, bool $flush = false): void
     {
@@ -52,11 +53,7 @@ class UserRepository extends ServiceEntityRepository
         if(sizeof($query) == 0){
             return null;
         }
-        $result = $query[0];
-        $user = new User();
-        $user->setId($result->getId())->setUsername($result->getUsername())->setPassword($result->getPassword())
-        ->setPc($result->getPc())->setCryptokemons($result->getCryptokemons())->setEmail($result->getEmail());
-        return $user;
+        return $query[0];
     }
     
     public function verifyAccountByEmail($email): bool
@@ -72,6 +69,18 @@ class UserRepository extends ServiceEntityRepository
         return true;
     }
     
+    public function verifyAccountByUsername($username): bool
+    {
+        $query = $this->createQueryBuilder('u')
+            ->where('u.username = :username')
+            ->setParameter('username', $username)
+            ->getQuery()
+            ->getResult();
+        if(sizeof($query) == 0){
+            return false;
+        }
+        return true;
+    }
 
     public function findLastIdPlayer(): ?array
     {
