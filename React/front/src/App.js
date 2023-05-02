@@ -25,6 +25,7 @@ function App() {
   const [load, isLoad] = useState(true);
 
   const user = JSON.parse(sessionStorage.getItem("user"));
+  const [money, setMoney] = useState(user.cryptokemons)
   const token = useState(sessionStorage.getItem("token"));
 
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ function App() {
       navigate("/login") :
       <ThemeProvider theme={theme}>
 
-      <Header value={value} changeSearch={setSearch} user={user} />
+      <Header value={value} changeSearch={setSearch} user={user} money={money} />
 
       <div hidden={value !== 0}>
         {load ? 
@@ -55,7 +56,7 @@ function App() {
           <CircularProgress />
         </Box> : 
 
-        <Gatcha pokemons={items} value={value} user={user} token={token}/>}
+        <Gatcha pokemons={items} value={value} user={user} token={token} money={money} setMoney={setMoney} />}
 
       </div>
 

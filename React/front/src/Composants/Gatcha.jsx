@@ -11,7 +11,7 @@ import Gatchamon from "../Ressources/Gatchamon.png"
 import { Dialog } from "@mui/material";
 import Invoque from "./Invoque";
 
-function Gatcha({pokemons, value, user, token}) {
+function Gatcha({pokemons, value, user, token, money, setMoney}) {
 
     const [rand, setRand] = useState(0);
     const [randS, setRandS] = useState([]);
@@ -49,6 +49,7 @@ function Gatcha({pokemons, value, user, token}) {
     }
 
     const invoqueOne = () => {
+        setMoney(money - 100)
         user.cryptokemons -= 100
 
         const random = Math.floor(Math.random() * (897 - 1 + 1)) + 1;
@@ -65,6 +66,7 @@ function Gatcha({pokemons, value, user, token}) {
     }
 
     const invoqueSix = () => {
+        setMoney(money - 550)
         user.cryptokemons -= 550
 
         const pc = JSON.parse(user.pc)
