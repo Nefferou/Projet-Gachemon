@@ -138,7 +138,7 @@ class UserController extends AbstractController
         }
     }
     
-    #[Route('/api/pc/update', name: 'api_update_pc', methods: ['POST'])]
+    #[Route('/api/update/pc', name: 'api_update_pc', methods: ['PUT'])]
     public function actionUpdatePc(Request $request, EntityManagerInterface $entityManager): Response
     {
         $token = $request->headers->get('Authorization');
@@ -160,6 +160,27 @@ class UserController extends AbstractController
         
         $repo->save($user, true);
         return new Response('Pc updated', Response::HTTP_ACCEPTED);
+    }
+
+
+    #[Route('/api/update/cryptokemons', name: 'api_update_cryptokemon', methods: ['PUT'])]
+    public function actionUpdateCryptokemon(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $token = $request->headers->get('Authorization');
+        if (!$token) {
+            return new Response('No token provided', Response::HTTP_BAD_REQUEST);
+        }
+        if(!$this->jwtTokenGenerator->verifyToken($token)){
+            return new Response('Token invalid', Response::HTTP_NOT_ACCEPTABLE);
+        }
+        $user = $this->jwtTokenGenerator->decodeToken($token);
+        $request = Request::createFromGlobals();
+        $parameters = json_decode($request->getContent(), true);
+        $repo = $entityManager->getRepository(User::class);
+        $user->setCryptokemons($parameters['cryptokemons']);
+
+        $repo->save($user, true);
+        return new Response('Cryptokemons updated', Response::HTTP_ACCEPTED);
     }
 
         public function showUser(User $user){
