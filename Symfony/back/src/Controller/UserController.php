@@ -50,19 +50,35 @@ class UserController extends AbstractController
           Response::HTTP_OK, ['accept' => 'json', 'Authorization' => 'Bearer '.$token], true);
     }
 
-    #[Route('/api/user', name: 'api_user_register', methods: ['POST'])]
+    #[Route('/api/user/register', name: 'api_user_register', methods: ['POST'])]
     public function actionRegister(EntityManagerInterface $entityManager): JsonResponse
     {
         $request = Request::createFromGlobals();
-        $content = $request->getContent();
-
-        $data = json_decode($content, true);
+        $data = json_decode($request->getContent(), true);
+        if (
+            !isset($data['username']) ||
+            !isset($data['password']) ||
+            !isset($data['email'])) {
+            return new JsonResponse([
+                'error' => 'Missing parameters'
+            ], Response::HTTP_BAD_REQUEST);
+        }
         $username = $data['username'];
         $password = $data['password'];
         $email = $data['email'];
+
+
         $repoUser = $entityManager->getRepository(User::class);
+        if(!is_null($repoUser->verifyAccountByUsernameAndPassword($data['username'], $data['password']))){
+            return new JsonResponse([
+                'error' => 'Account already exist'
+            ], Response::HTTP_NOT_ACCEPTABLE);
+        }
+
         $user = new User();
+        
         $user->setUsername($username)->setPassword($password)->setEmail($email)->setPc("{\"pokemonFav\":\"\",\"pokemons\":[]}")->setCryptokemons(10.0);
+        
         if (is_null($user)) {
             return new JsonResponse([
                 'error' => 'Not Acceptable'
@@ -91,6 +107,22 @@ class UserController extends AbstractController
             return new Response('Email not used', Response::HTTP_ACCEPTED);
         }
     }
+
+    #[Route('/api/user/username', name: 'api_user_username', methods: ['POST'])]
+    public function actionVerificationUsername(EntityManagerInterface $entityManager): Response
+    {
+        $request = Request::createFromGlobals();
+        $parameters = json_decode($request->getContent(), true);
+
+        $repo = $entityManager->getRepository(User::class);
+        if (($repo->verifyAccountByUsername($parameters['username']))) {
+            return new Response(
+                'Username already used', Response::HTTP_NOT_ACCEPTABLE);
+        }else{
+            return new Response('Username not used', Response::HTTP_ACCEPTED);
+        }
+    }
+
     #[Route('/api/token/verify', name: 'api_utoken_verify', methods: ['POST'])]
     public function actionVerificationToken(Request $request): Response
     {
@@ -106,11 +138,36 @@ class UserController extends AbstractController
         }
     }
     
+    #[Route('/api/pc/update', name: 'api_update_pc', methods: ['POST'])]
+    public function actionUpdatePc(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $token = $request->headers->get('Authorization');
+        if (!$token) {
+            return new Response('No token provided', Response::HTTP_BAD_REQUEST);
+        }
+        if(!$this->jwtTokenGenerator->verifyToken($token)){
+            return new Response('Token invalid', Response::HTTP_NOT_ACCEPTABLE);
+        }
+        $user = $this->jwtTokenGenerator->decodeToken($token);
+        $request = Request::createFromGlobals();
+        $parameters = json_decode($request->getContent(), true);
+
+        if (is_null($user)) {
+            return new Response('Token invalid', Response::HTTP_NOT_ACCEPTABLE);
+        }
+        $repo = $entityManager->getRepository(User::class);
+        $user->setPc(json_encode($parameters['pc']));
+        
+        $repo->save($user, true);
+        return new Response('Pc updated', Response::HTTP_ACCEPTED);
+    }
+
         public function showUser(User $user){
             return array([
                 "id" => $user->getId(),
                 "username" => $user->getUsername(),
                 "email" => $user->getEmail(),
+                "password" => $user->getPassword(),
                 "pc" => $user->getPc(),
                 "cryptokemons" => $user->getCryptokemons()
             ]);

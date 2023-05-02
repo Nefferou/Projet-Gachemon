@@ -24,7 +24,8 @@ function App() {
   const [items, setItems] = useState([]);
   const [load, isLoad] = useState(true);
 
-  const [user, setUser] = useState(); 
+  const user = useState(JSON.parse(sessionStorage.getItem("user")));
+  const token = useState(sessionStorage.getItem("token"));
 
   const navigate = useNavigate();
 
@@ -53,7 +54,9 @@ function App() {
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <CircularProgress />
         </Box> : 
-        <Gatcha pokemons={items} value={value} user={user} />}
+
+        <Gatcha pokemons={items} value={value} user={user[0]} token={token}/>}
+
       </div>
 
       <div style={{backgroundColor: "black"}} hidden={value !== 1}>
