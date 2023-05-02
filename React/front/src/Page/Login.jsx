@@ -27,8 +27,10 @@ function Login() {
         })
             .then(response => {
                 console.log(response.data.user[0]);
+                console.log(JSON.stringify(response.data.user[0]));
+
                 sessionStorage.setItem("token",response.data.token);
-                sessionStorage.setItem("user", JSON.stringify(response.data.user[0])); 
+                sessionStorage.setItem("user", JSON.stringify(response.data.user[0]));
                 navigate("/app");
             })
             .catch(error => console.error(error));

@@ -30,17 +30,17 @@ function Gatcha({pokemons, value, user, token}) {
     const postPc=()=>{
 
         const jsonBody = {
-            pc: user.pc,
+            pc: JSON.parse(user.pc),
         }
         console.log(token[0].exp);
-        axios.put('https://gachemon.osc-fr1.scalingo.io/api/pc/update', jsonBody, {
+        axios.put('https://gachemon.osc-fr1.scalingo.io/api/pc/update', JSON.stringify(jsonBody), {
         headers: {
                 'Content-Type': 'application/json',
                 Authorization: token[0]
             }
         }).then(response => {
-            console.log(jsonBody.pc);
-            console.log(user.pc);
+            // console.log(jsonBody.pc);
+            // console.log(user.pc);
         })
         .catch(error =>{
             console.log(error);
@@ -49,29 +49,40 @@ function Gatcha({pokemons, value, user, token}) {
     }
 
     const invoqueOne = () => {
+        user.cryptokemons -= 100
+
         const random = Math.floor(Math.random() * (897 - 1 + 1)) + 1;
         setRand(random);
-        let pc = JSON.parse(user.pc);
-        pc.push(31)
-        console.log(pc);
-        user.pc = JSON.stringify(pc);
+
+        const pc = JSON.parse(user.pc)
+        pc.push(pokemons[random].id)
+        user.pc = JSON.stringify(pc)
+
         postPc();
         setOpenO(true);
+
+        console.log(user);
     }
 
     const invoqueSix = () => {
-        let random;
-        const pc = JSON.parse(user.pc);
+        user.cryptokemons -= 550
+
+        const pc = JSON.parse(user.pc)
         for(let i = 0; i < 6; i++){
-            random = Math.floor(Math.random() * (897 - 1 + 1)) + 1;
+            const random = Math.floor(Math.random() * (897 - 1 + 1)) + 1;
             randS.push(<Grid key={random} item xs={4}><Invoque key={random} item={pokemons[random]} /></Grid>)
-            pc.push(pokemons[random].id);
+            pc.push(pokemons[random].id)
         }
-        user.pc = JSON.stringify(pc);
+
+        user.pc = JSON.stringify(pc)
+
         postPc();
+
         if(randS.length === 6){
             setOpenS(true);
         }
+        
+        console.log(user);
     }
 
     const handleClose = () => {
@@ -90,10 +101,10 @@ function Gatcha({pokemons, value, user, token}) {
             </Grow>
             <div className="GatchaButton">
                 <Grow in={value === 0} {...(value === 0 ? { timeout: 1000 } : {})}>
-                    <Button variant="contained" onClick={invoqueOne} onClose={handleClose} >Invoquer 1</Button>
+                    <Button variant="contained" disabled={user.cryptokemons < 100} onClick={invoqueOne} onClose={handleClose} >Invoquer 1</Button>
                 </Grow>
                 <Grow in={value === 0} {...(value === 0 ? { timeout: 1000 } : {})}>
-                    <Button variant="contained" onClick={invoqueSix} onClose={handleClose} >Invoquer 6</Button>
+                    <Button variant="contained" disabled={user.cryptokemons < 550} onClick={invoqueSix} onClose={handleClose} >Invoquer 6</Button>
                 </Grow>
             </div>
             <Dialog className="dialogOpen" open={openO} onClose={handleClose} >
