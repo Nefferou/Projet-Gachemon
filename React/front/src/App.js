@@ -54,7 +54,9 @@ function App() {
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
           <CircularProgress />
         </Box> : 
+
         <Gatcha pokemons={items} value={value} user={user[0]} token={token}/>}
+
       </div>
 
       <div style={{backgroundColor: "black"}} hidden={value !== 1}>

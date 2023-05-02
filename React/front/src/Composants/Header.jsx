@@ -17,7 +17,7 @@ export default function MenuAppBar({value, changeSearch, user}) {
       <AppBar position="static">
         <Toolbar>
           <div className='headerInfo'>
-              <IconButton size="medium" color="inherit">
+              <IconButton size="medium" color="inherit" href='./profile'>
                   <AccountCircle />
               </IconButton>
               <p>{user.username}</p>
@@ -38,7 +38,7 @@ export default function MenuAppBar({value, changeSearch, user}) {
             </Typography>
             <div className='headerInfo'>
               <p>{user.cryptokemons}</p>
-              <IconButton color="inherit">
+              <IconButton size="medium" color="inherit">
                   <CatchingPokemonIcon />
               </IconButton>
             </div>

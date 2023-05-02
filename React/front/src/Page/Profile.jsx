@@ -1,18 +1,25 @@
 import React from 'react';
 import { useState, useEffect} from 'react';
 import '../Scss/Profile.scss';
+import theme from "../theme";
+
+import HeaderProfile from '../Composants/HeaderProfile';
+
+import { ThemeProvider } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import { Grid } from '@material-ui/core';
 
 export default function Profile() {
-    const [user] = useState(JSON.parse(sessionStorage.getItem('user')))
-    const [img, setImg] = useState();
+      const user = useState(JSON.parse(sessionStorage.getItem('user')))
+      const [img, setImg] = useState();
 
     useEffect(() => {
-      fetch("https://pokeapi.co/api/v2/pokemon/"+user.id)
+      fetch("https://pokebuildapi.fr/api/v1/pokemon/")
         .then((res) => res.json())
         .then(
           (result) => {
-            setImg(result.sprites.front_shiny);
-            console.log(result);
+            setImg(result[user[0].id].sprite);
+            console.log(user);
           },
           (error) => {
             console.log(error);
@@ -21,27 +28,23 @@ export default function Profile() {
     })
     
     return (
+      <ThemeProvider theme={theme}>
+        <HeaderProfile />
+        <Grid container>
+          <Grid item xs={4} className='avatar'>
+            <Avatar
+              alt="Profile"
+              src={img}
+              sx={{ width: "10%", height: "auto"}}
+            />
+          </Grid>
+          <Grid item xs={8} className='avatar'>
+
+          </Grid>
+          <Grid item xs={12} className='avatar'>
             
-        <div id='profile'>
-          <div className="trainer-profile">
-        <div className="profile-header">
-          <p><em>Profile details</em></p>
-          <div className="profile-banner" />
-          <div className="profile-avatar">
-            <img src={img} alt={user.username} />
-          </div>
-          <h1 className="profile-username">{user.username}
-          </h1>
-        </div>
-        <div className="profile-stats">
-          <div className="stat-item">
-            <div className="stat-label">Cryptokemons</div>
-            <div className="stat-value">{user.Cryptokemons}</div>
-          </div>
-        </div>
-      </div><div className="stat-item">
-          <div className="stat-label">Pokédex personnel</div>
-          <div className="stat-value">{user.Pc}</div>
-        </div></div>
+          </Grid>
+        </Grid>
+      </ThemeProvider>
       );
     }
