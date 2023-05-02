@@ -77,7 +77,7 @@ class UserController extends AbstractController
 
         $user = new User();
         
-        $user->setUsername($username)->setPassword($password)->setEmail($email)->setPc("{\"pokemonFav\":\"\",\"pokemons\":[]}")->setCryptokemons(10.0);
+        $user->setUsername($username)->setPassword($password)->setEmail($email)->setPc("[]")->setCryptokemons(10.0);
         
         if (is_null($user)) {
             return new JsonResponse([
@@ -138,7 +138,7 @@ class UserController extends AbstractController
         }
     }
     
-    #[Route('/api/pc/update', name: 'api_update_pc', methods: ['POST'])]
+    #[Route('/api/pc/update', name: 'api_update_pc', methods: ['PUT'])]
     public function actionUpdatePc(Request $request, EntityManagerInterface $entityManager): Response
     {
         $token = $request->headers->get('Authorization');

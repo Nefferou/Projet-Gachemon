@@ -33,13 +33,14 @@ function Gatcha({pokemons, value, user, token}) {
             pc: user.pc,
         }
         console.log(token[0].exp);
-        axios.post(`https://gachemon.osc-fr1.scalingo.io/api/pc/update`, JSON.stringify(jsonBody),{
-            headers: {
+        axios.put('https://gachemon.osc-fr1.scalingo.io/api/pc/update', jsonBody, {
+        headers: {
                 'Content-Type': 'application/json',
                 Authorization: token[0]
             }
         }).then(response => {
-            console.log(response);
+            console.log(jsonBody.pc);
+            console.log(user.pc);
         })
         .catch(error =>{
             console.log(error);
@@ -50,8 +51,9 @@ function Gatcha({pokemons, value, user, token}) {
     const invoqueOne = () => {
         const random = Math.floor(Math.random() * (897 - 1 + 1)) + 1;
         setRand(random);
-        const pc = JSON.parse(user.pc);
-        pc.pokemons.push(pokemons[random].id);
+        let pc = JSON.parse(user.pc);
+        pc.push(31)
+        console.log(pc);
         user.pc = JSON.stringify(pc);
         postPc();
         setOpenO(true);
@@ -63,7 +65,7 @@ function Gatcha({pokemons, value, user, token}) {
         for(let i = 0; i < 6; i++){
             random = Math.floor(Math.random() * (897 - 1 + 1)) + 1;
             randS.push(<Grid key={random} item xs={4}><Invoque key={random} item={pokemons[random]} /></Grid>)
-            pc.pokemons.push(pokemons[random].id);
+            pc.push(pokemons[random].id);
         }
         user.pc = JSON.stringify(pc);
         postPc();
