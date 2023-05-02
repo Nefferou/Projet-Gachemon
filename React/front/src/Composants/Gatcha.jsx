@@ -26,15 +26,31 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
             div.classList.add('animation');
         }, index * 1000);
     });
-
+    const updateCrypto = () =>{
+        const jsonBody = {
+            cryptokemons: user.cryptokemons
+        }
+        console.log(JSON.stringify(jsonBody));
+        axios.put(`https://gachemon.osc-fr1.scalingo.io/api/update/cryptokemons`, JSON.stringify(jsonBody),{
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: token[0]
+            }
+        }).then(response => {
+            console.log(response);
+        })
+        .catch(error =>{
+            console.log(error);
+        });
+    }
     const postPc=()=>{
 
         const jsonBody = {
             pc: JSON.parse(user.pc),
         }
         console.log(token[0].exp);
-        axios.put('https://gachemon.osc-fr1.scalingo.io/api/pc/update', JSON.stringify(jsonBody), {
-        headers: {
+        axios.post(`https://gachemon.osc-fr1.scalingo.io/api/update/pc`, JSON.stringify(jsonBody),{
+            headers: {
                 'Content-Type': 'application/json',
                 Authorization: token[0]
             }
@@ -60,6 +76,7 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
         user.pc = JSON.stringify(pc)
 
         postPc();
+        updateCrypto();
         setOpenO(true);
 
         console.log(user);
@@ -79,7 +96,7 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
         user.pc = JSON.stringify(pc)
 
         postPc();
-
+        updateCrypto();
         if(randS.length === 6){
             setOpenS(true);
         }
