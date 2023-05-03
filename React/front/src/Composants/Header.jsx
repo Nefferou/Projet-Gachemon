@@ -10,7 +10,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
 
-export default function MenuAppBar({value, changeSearch, user}) {
+export default function MenuAppBar({value, changeSearch, user, money}) {
 
   return (
     <div>
@@ -37,7 +37,7 @@ export default function MenuAppBar({value, changeSearch, user}) {
               </div>}
             </Typography>
             <div className='headerInfo'>
-              <p>{user.cryptokemons}</p>
+              <p>{money}</p>
               <IconButton size="medium" color="inherit">
                   <CatchingPokemonIcon />
               </IconButton>

@@ -77,7 +77,7 @@ class UserController extends AbstractController
 
         $user = new User();
         
-        $user->setUsername($username)->setPassword($password)->setEmail($email)->setPc("{\"pokemonFav\":\"\",\"pokemons\":[]}")->setCryptokemons(10.0);
+        $user->setUsername($username)->setPassword($password)->setEmail($email)->setPc("[]")->setCryptokemons(10.0);
         
         if (is_null($user)) {
             return new JsonResponse([

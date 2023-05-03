@@ -22,7 +22,7 @@ security:
         - { path: ^/api/user, roles: PUBLIC_ACCESS  }
         - { path: ^/api/user/email, roles: PUBLIC_ACCESS }
         - { path: ^/api/token, roles: PUBLIC_ACCESS }
-        - { path: ^/api/pc, methods: [POST], allow_if: "request.headers.get('Authorization')"}
+        - { path: ^/api/update, methods: [PUT], allow_if: "request.headers.get('Authorization')"}
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
