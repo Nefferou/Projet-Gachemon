@@ -9,7 +9,7 @@ import axios from 'axios';
 
 import Gatchamon from "../Ressources/Gatchamon.png"
 import { Dialog } from "@mui/material";
-import Invoque from "./Invoque";
+import Invoque from "../Composants/Invoque";
 
 function Gatcha({pokemons, value, user, token, money, setMoney}) {
 
@@ -26,11 +26,12 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
             div.classList.add('animation');
         }, index * 1000);
     });
+
     const updateCrypto = () =>{
         const jsonBody = {
             cryptokemons: user.cryptokemons
         }
-        console.log(JSON.stringify(jsonBody));
+        
         axios.put(`https://gachemon.osc-fr1.scalingo.io/api/update/cryptokemons`, JSON.stringify(jsonBody),{
             headers: {
                 'Content-Type': 'application/json',
@@ -40,7 +41,7 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
             console.log(response);
         })
         .catch(error =>{
-            console.log(error);
+            // console.log(error);
         });
     }
     const postPc=()=>{
@@ -48,26 +49,26 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
         const jsonBody = {
             pc: JSON.parse(user.pc),
         }
-        console.log(token[0].exp);
+        // console.log(token[0].exp);
         axios.put(`https://gachemon.osc-fr1.scalingo.io/api/update/pc`, JSON.stringify(jsonBody),{
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: token[0]
             }
         }).then(response => {
+            console.log(response);
             // console.log(jsonBody.pc);
             // console.log(user.pc);
         })
         .catch(error =>{
-            console.log(error);
+            // console.log(error);
         });
 
     }
 
     const invoqueOne = () => {
+        user.cryptokemons = money - 100
         setMoney(money - 100)
-        user.cryptokemons -= 100
-        updateCrypto();
 
         const random = Math.floor(Math.random() * (897 - 1 + 1)) + 1;
         setRand(random);
@@ -77,15 +78,13 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
         user.pc = JSON.stringify(pc)
 
         postPc();
+        updateCrypto();
         setOpenO(true);
-
-        console.log(user);
     }
 
     const invoqueSix = () => {
+        user.cryptokemons = money - 550
         setMoney(money - 550)
-        user.cryptokemons -= 550
-        updateCrypto();
 
         const pc = JSON.parse(user.pc)
         for(let i = 0; i < 6; i++){
@@ -97,11 +96,10 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
         user.pc = JSON.stringify(pc)
 
         postPc();
+        updateCrypto();
         if(randS.length === 6){
             setOpenS(true);
         }
-        
-        console.log(user);
     }
 
     const handleClose = () => {

@@ -5,11 +5,11 @@ import soon from './Ressources/enCours.gif'
 
 import AppBar from "./Composants/AppBar"
 import Header from "./Composants/Header"
-import Pokedex from './Composants/Pokedex';
+import Pokedex from './Page/Pokedex';
 
 import { ThemeProvider } from "@emotion/react";
 import theme from "./theme";
-import Gatcha from './Composants/Gatcha';
+import Gatcha from './Page/Gatcha';
 
 import { Box } from '@mui/system';
 import { CircularProgress } from '@mui/material';

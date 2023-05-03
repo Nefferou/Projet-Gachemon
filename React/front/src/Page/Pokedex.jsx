@@ -1,7 +1,7 @@
 import React from "react"
 import "../Scss/Pokedex.scss"
 
-import PokemonBox from "./PokemonBox";
+import PokemonBox from "../Composants/PokemonBox";
 
 import { Grid } from "@mui/material";
 
