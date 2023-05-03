@@ -1,0 +1,11 @@
+.clicker {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+
+    min-height: 100%;
+
+    div {
+        height: 30%;
+    }
+}

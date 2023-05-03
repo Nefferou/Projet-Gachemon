@@ -1,11 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import './Scss/App.scss';
-import soon from './Ressources/enCours.gif'
 
 import AppBar from "./Composants/AppBar"
 import Header from "./Composants/Header"
 import Pokedex from './Page/Pokedex';
+import Clicker from './Page/Clicker';
 
 import { ThemeProvider } from "@emotion/react";
 import theme from "./theme";
@@ -60,8 +60,11 @@ function App() {
 
       </div>
 
-      <div style={{backgroundColor: "black"}} hidden={value !== 1}>
-        <img src={soon} alt='en cours'/>
+      <div hidden={value !== 1}>
+        {load ? <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <CircularProgress />
+                </Box> :
+        <Clicker pokemons={items} money={money} setMoney={setMoney} user={user} token={token} />}
       </div>
 
       <div hidden={value !== 2}>

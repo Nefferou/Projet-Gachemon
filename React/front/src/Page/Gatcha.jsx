@@ -44,6 +44,7 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
             // console.log(error);
         });
     }
+    
     const postPc=()=>{
 
         const jsonBody = {
