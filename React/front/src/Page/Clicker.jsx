@@ -6,6 +6,7 @@ import { ThemeProvider } from '@emotion/react';
 import theme from '../theme';
 import "../Scss/Clicker.scss"
 import axios from 'axios';
+import PokemonClicker from '../Composants/PokemonClicker';
 
 
 function Clicker({pokemons, money, setMoney, user, token}) {
@@ -63,9 +64,9 @@ function Clicker({pokemons, money, setMoney, user, token}) {
         <div className='clicker'>
             <ThemeProvider theme={theme}>
             <Grid item xs={5} container direction="column" justifyContent="center" alignItems="center">
-                <Avatar src={pokemons[0].sprite} sx={{ width: "33%", height: "33%" }}/>
-                <Avatar src={pokemons[0].sprite} sx={{ width: "33%", height: "33%" }}/>
-                <Avatar src={pokemons[0].sprite} sx={{ width: "33%", height: "33%" }}/>
+                <PokemonClicker pokemon={pokemons[pok1]} />
+                <PokemonClicker pokemon={pokemons[pok2]} />
+                <PokemonClicker pokemon={pokemons[pok3]} />
             </Grid>
             <Grid item xs={2} container direction="column" sx={{margin: "auto"}}>
                 <Button variant="text" onClick={Clicker} color='secondary'>Clicker</Button>
@@ -75,9 +76,9 @@ function Clicker({pokemons, money, setMoney, user, token}) {
                 <Button variant="text" onClick={Collect} color='secondary'>Collect</Button>
             </Grid>
             <Grid item xs={5} container direction="column" justifyContent="center" alignItems="center">
-                <Avatar src={pokemons[0].sprite} sx={{ width: "33%", height: "33%" }}/>
-                <Avatar src={pokemons[0].sprite} sx={{ width: "33%", height: "33%" }}/>
-                <Avatar src={pokemons[0].sprite} sx={{ width: "33%", height: "33%" }}/>
+                <PokemonClicker pokemon={pokemons[pok4]} /> 
+                <PokemonClicker pokemon={pokemons[pok5]} />
+                <PokemonClicker pokemon={pokemons[pok6]} />
             </Grid>
             <Snackbar open={isFull} autoHideDuration={6000} onClose={handleClose}>
                 <Alert severity="warning" onClose={handleClose} sx={{ width: '100%' }}>
