@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 
 function App() {
 
-  const [value, setValue] = useState(2);
+  const [value, setValue] = useState(1);
   const [search, setSearch] = useState("");
 
   const [items, setItems] = useState([]);

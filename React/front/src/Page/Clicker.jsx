@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useState } from "react";
 import Grid from '@mui/material/Grid';
-import { Avatar, IconButton } from '@mui/material';
+import { Avatar, Button, Tooltip, Snackbar, Alert} from '@mui/material';
+import { ThemeProvider } from '@emotion/react';
+import theme from '../theme';
 import "../Scss/Clicker.scss"
 import axios from 'axios';
-
-import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
 
 
 function Clicker({pokemons, money, setMoney, user, token}) {
@@ -16,6 +16,9 @@ function Clicker({pokemons, money, setMoney, user, token}) {
     const [pok4, setPok4] = useState(1)
     const [pok5, setPok5] = useState(1)
     const [pok6, setPok6] = useState(1)
+    
+    const [stock, setStock] = useState(0)
+    const [isFull, setFull] = useState(false)
 
     const updateCrypto = () =>{
         const jsonBody = {
@@ -36,28 +39,52 @@ function Clicker({pokemons, money, setMoney, user, token}) {
     }
 
     const Clicker = () => {
-        user.cryptokemons = money + 1
-        setMoney(money + 1)
-        updateCrypto();
+        if(stock >= 1000){
+            setFull(true)
+            setStock(1000)
+        }
+        else {
+            setStock(stock + 1)
+        }
+    }
+
+    const handleClose = () => {
+        setFull(false)
+    }
+
+    const Collect = () => {
+        user.cryptokemons = money + stock
+        setMoney(money + stock)
+        updateCrypto()
+        setStock(0)
     }
 
     return (
         <div className='clicker'>
+            <ThemeProvider theme={theme}>
             <Grid item xs={5} container direction="column" justifyContent="center" alignItems="center">
                 <Avatar src={pokemons[0].sprite} sx={{ width: "33%", height: "33%" }}/>
                 <Avatar src={pokemons[0].sprite} sx={{ width: "33%", height: "33%" }}/>
                 <Avatar src={pokemons[0].sprite} sx={{ width: "33%", height: "33%" }}/>
             </Grid>
-            <Grid item xs={2} sx={{margin: "auto"}}>
-                <IconButton aria-label="Clicker" size="large" color="inherit" onClick={Clicker} >
-                    <CatchingPokemonIcon sx={{ width: "150%", height: "auto", backgroundColor: "white", borderRadius: "100px" }} />
-                </IconButton>
+            <Grid item xs={2} container direction="column" sx={{margin: "auto"}}>
+                <Button variant="text" onClick={Clicker} color='secondary'>Clicker</Button>
+                <Tooltip title="Stock" disableInteractive>
+                    <Button>{stock} / 1000</Button>
+                </Tooltip>
+                <Button variant="text" onClick={Collect} color='secondary'>Collect</Button>
             </Grid>
             <Grid item xs={5} container direction="column" justifyContent="center" alignItems="center">
                 <Avatar src={pokemons[0].sprite} sx={{ width: "33%", height: "33%" }}/>
                 <Avatar src={pokemons[0].sprite} sx={{ width: "33%", height: "33%" }}/>
                 <Avatar src={pokemons[0].sprite} sx={{ width: "33%", height: "33%" }}/>
             </Grid>
+            <Snackbar open={isFull} autoHideDuration={6000} onClose={handleClose}>
+                <Alert severity="warning" onClose={handleClose} sx={{ width: '100%' }}>
+                    Stock is full
+                </Alert>
+            </Snackbar>
+            </ThemeProvider>
         </div>
     );
 }
