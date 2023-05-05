@@ -11,9 +11,12 @@ import PokemonClicker from '../Composants/PokemonClicker';
 
 function Clicker({pokemons, money, setMoney, user, token}) {
 
-    const [pok1, setPok1] = useState(1)
-    const [pok2, setPok2] = useState(1)
-    const [pok3, setPok3] = useState(1)
+    const [pok1, setPok1] = useState(385)
+    const [pok1Stock, setP1Stock] = useState(0)
+    const [pok2, setPok2] = useState(150)
+    const [pok2Stock, setP2Stock] = useState(0)
+    const [pok3, setPok3] = useState(149)
+    const [pok3Stock, setP3Stock] = useState(0)
     const [pok4, setPok4] = useState(1)
     const [pok5, setPok5] = useState(1)
     const [pok6, setPok6] = useState(1)
@@ -49,6 +52,16 @@ function Clicker({pokemons, money, setMoney, user, token}) {
         }
     }
 
+    const PokeClicker = () => {
+        if(stock >= 1000){
+            setFull(true)
+            setStock(1000)
+        }
+        else {
+            setStock(pok1Stock + pok2Stock + pok3Stock)
+        }
+    }
+
     const handleClose = () => {
         setFull(false)
     }
@@ -64,9 +77,9 @@ function Clicker({pokemons, money, setMoney, user, token}) {
         <div className='clicker'>
             <ThemeProvider theme={theme}>
             <Grid item xs={5} container direction="column" justifyContent="center" alignItems="center">
-                <PokemonClicker pokemon={pokemons[pok1]} />
-                <PokemonClicker pokemon={pokemons[pok2]} />
-                <PokemonClicker pokemon={pokemons[pok3]} />
+                <PokemonClicker pokemon={pokemons[pok1]} add={PokeClicker} stock={pok1Stock} setStock={setP1Stock} />
+                <PokemonClicker pokemon={pokemons[pok2]} add={PokeClicker} stock={pok2Stock} setStock={setP2Stock} />
+                <PokemonClicker pokemon={pokemons[pok3]} add={PokeClicker} stock={pok3Stock} setStock={setP3Stock} />
             </Grid>
             <Grid item xs={2} container direction="column" sx={{margin: "auto"}}>
                 <Button variant="text" onClick={Clicker} color='secondary'>Clicker</Button>
@@ -76,9 +89,9 @@ function Clicker({pokemons, money, setMoney, user, token}) {
                 <Button variant="text" onClick={Collect} color='secondary'>Collect</Button>
             </Grid>
             <Grid item xs={5} container direction="column" justifyContent="center" alignItems="center">
-                <PokemonClicker pokemon={pokemons[pok4]} /> 
-                <PokemonClicker pokemon={pokemons[pok5]} />
-                <PokemonClicker pokemon={pokemons[pok6]} />
+                <PokemonClicker pokemon={pokemons[pok4]} add={PokeClicker} /> 
+                <PokemonClicker pokemon={pokemons[pok5]} add={PokeClicker} />
+                <PokemonClicker pokemon={pokemons[pok6]} add={PokeClicker} />
             </Grid>
             <Snackbar open={isFull} autoHideDuration={6000} onClose={handleClose}>
                 <Alert severity="warning" onClose={handleClose} sx={{ width: '100%' }}>
