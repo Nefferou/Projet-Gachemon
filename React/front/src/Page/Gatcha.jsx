@@ -68,8 +68,8 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
     }
 
     const invoqueOne = () => {
-        user.cryptokemons = money - 100
-        setMoney(money - 100)
+        user.cryptokemons = money - 10000
+        setMoney(money - 10000)
 
         const random = Math.floor(Math.random() * (897 - 1 + 1)) + 1;
         setRand(random);
@@ -84,8 +84,8 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
     }
 
     const invoqueSix = () => {
-        user.cryptokemons = money - 550
-        setMoney(money - 550)
+        user.cryptokemons = money - 55000
+        setMoney(money - 55000)
 
         const pc = JSON.parse(user.pc)
         for(let i = 0; i < 6; i++){
@@ -119,10 +119,10 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
             </Grow>
             <div className="GatchaButton">
                 <Grow in={value === 0} {...(value === 0 ? { timeout: 1000 } : {})}>
-                    <Button variant="contained" disabled={user.cryptokemons < 100} onClick={invoqueOne} onClose={handleClose} >Invoquer 1</Button>
+                    <Button variant="contained" disabled={user.cryptokemons < 10000} onClick={invoqueOne} onClose={handleClose} >Invoquer 1</Button>
                 </Grow>
                 <Grow in={value === 0} {...(value === 0 ? { timeout: 1000 } : {})}>
-                    <Button variant="contained" disabled={user.cryptokemons < 550} onClick={invoqueSix} onClose={handleClose} >Invoquer 6</Button>
+                    <Button variant="contained" disabled={user.cryptokemons < 55000} onClick={invoqueSix} onClose={handleClose} >Invoquer 6</Button>
                 </Grow>
             </div>
             <Dialog className="dialogOpen" open={openO} onClose={handleClose} >

@@ -16,7 +16,7 @@ function AppBar({value, setValue}) {
       <Box sx={{ borderBottom: 1, borderColor: 'divider', borderRadius: '5px', width: '96%', padding: '1%', margin: '1%', marginBottom: '0%', paddingBottom: '0%', bgcolor: '#a9a9a9e6'}}>
         <Tabs value={value}  onChange={handleChange} >
             <Tab label="Gatcha" />
-            <Tab label="Histoire"/>
+            <Tab label="Clicker"/>
             <Tab label="Pokedex"/>
         </Tabs>
       </Box>

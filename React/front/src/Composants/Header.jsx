@@ -24,7 +24,7 @@ export default function MenuAppBar({value, changeSearch, user, money}) {
             </div>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 {value === 0 ? "Gatcha" 
-                : value === 1 ? "Histoire" 
+                : value === 1 ? "Clicker" 
                 : <div><InputBase
                     sx={{ ml: 1, flex: 1 }}
                     placeholder="Search"

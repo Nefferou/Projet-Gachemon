@@ -18,8 +18,11 @@ function Clicker({pokemons, money, setMoney, user, token}) {
     const [pok3, setPok3] = useState(149)
     const [pok3Stock, setP3Stock] = useState(0)
     const [pok4, setPok4] = useState(1)
+    const [pok4Stock, setP4Stock] = useState(0)
     const [pok5, setPok5] = useState(1)
+    const [pok5Stock, setP5Stock] = useState(0)
     const [pok6, setPok6] = useState(1)
+    const [pok6Stock, setP6Stock] = useState(0)
     
     const [stock, setStock] = useState(0)
     const [isFull, setFull] = useState(false)
@@ -43,22 +46,13 @@ function Clicker({pokemons, money, setMoney, user, token}) {
     }
 
     const Clicker = () => {
-        if(stock >= 1000){
+        setStock(stock)
+        if(stock >= 100){
             setFull(true)
-            setStock(1000)
+            setStock(100)
         }
         else {
             setStock(stock + 1)
-        }
-    }
-
-    const PokeClicker = () => {
-        if(stock >= 1000){
-            setFull(true)
-            setStock(1000)
-        }
-        else {
-            setStock(pok1Stock + pok2Stock + pok3Stock)
         }
     }
 
@@ -67,31 +61,37 @@ function Clicker({pokemons, money, setMoney, user, token}) {
     }
 
     const Collect = () => {
-        user.cryptokemons = money + stock
-        setMoney(money + stock)
+        user.cryptokemons = money + stock  + pok1Stock + pok2Stock + pok3Stock + pok4Stock + pok5Stock + pok6Stock
+        setMoney(money + stock  + pok1Stock + pok2Stock + pok3Stock + pok4Stock + pok5Stock + pok6Stock)
         updateCrypto()
         setStock(0)
+        setP1Stock(0)
+        setP2Stock(0)
+        setP3Stock(0)
+        setP4Stock(0)
+        setP5Stock(0)
+        setP6Stock(0)
     }
 
     return (
         <div className='clicker'>
             <ThemeProvider theme={theme}>
             <Grid item xs={5} container direction="column" justifyContent="center" alignItems="center">
-                <PokemonClicker pokemon={pokemons[pok1]} add={PokeClicker} stock={pok1Stock} setStock={setP1Stock} />
-                <PokemonClicker pokemon={pokemons[pok2]} add={PokeClicker} stock={pok2Stock} setStock={setP2Stock} />
-                <PokemonClicker pokemon={pokemons[pok3]} add={PokeClicker} stock={pok3Stock} setStock={setP3Stock} />
+                <PokemonClicker pokemon={pokemons[pok1]} stock={pok1Stock} setStock={setP1Stock} />
+                <PokemonClicker pokemon={pokemons[pok2]} stock={pok2Stock} setStock={setP2Stock} />
+                <PokemonClicker pokemon={pokemons[pok3]} stock={pok3Stock} setStock={setP3Stock} />
             </Grid>
             <Grid item xs={2} container direction="column" sx={{margin: "auto"}}>
                 <Button variant="text" onClick={Clicker} color='secondary'>Clicker</Button>
                 <Tooltip title="Stock" disableInteractive>
-                    <Button>{stock} / 1000</Button>
+                    <Button>{stock} / 100</Button>
                 </Tooltip>
                 <Button variant="text" onClick={Collect} color='secondary'>Collect</Button>
             </Grid>
             <Grid item xs={5} container direction="column" justifyContent="center" alignItems="center">
-                <PokemonClicker pokemon={pokemons[pok4]} add={PokeClicker} /> 
-                <PokemonClicker pokemon={pokemons[pok5]} add={PokeClicker} />
-                <PokemonClicker pokemon={pokemons[pok6]} add={PokeClicker} />
+                <PokemonClicker pokemon={pokemons[pok4]} stock={pok4Stock} setStock={setP4Stock} /> 
+                <PokemonClicker pokemon={pokemons[pok5]} stock={pok5Stock} setStock={setP5Stock} />
+                <PokemonClicker pokemon={pokemons[pok6]} stock={pok6Stock} setStock={setP6Stock} />
             </Grid>
             <Snackbar open={isFull} autoHideDuration={6000} onClose={handleClose}>
                 <Alert severity="warning" onClose={handleClose} sx={{ width: '100%' }}>

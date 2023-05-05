@@ -7,9 +7,13 @@
 }
 
 #pokemonClicker {
-    width: 30%;
-    height: 30%;
-    margin: 1%;
+    width: 25%;
+    height: 25%;
+    margin: auto;
+
+    p {
+        margin: 0;
+    }
 
     button {
         width: 100%;
