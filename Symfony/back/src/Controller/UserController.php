@@ -131,18 +131,26 @@ class UserController extends AbstractController
     }
 
     #[Route('/api/token/verify', name: 'api_utoken_verify', methods: ['POST'])]
-    public function actionVerificationToken(Request $request): Response
+    public function actionVerificationToken(Request $request, JwtTokenGenerator $jwtTokenGenerator): Response
     {
         $token = $request->headers->get('token');
         if (!$token) {
-            return new Response('No token provided', Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(['error' => 'No token provided'], Response::HTTP_BAD_REQUEST);
         }
     
-        if ($this->jwtTokenGenerator->verifyToken($token)) {
-            return new Response('Token valid', Response::HTTP_ACCEPTED);
-        } else {
-            return new Response('Token invalid', Response::HTTP_NOT_ACCEPTABLE);
+        if (!$jwtTokenGenerator->verifyToken($token)) {
+            return new JsonResponse(['error' => 'Token invalid'], Response::HTTP_NOT_ACCEPTABLE);
         }
+    
+        $user = $jwtTokenGenerator->decodeToken($token);
+        $userResponse = [
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'cryptokemons' => $user->getCryptokemons(),
+            'pc' => $user->getPc(),
+        ];
+    
+        return new JsonResponse($userResponse, Response::HTTP_ACCEPTED);
     }
     
     #[Route('/api/update/pc', name: 'api_update_pc', methods: ['PUT'])]
