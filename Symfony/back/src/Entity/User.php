@@ -31,6 +31,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 250000)]
     private ?string $pc = null;
 
+    #[ORM\Column(length: 250000)]
+    private string $pokemonFav = "[]";
+
     public function setId($id): self
     {
         $this->id = $id;
@@ -106,6 +109,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->username;
     }
+
+    public function getPokemonFav(): string
+    {
+        return $this->pokemonFav;
+    }
+
+    public function setPokemonFav(string $pokemonFav): self
+    {
+        $this->pokemonFav = $pokemonFav;
+
+        return $this;
+    }
+
 
     public function getRoles(): array
     {

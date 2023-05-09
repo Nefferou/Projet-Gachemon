@@ -82,7 +82,7 @@ class UserController extends AbstractController
 
         $user = new User();
         
-        $user->setUsername($username)->setEmail($email)->setPc("[]")->setCryptokemons(10.0);
+        $user->setUsername($username)->setEmail($email)->setPc("[]")->setPokemonFav("[]")->setCryptokemons(10.0);
         $hashedPassword = $passwordEncoder->hashPassword(new User(), $password);
         $user->setPassword($hashedPassword);
         var_dump($user->getPassword());
@@ -133,7 +133,7 @@ class UserController extends AbstractController
     #[Route('/api/token/verify', name: 'api_utoken_verify', methods: ['POST'])]
     public function actionVerificationToken(Request $request, JwtTokenGenerator $jwtTokenGenerator): Response
     {
-        $token = $request->headers->get('token');
+        $token = $request->headers->get('Authorization');
         if (!$token) {
             return new JsonResponse(['error' => 'No token provided'], Response::HTTP_BAD_REQUEST);
         }
@@ -198,16 +198,18 @@ class UserController extends AbstractController
         return new Response('Cryptokemons updated', Response::HTTP_ACCEPTED);
     }
 
-        public function showUser(User $user){
-            return array([
-                "id" => $user->getId(),
-                "username" => $user->getUsername(),
-                "email" => $user->getEmail(),
-                "password" => $user->getPassword(),
-                "pc" => $user->getPc(),
-                "cryptokemons" => $user->getCryptokemons()
-            ]);
-        }
+    public function showUser(User $user){
+        return array([
+            "id" => $user->getId(),
+            "username" => $user->getUsername(),
+            "email" => $user->getEmail(),
+            "password" => $user->getPassword(),
+            "pc" => $user->getPc(),
+            "cryptokemons" => $user->getCryptokemons(),
+            "pokemonFav" => $user->getPokemonFav()
+        ]);
+    }
+    
 
         public function serializeUser(User $user){
             return array([
