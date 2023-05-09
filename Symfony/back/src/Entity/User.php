@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -98,5 +101,30 @@ class User
         $this->pc = $pc;
 
         return $this;
+    }
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
+    }
+
+    public function getRoles(): array
+    {
+        // Ici, vous pouvez retourner les rôles de l'utilisateur en fonction de votre logique.
+        // Par défaut, nous retournons simplement un rôle "ROLE_USER".
+        return ['ROLE_USER'];
+    }
+
+    public function getSalt(): ?string
+    {
+        // Depuis Symfony 5.3, les encodeurs de mots de passe utilisent l'API Password Hasher
+        // qui n'a pas besoin de sel, donc cette méthode peut retourner null.
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+        // Cette méthode est généralement utilisée pour effacer les informations sensibles,
+        // comme un mot de passe brut, qui ne doivent pas être stockées en mémoire.
+        // Vous pouvez laisser cette méthode vide si vous n'avez pas besoin de l'utiliser.
     }
 }

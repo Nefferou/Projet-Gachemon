@@ -10,6 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use Firebase\JWT\JWT;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\VarDumper\VarDumper;
+
 class UserController extends AbstractController
 {
     private $jwtTokenGenerator;
@@ -20,7 +23,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/api/user/login', name: 'api_user_connection', methods: ['POST'])]
-    public function actionConnection(EntityManagerInterface $entityManager): JsonResponse
+    public function actionConnection(EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordEncoder): JsonResponse
     {
         $request = Request::createFromGlobals();
         $parameters = json_decode($request->getContent(), true);
@@ -32,14 +35,16 @@ class UserController extends AbstractController
                 'error' => 'Missing parameters'
             ], Response::HTTP_BAD_REQUEST);
         }
-
+    
         $repo = $entityManager->getRepository(User::class);
-        $user = $repo->verifyAccountByUsernameAndPassword($parameters['username'], $parameters['password']);
-        if (is_null($user)) {
+        $user = $repo->findOneBy(['username' => $parameters['username']]);
+        
+        if (!$user || !$passwordEncoder->isPasswordValid($user, $parameters['password'])) {
             return new JsonResponse([
                 'error' => 'Wrong Account'
             ], Response::HTTP_NOT_FOUND);
         }
+    
         $token = $this->jwtTokenGenerator->generateToken($user);
         return new JsonResponse(json_encode(
             [
@@ -49,9 +54,10 @@ class UserController extends AbstractController
         ),
           Response::HTTP_OK, ['accept' => 'json', 'Authorization' => 'Bearer '.$token], true);
     }
+    
 
     #[Route('/api/user/register', name: 'api_user_register', methods: ['POST'])]
-    public function actionRegister(EntityManagerInterface $entityManager): JsonResponse
+    public function actionRegister(EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordEncoder): JsonResponse
     {
         $request = Request::createFromGlobals();
         $data = json_decode($request->getContent(), true);
@@ -77,8 +83,10 @@ class UserController extends AbstractController
 
         $user = new User();
         
-        $user->setUsername($username)->setPassword($password)->setEmail($email)->setPc("[]")->setCryptokemons(10.0);
-        
+        $user->setUsername($username)->setEmail($email)->setPc("[]")->setCryptokemons(10.0);
+        $hashedPassword = $passwordEncoder->hashPassword(new User(), $password);
+        $user->setPassword($hashedPassword);
+        var_dump($user->getPassword());
         if (is_null($user)) {
             return new JsonResponse([
                 'error' => 'Not Acceptable'
