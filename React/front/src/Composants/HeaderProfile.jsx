@@ -1,7 +1,6 @@
 import React, { useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import { useNavigate  } from 'react-router-dom';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -10,16 +9,7 @@ import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 
 function HeaderProfile() {
   const token = useState(sessionStorage.getItem("token"));
-
-  const navigate = useNavigate();
-
-  const handleRedirect = () => {
-    const url = new URL('https://projet-angular-gachemon.vercel.app/boutique/');
-    url.searchParams.append('token', token[0]);
-    navigate(url.href);
-  };
   
-
     return (
         <Box>
             <AppBar position="static">
@@ -32,7 +22,7 @@ function HeaderProfile() {
                     </Typography>
                     <Box sx={{ flexGrow: 0 }}>
                         <IconButton size="large" edge="end" color="inherit" aria-label="open drawer" sx={{ ml: 2 }}
-                               onClick={handleRedirect}
+                               href={`https://projet-angular-gachemon.vercel.app/boutique/${token[0]}`}
                                >
                             <ShoppingBasketIcon />
                         </IconButton>
