@@ -143,14 +143,9 @@ class UserController extends AbstractController
         }
     
         $user = $jwtTokenGenerator->decodeToken($token);
-        $userResponse = [
-            'username' => $user->getUsername(),
-            'email' => $user->getEmail(),
-            'cryptokemons' => $user->getCryptokemons(),
-            'pc' => $user->getPc(),
-        ];
+        
     
-        return new JsonResponse($userResponse, Response::HTTP_ACCEPTED);
+        return new JsonResponse($this->showUser($user), Response::HTTP_ACCEPTED);
     }
     
     #[Route('/api/update/pc', name: 'api_update_pc', methods: ['PUT'])]
