@@ -130,7 +130,7 @@ class UserController extends AbstractController
         }
     }
 
-    #[Route('/api/token/verify', name: 'api_utoken_verify', methods: ['POST'])]
+    #[Route('/api/token/verify', name: 'api_utoken_verify', methods: ['GET'])]
     public function actionVerificationToken(Request $request, JwtTokenGenerator $jwtTokenGenerator): Response
     {
         $token = $request->headers->get('Authorization');
