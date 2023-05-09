@@ -38,7 +38,6 @@ class UserController extends AbstractController
     
         $repo = $entityManager->getRepository(User::class);
         $user = $repo->findOneBy(['username' => $parameters['username']]);
-        
         if (!$user || !$passwordEncoder->isPasswordValid($user, $parameters['password'])) {
             return new JsonResponse([
                 'error' => 'Wrong Account'
