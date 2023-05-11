@@ -24,7 +24,7 @@ function App() {
   const [items, setItems] = useState([]);
   const [load, isLoad] = useState(true);
 
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const [user, setUser] = useState(JSON.parse(sessionStorage.getItem("user")))
   const [money, setMoney] = useState(user.cryptokemons)
   const token = useState(sessionStorage.getItem("token"));
 
@@ -32,6 +32,7 @@ function App() {
 
   useEffect(function () {
     isLoad(true)
+    setUser(JSON.parse(sessionStorage.getItem("user")))
     fetch("https://pokebuildapi.fr/api/v1/pokemon")
     .then(res => res.json())
     .then(

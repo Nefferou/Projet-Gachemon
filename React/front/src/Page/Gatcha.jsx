@@ -119,10 +119,28 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
             </Grow>
             <div className="GatchaButton">
                 <Grow in={value === 0} {...(value === 0 ? { timeout: 1000 } : {})}>
-                    <Button variant="contained" disabled={user.cryptokemons < 10000} onClick={invoqueOne} onClose={handleClose} >Invoquer 1</Button>
+                    <Button variant="contained" disabled={user.cryptokemons < 10000} onClick={invoqueOne} onClose={handleClose}>
+                        <Grid container direction="column" justifyContent="center" alignItems="center">
+                            <Grid items>
+                                Catch 1
+                            </Grid>
+                            <Grid items>
+                                10 000
+                            </Grid>
+                        </Grid> 
+                    </Button>
                 </Grow>
                 <Grow in={value === 0} {...(value === 0 ? { timeout: 1000 } : {})}>
-                    <Button variant="contained" disabled={user.cryptokemons < 55000} onClick={invoqueSix} onClose={handleClose} >Invoquer 6</Button>
+                    <Button variant="contained" disabled={user.cryptokemons < 55000} onClick={invoqueSix} onClose={handleClose} >
+                        <Grid container direction="column" justifyContent="center" alignItems="center">
+                            <Grid items>
+                                Catch 6
+                            </Grid>
+                            <Grid items>
+                                55 000
+                            </Grid>
+                        </Grid>
+                    </Button>
                 </Grow>
             </div>
             <Dialog className="dialogOpen" open={openO} onClose={handleClose} >

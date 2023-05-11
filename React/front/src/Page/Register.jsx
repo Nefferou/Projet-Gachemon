@@ -78,9 +78,11 @@ function Register() {
             })
                 .then(response => {
                     sessionStorage.setItem("token",response.data.token);
+                    console.log("Register complete");
                     navigate("/login");
                 })
-                .catch(error => console.error(error));
+                .catch(error => {console.error(error);
+                navigate("/login")});
         }
     }
 

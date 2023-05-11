@@ -8,7 +8,7 @@ import { ThemeProvider } from "@emotion/react";
 import theme from "../theme";
 import { Button } from "@material-ui/core";
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
 function Login() {
     const [username, setUsername] = useState("");
@@ -27,8 +27,6 @@ function Login() {
         })
             .then(response => {
                 console.log(response.data.user[0]);
-                console.log(JSON.stringify(response.data.user[0]));
-
                 sessionStorage.setItem("token",response.data.token);
                 sessionStorage.setItem("user", JSON.stringify(response.data.user[0]));
                 navigate("/app");
@@ -38,6 +36,8 @@ function Login() {
 
     return (
         <div className="center">
+        {JSON.parse(sessionStorage.getItem("user")) !== null ? <Navigate to="/app" />
+        :  
         <Stack id="login" spacing={2}>
             <ThemeProvider theme={theme}>
                 <h1>Login</h1>
@@ -46,7 +46,7 @@ function Login() {
                 <Button variant="contained" onClick={handleLogin}> Login </Button>
                 <Link href="/register">Register me</Link>
             </ThemeProvider>
-        </Stack>
+        </Stack>}
         </div>
     );
 }
