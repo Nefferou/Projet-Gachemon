@@ -2,9 +2,8 @@ import {React, useState, useEffect} from "react";
 import { Avatar, LinearProgress, Snackbar, Button, Alert } from "@mui/material";
 import "../Scss/Clicker.scss"
 
-function PokemonClicker({pokemon, stock, setStock}) { 
+function PokemonClicker({pokemon, stock, setStock, load, setLoad}) { 
 
-    const [loading, setLoading] = useState(false);
     const [progress, setProgress] = useState(0);
     const [isFull, setFull] = useState(false);
 
@@ -14,11 +13,11 @@ function PokemonClicker({pokemon, stock, setStock}) {
 
 
     const handleClick = () => {
-        setLoading(true);
+        setLoad(true);
         setProgress(0);
 
         setTimeout(() => {
-            setLoading(false);
+            setLoad(false);
             if(stock + att > (def * 5)) {
                 setStock(def * 5)
                 setFull(true)
@@ -34,7 +33,7 @@ function PokemonClicker({pokemon, stock, setStock}) {
 
     useEffect(() => {
         let timerId;
-        if (loading) {
+        if (load) {
           timerId = setInterval(() => {
             setProgress((prevProgress) =>
               prevProgress >= 100 ? 0 : prevProgress + 1
@@ -45,11 +44,11 @@ function PokemonClicker({pokemon, stock, setStock}) {
         return () => {
           clearInterval(timerId);
         };
-      }, [loading]);
+      }, [load]);
 
     return (
         <div id="pokemonClicker">
-            <button onClick={handleClick}>
+            <button disabled={load ? true : false} onClick={handleClick}>
                 <Avatar src={pokemon.sprite} sx={{ width: "100%", height: "100%" }}/>
             </button>
             <p><Button>{stock} / {def * 5}</Button></p>
