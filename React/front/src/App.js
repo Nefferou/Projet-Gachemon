@@ -33,6 +33,7 @@ function App() {
   useEffect(function () {
     isLoad(true)
     setUser(JSON.parse(sessionStorage.getItem("user")))
+    sessionStorage.setItem('pokemon', null)
     fetch("https://pokebuildapi.fr/api/v1/pokemon")
     .then(res => res.json())
     .then(
@@ -49,7 +50,7 @@ function App() {
       navigate("/login") :
       <ThemeProvider theme={theme}>
 
-      <Header value={value} changeSearch={setSearch} user={user} money={money} />
+      <Header value={value} changeSearch={setSearch} user={user} money={money} pokemons={items} />
 
       <div hidden={value !== 0}>
         {load ? 
@@ -65,7 +66,7 @@ function App() {
         {load ? <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                   <CircularProgress />
                 </Box> :
-        <Clicker pokemons={items} money={money} setMoney={setMoney} user={user} token={token} />}
+        <Clicker pokemons={items} value={value} money={money} setMoney={setMoney} user={user} token={token} />}
       </div>
 
       <div hidden={value !== 2}>

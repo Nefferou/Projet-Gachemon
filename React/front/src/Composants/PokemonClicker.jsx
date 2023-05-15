@@ -1,21 +1,20 @@
 import {React, useState, useEffect} from "react";
 import { Avatar, LinearProgress, Snackbar, Button, Alert } from "@mui/material";
 import "../Scss/Clicker.scss"
+import NoPokemon from "../Ressources/NoPokemon.png"
 
-function PokemonClicker({pokemon, stock, setStock, load, setLoad}) { 
+function PokemonClicker({pokemon, setPok, selecte, setSelect, stock, setStock, load, setLoad}) { 
 
     const [progress, setProgress] = useState(0);
     const [isFull, setFull] = useState(false);
-
-    const att = pokemon.stats.attack + pokemon.stats.special_attack
-    const def = pokemon.stats.defense + pokemon.stats.special_defense
-    const speed = pokemon.stats.speed;
-
+    
+    const [att, setAtt] = useState(0)
+    const [def, setDef] = useState(0)
+    const [speed, setSpeed] = useState(0)
 
     const handleClick = () => {
         setLoad(true);
         setProgress(0);
-
         setTimeout(() => {
             setLoad(false);
             if(stock + att > (def * 5)) {
@@ -29,6 +28,15 @@ function PokemonClicker({pokemon, stock, setStock, load, setLoad}) {
 
     const handleClose = () => {
         setFull(false)
+    }
+
+    const changePokemon = () => {
+        setPok(selecte.pokedexId - 1)
+        setAtt(selecte.stats.attack + selecte.stats.special_attack)
+        setDef(selecte.stats.defense + selecte.stats.special_defense)
+        setSpeed(selecte.stats.speed)
+        setStock(0)
+        setSelect(undefined)
     }
 
     useEffect(() => {
@@ -46,18 +54,28 @@ function PokemonClicker({pokemon, stock, setStock, load, setLoad}) {
         };
       }, [load]);
 
+      console.log(pokemon);
+
     return (
         <div id="pokemonClicker">
-            <button disabled={load ? true : false} onClick={handleClick}>
-                <Avatar src={pokemon.sprite} sx={{ width: "100%", height: "100%" }}/>
+            <button disabled={load ? true : false} onClick={selecte === undefined ? handleClick : changePokemon}>
+                {pokemon !== undefined ? <Avatar src={pokemon.sprite} sx={{ width: "100%", height: "100%" }}/> : 
+                <Avatar src={NoPokemon} sx={{ width: "100%", height: "100%" }}/>}
             </button>
-            <p><Button>{stock} / {def * 5}</Button></p>
+            {selecte === undefined || load ? 
+            <p><Button>{stock} / {def * 5}</Button></p> :
+            <p><Button onClick={changePokemon}>Change</Button></p>}
             <LinearProgress variant="determinate" value={progress} />
-            <Snackbar open={isFull} autoHideDuration={6000} onClose={handleClose}>
+            {pokemon !== undefined ? <Snackbar open={isFull} autoHideDuration={6000} onClose={handleClose}>
                 <Alert severity="warning" onClose={handleClose} sx={{ width: '100%' }}>
                     {pokemon.name} stock is full
                 </Alert>
-            </Snackbar>
+            </Snackbar> : null}
+            {selecte !== undefined ?<Snackbar open={true}>
+                <Alert severity="success" sx={{ width: '100%' }}>
+                    {selecte.name} selected
+                </Alert>
+            </Snackbar> : null}
         </div>
     );
 }
