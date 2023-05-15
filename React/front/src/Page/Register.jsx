@@ -77,7 +77,6 @@ function Register() {
                 }
             })
                 .then(response => {
-                    sessionStorage.setItem("token",response.data.token);
                     console.log("Register complete");
                     navigate("/login");
                 })
