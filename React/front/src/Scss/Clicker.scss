@@ -50,6 +50,25 @@
 }
 
 #clicker {
-    height: 100%;
-    width: 100%;
+    width: 75%;
+}
+
+#collect {
+    width: 75%;
+    margin-top: -20%;
+}
+
+#pc {
+    width: 50%;
+}
+
+#stock {
+    color: #858585;
+    background-color: #000000;
+    margin: auto;
+    margin-top: 10%;
+    margin-bottom: -10%;
+    z-index: 1;
+    padding: 10px;
+    border-radius: 10px;
 }

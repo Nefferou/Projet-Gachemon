@@ -14,7 +14,6 @@ import { Avatar, Box } from '@mui/material';
 import Pokeball from "../Ressources/Pokeball.svg"
 import Player from "../Ressources/Player.svg"
 
-import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useNavigate } from 'react-router-dom';
@@ -81,7 +80,7 @@ export default function MenuAppBar({value, changeSearch, user, money, pokemons})
             </Box>}
           </Typography>
           <div className='headerInfo'>
-            <p>{money}</p>
+            <p>{money.toLocaleString()}</p>
             <IconButton size="medium" color="inherit">
                 <Avatar src={Pokeball} size="small" />
             </IconButton>
