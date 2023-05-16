@@ -7,18 +7,49 @@
 }
 
 #pokemonClicker {
-    width: 25%;
-    height: 25%;
+    width: 50%;
+    height: 50%;
     margin: auto;
 
     p {
-        margin: 0;
+        color: #858585;
     }
 
     button {
         width: 100%;
         height: 100%;
-        background-color: rgba(255, 255, 255, 0);
+
+        padding: 0;
+
+        background: rgba(0, 0, 0, 0.2);
+        box-shadow: 3px 4px 16px rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(5px);
         border-radius: 20px;
+
+        overflow: hidden;
+
+        img {
+            width: 90%;
+            height: 90%;
+            align-self: center;
+        }
+
+        span{   
+            width: 100%;
+            height: 10px;
+            background: #000000;
+
+            span {
+                height: 100%;
+                width: 100%;
+                right: 5%;
+                background: #D32F2F;
+            }
+        }
     }
+}
+
+#clicker {
+    height: 100%;
+    width: 100%;
 }
