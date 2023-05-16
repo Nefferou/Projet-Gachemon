@@ -44,9 +44,8 @@
   div>div>div>div {
       display: flex;
       justify-content: space-around;
-
       button {
-          font-size: x-large;
+        font-size: x-large;
       }
   }
 }
@@ -55,9 +54,6 @@
   display: flex;
   justify-content: space-evenly;
   flex-direction: row;
-
-  background-color: #721a1ae6;
-  border-radius: 20px;
 
   padding-left: 2px;
   padding-right: 2px;

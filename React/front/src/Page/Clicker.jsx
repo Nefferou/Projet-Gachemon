@@ -11,6 +11,10 @@ import PokemonClicker from '../Composants/PokemonClicker';
 import IconButton from '@mui/material/IconButton';
 import TvIcon from '@mui/icons-material/Tv';
 import Grow from '@mui/material/Grow';
+import Avatar from '@mui/material/Avatar';
+
+import ClickerImage from "../Ressources/Clicker.svg"
+import CollectImage from "../Ressources/Collect.svg"
 
 
 function Clicker({pokemons, value, money, setMoney, user, token}) {
@@ -103,29 +107,41 @@ function Clicker({pokemons, value, money, setMoney, user, token}) {
         <div className='clicker'>
             <ThemeProvider theme={theme}>
             <Grow in={value === 1} {...(value === 1 ? { timeout: 1000 } : {})}>
-            <Grid item xs={5} container direction="column" justifyContent="center" alignItems="center">
-                <PokemonClicker pokemon={pokemons[pok1]} setPok={setPok1} selecte={pokemons[selecte]} setSelect={setSelect} stock={pok1Stock} setStock={setP1Stock} load={isLoad1} setLoad={setLoad1} />
-                <PokemonClicker pokemon={pokemons[pok2]} setPok={setPok2} selecte={pokemons[selecte]} setSelect={setSelect} stock={pok2Stock} setStock={setP2Stock} load={isLoad2} setLoad={setLoad2} />
-                <PokemonClicker pokemon={pokemons[pok3]} setPok={setPok3} selecte={pokemons[selecte]} setSelect={setSelect} stock={pok3Stock} setStock={setP3Stock} load={isLoad3} setLoad={setLoad3} />
+            <Grid item xs={4.5} container direction="row" justifyContent="center" alignItems="center">
+                <Grid item xs={6} direction="column" justifyContent="space-evenly" >
+                    <PokemonClicker pokemon={pokemons[pok1]} setPok={setPok1} selecte={pokemons[selecte]} setSelect={setSelect} stock={pok1Stock} setStock={setP1Stock} load={isLoad1} setLoad={setLoad1} />
+                </Grid>
+                <Grid item xs={6} direction="column" justifyContent="space-evenly">
+                    <PokemonClicker pokemon={pokemons[pok2]} setPok={setPok2} selecte={pokemons[selecte]} setSelect={setSelect} stock={pok2Stock} setStock={setP2Stock} load={isLoad2} setLoad={setLoad2} />
+                    <PokemonClicker pokemon={pokemons[pok3]} setPok={setPok3} selecte={pokemons[selecte]} setSelect={setSelect} stock={pok3Stock} setStock={setP3Stock} load={isLoad3} setLoad={setLoad3} />
+                </Grid>
             </Grid>
             </Grow>
             <Grow in={value === 1} {...(value === 1 ? { timeout: 1000 } : {})}>
-            <Grid item xs={2} container direction="column" sx={{margin: "auto"}}>
+            <Grid item xs={3} container direction="column" sx={{margin: "auto"}}>
                 <IconButton size="small" edge="start" color='info' sx={{m:0, p:0}} onClick={openPC}>  
                   <TvIcon />
                 </IconButton>
-                <Button variant="text" onClick={Clicker} color='secondary'>Clicker</Button>
                 <Tooltip title="Stock" disableInteractive>
                     <Button>{stock} / 100</Button>
                 </Tooltip>
-                <Button disabled={isLoad1 || isLoad2 || isLoad3 || isLoad4 || isLoad5 || isLoad6 || selecte !== undefined} variant="text" onClick={Collect} color='secondary'>Collect</Button>
+                <IconButton size="small" edge="start" color='info' sx={{m:'auto', p:'auto', height:'100%', width:'100%'}}>
+                    <img id='clicker' src={ClickerImage} variant="text" onClick={Clicker} color='secondary'/>
+                </IconButton>
+                <IconButton onClick={Collect} size="small" edge="center" sx={{m:0, p:0}} disabled={isLoad1 || isLoad2 || isLoad3 || isLoad4 || isLoad5 || isLoad6 || selecte !== undefined}>
+                    <img id='collect' src={CollectImage} onClick={Collect} color='secondary'/>
+                </IconButton>
             </Grid>
             </Grow>
             <Grow in={value === 1} {...(value === 1 ? { timeout: 1000 } : {})}>
-            <Grid item xs={5} container direction="column" justifyContent="center" alignItems="center">
-                <PokemonClicker pokemon={pokemons[pok4]} setPok={setPok4} selecte={pokemons[selecte]} setSelect={setSelect} stock={pok4Stock} setStock={setP4Stock} load={isLoad4} setLoad={setLoad4} /> 
-                <PokemonClicker pokemon={pokemons[pok5]} setPok={setPok5} selecte={pokemons[selecte]} setSelect={setSelect} stock={pok5Stock} setStock={setP5Stock} load={isLoad5} setLoad={setLoad5} />
-                <PokemonClicker pokemon={pokemons[pok6]} setPok={setPok6} selecte={pokemons[selecte]} setSelect={setSelect} stock={pok6Stock} setStock={setP6Stock} load={isLoad6} setLoad={setLoad6} />
+            <Grid item xs={4.5} container direction="row" justifyContent="center" alignItems="center">
+                <Grid item xs={6} direction="column" justifyContent="space-evenly">
+                    <PokemonClicker pokemon={pokemons[pok4]} setPok={setPok4} selecte={pokemons[selecte]} setSelect={setSelect} stock={pok4Stock} setStock={setP4Stock} load={isLoad4} setLoad={setLoad4} /> 
+                    <PokemonClicker pokemon={pokemons[pok5]} setPok={setPok5} selecte={pokemons[selecte]} setSelect={setSelect} stock={pok5Stock} setStock={setP5Stock} load={isLoad5} setLoad={setLoad5} />
+                </Grid>
+                <Grid item xs={6} direction="column" justifyContent="space-evenly">
+                    <PokemonClicker pokemon={pokemons[pok6]} setPok={setPok6} selecte={pokemons[selecte]} setSelect={setSelect} stock={pok6Stock} setStock={setP6Stock} load={isLoad6} setLoad={setLoad6} />
+                </Grid>
             </Grid>
             </Grow>
             <Snackbar open={isFull} autoHideDuration={6000} onClose={handleClose}>

@@ -9,8 +9,11 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { Avatar, Box } from '@mui/material';
 
-import ListIcon from '@mui/icons-material/List';
+import Pokeball from "../Ressources/Pokeball.svg"
+import Player from "../Ressources/Player.svg"
+
 import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
@@ -39,11 +42,11 @@ export default function MenuAppBar({value, changeSearch, user, money, pokemons})
 
   return (
     <div>
-      <AppBar position="static">
+      <AppBar color='secondary' position="static">
         <Toolbar>
           <div className='headerInfo'>
               <IconButton size="medium" color="inherit">
-                  <ListIcon onClick={handleClick} />
+                  <img src={Player} onClick={handleClick} />
               </IconButton>
               <p>{user.username}</p>
               <Menu id="basic-menu" anchorEl={anchorEl} open={open} onClose={handleClose} color='info'
@@ -62,24 +65,25 @@ export default function MenuAppBar({value, changeSearch, user, money, pokemons})
               </MenuItem>
             </Menu>
           </div>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              {value === 0 ? "Gatcha" 
+          <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
+              {value === 0 ? "Gatcha"
               : value === 1 ? "Clicker" 
-              : <div><InputBase
-                  sx={{ ml: 1, flex: 1 }}
+              : <Box><InputBase
+                  sx={{ ml: 1, flex: 1, color: '#d32f2f'}}
                   placeholder="Search"
+                  color='secondary'
                   inputProps={{ 'aria-label': 'Search' }}
                   onChange={event => changeSearch(event.target.value)}
                 />
-                <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-                  <SearchIcon />
+                <IconButton type="button" sx={{ p: '10px'}} aria-label="search">
+                  <SearchIcon color='secondary' />
                 </IconButton>
-            </div>}
+            </Box>}
           </Typography>
           <div className='headerInfo'>
             <p>{money}</p>
             <IconButton size="medium" color="inherit">
-                <CatchingPokemonIcon />
+                <Avatar src={Pokeball} size="small" />
             </IconButton>
           </div>
         </Toolbar>

@@ -59,13 +59,13 @@ function PokemonClicker({pokemon, setPok, selecte, setSelect, stock, setStock, l
     return (
         <div id="pokemonClicker">
             <button disabled={load ? true : false} onClick={selecte === undefined ? handleClick : changePokemon}>
-                {pokemon !== undefined ? <Avatar src={pokemon.sprite} sx={{ width: "100%", height: "100%" }}/> : 
-                <Avatar src={NoPokemon} sx={{ width: "100%", height: "100%" }}/>}
+                {pokemon !== undefined ? <img src={pokemon.sprite}/> : 
+                <img src={NoPokemon}/>}
+                <LinearProgress variant="determinate" value={progress} />
             </button>
             {selecte === undefined || load ? 
-            <p><Button>{stock} / {def * 5}</Button></p> :
-            <p><Button onClick={changePokemon}>Change</Button></p>}
-            <LinearProgress variant="determinate" value={progress} />
+            <p>{stock} / {def * 5}</p> :
+            <p>Change</p>}
             {pokemon !== undefined ? <Snackbar open={isFull} autoHideDuration={6000} onClose={handleClose}>
                 <Alert severity="warning" onClose={handleClose} sx={{ width: '100%' }}>
                     {pokemon.name} stock is full
