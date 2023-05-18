@@ -54,8 +54,6 @@ function PokemonClicker({pokemon, setPok, selecte, setSelect, stock, setStock, l
         };
       }, [load]);
 
-      console.log(pokemon);
-
     return (
         <div id="pokemonClicker">
             <button disabled={load ? true : false} onClick={selecte === undefined ? handleClick : changePokemon}>

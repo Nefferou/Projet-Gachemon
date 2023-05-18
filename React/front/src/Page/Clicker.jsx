@@ -15,6 +15,7 @@ import Avatar from '@mui/material/Avatar';
 
 import ClickerImage from "../Ressources/Clicker.svg"
 import CollectImage from "../Ressources/Collect.svg"
+import Pc from "../Ressources/Pc.svg"
 
 
 function Clicker({pokemons, value, money, setMoney, user, token}) {
@@ -107,7 +108,7 @@ function Clicker({pokemons, value, money, setMoney, user, token}) {
         <div className='clicker'>
             <ThemeProvider theme={theme}>
             <Grow in={value === 1} {...(value === 1 ? { timeout: 1000 } : {})}>
-            <Grid item xs={4.5} container direction="row" justifyContent="center" alignItems="center">
+            <Grid item xs={4.75} container direction="row" justifyContent="center" alignItems="center">
                 <Grid item xs={6} direction="column" justifyContent="space-evenly" >
                     <PokemonClicker pokemon={pokemons[pok1]} setPok={setPok1} selecte={pokemons[selecte]} setSelect={setSelect} stock={pok1Stock} setStock={setP1Stock} load={isLoad1} setLoad={setLoad1} />
                 </Grid>
@@ -118,12 +119,12 @@ function Clicker({pokemons, value, money, setMoney, user, token}) {
             </Grid>
             </Grow>
             <Grow in={value === 1} {...(value === 1 ? { timeout: 1000 } : {})}>
-            <Grid item xs={3} container direction="column" sx={{margin: "auto"}}>
+            <Grid item xs={2.5} container direction="column" justifyContent="space-evenly" sx={{margin: "auto"}}>
                 <IconButton size="small" edge="start" color='info' sx={{m:0, p:0}} onClick={openPC}>  
-                  <TvIcon />
+                    <img id='pc' src={Pc} variant="text" onClick={Clicker} color='secondary'/>
                 </IconButton>
-                <Tooltip title="Stock" disableInteractive>
-                    <Button>{stock} / 100</Button>
+                <Tooltip title="Stock">
+                    <p id='stock'>{stock} / 100</p>
                 </Tooltip>
                 <IconButton size="small" edge="start" color='info' sx={{m:'auto', p:'auto', height:'100%', width:'100%'}}>
                     <img id='clicker' src={ClickerImage} variant="text" onClick={Clicker} color='secondary'/>
@@ -134,7 +135,7 @@ function Clicker({pokemons, value, money, setMoney, user, token}) {
             </Grid>
             </Grow>
             <Grow in={value === 1} {...(value === 1 ? { timeout: 1000 } : {})}>
-            <Grid item xs={4.5} container direction="row" justifyContent="center" alignItems="center">
+            <Grid item xs={4.75} container direction="row" justifyContent="center" alignItems="center">
                 <Grid item xs={6} direction="column" justifyContent="space-evenly">
                     <PokemonClicker pokemon={pokemons[pok4]} setPok={setPok4} selecte={pokemons[selecte]} setSelect={setSelect} stock={pok4Stock} setStock={setP4Stock} load={isLoad4} setLoad={setLoad4} /> 
                     <PokemonClicker pokemon={pokemons[pok5]} setPok={setPok5} selecte={pokemons[selecte]} setSelect={setSelect} stock={pok5Stock} setStock={setP5Stock} load={isLoad5} setLoad={setLoad5} />
