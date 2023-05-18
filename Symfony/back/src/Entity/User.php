@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -33,6 +35,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 250000)]
     private string $pokemonFav = "[]";
+
+    #[ORM\OneToMany(targetEntity: CartHistory::class, mappedBy: 'user', cascade: ["persist"])]
+    private Collection $cartHistory;
+
+    public function __construct()
+    {
+        $this->cartHistory = new ArrayCollection();
+    }
 
     public function setId($id): self
     {
@@ -142,5 +152,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // Cette méthode est généralement utilisée pour effacer les informations sensibles,
         // comme un mot de passe brut, qui ne doivent pas être stockées en mémoire.
         // Vous pouvez laisser cette méthode vide si vous n'avez pas besoin de l'utiliser.
+    }
+
+    /**
+     * @return Collection<int, CartHistory>
+     */
+    public function getCartHistory(): Collection
+    {
+        return $this->cartHistory;
+    }
+
+
+    public function addCartHistory(CartHistory $cartHistory): self
+    {
+        if (!$this->cartHistory->contains($cartHistory)) {
+            $this->cartHistory->add($cartHistory);
+            $cartHistory->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCartHistory(CartHistory $cartHistory): self
+    {
+        if ($this->cartHistory->removeElement($cartHistory)) {
+            // set the owning side to null (unless already changed)
+            if ($cartHistory->getUser() === $this) {
+                $cartHistory->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -54,7 +54,7 @@ function Clicker({pokemons, value, money, setMoney, user, token}) {
             cryptokemons: user.cryptokemons
         }
         
-        axios.put(`https://gachemon.osc-fr1.scalingo.io/api/update/cryptokemons`, JSON.stringify(jsonBody),{
+        axios.put(`https://gachemon.osc-fr1.scalingo.io/api/update/user/cryptokemons`, JSON.stringify(jsonBody),{
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: token[0]
