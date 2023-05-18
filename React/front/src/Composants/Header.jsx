@@ -53,7 +53,7 @@ export default function MenuAppBar({value, changeSearch, user, money, pokemons})
                 'aria-labelledby': 'basic-button',
               }}>
               <MenuItem onClick={handleClose}>
-                <IconButton size="small" edge="start" color='info' sx={{m:0, p:0}} href={`https://projet-angular-gachemon.vercel.app/boutique/${token[0]}`}>  
+                <IconButton size="small" edge="start" color='info' sx={{m:0, p:0}} href={`https://projet-angular-gachemon.vercel.app/boutique?token=${token[0]}`}>  
                   <ShoppingBasketIcon />
                 </IconButton>
               </MenuItem>
