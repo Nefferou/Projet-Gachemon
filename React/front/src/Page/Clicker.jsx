@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from "react";
 import Grid from '@mui/material/Grid';
-import { Button, Tooltip, Snackbar, Alert, Dialog } from '@mui/material';
+import { Tooltip, Snackbar, Alert, Dialog } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 import theme from '../theme';
 import PC from '../Composants/Pc';
@@ -9,9 +9,7 @@ import "../Scss/Clicker.scss"
 import axios from 'axios';
 import PokemonClicker from '../Composants/PokemonClicker';
 import IconButton from '@mui/material/IconButton';
-import TvIcon from '@mui/icons-material/Tv';
 import Grow from '@mui/material/Grow';
-import Avatar from '@mui/material/Avatar';
 
 import ClickerImage from "../Ressources/Clicker.svg"
 import CollectImage from "../Ressources/Collect.svg"
@@ -121,16 +119,16 @@ function Clicker({pokemons, value, money, setMoney, user, token}) {
             <Grow in={value === 1} {...(value === 1 ? { timeout: 1000 } : {})}>
             <Grid item xs={2.5} container direction="column" justifyContent="space-evenly" sx={{margin: "auto"}}>
                 <IconButton size="small" edge="start" color='info' sx={{m:0, p:0}} onClick={openPC}>  
-                    <img id='pc' src={Pc} variant="text" onClick={Clicker} color='secondary'/>
+                    <img id='pc' src={Pc} alt='pc' variant="text" color='secondary'/>
                 </IconButton>
                 <Tooltip title="Stock">
                     <p id='stock'>{stock} / 100</p>
                 </Tooltip>
                 <IconButton size="small" edge="start" color='info' sx={{m:'auto', p:'auto', height:'100%', width:'100%'}}>
-                    <img id='clicker' src={ClickerImage} variant="text" onClick={Clicker} color='secondary'/>
+                    <img id='clicker' alt='clicker' src={ClickerImage} variant="text" onClick={Clicker} color='secondary'/>
                 </IconButton>
                 <IconButton onClick={Collect} size="small" edge="center" sx={{m:0, p:0}} disabled={isLoad1 || isLoad2 || isLoad3 || isLoad4 || isLoad5 || isLoad6 || selecte !== undefined}>
-                    <img id='collect' src={CollectImage} onClick={Collect} color='secondary'/>
+                    <img id='collect' alt='collect' src={CollectImage} onClick={Collect} color='secondary'/>
                 </IconButton>
             </Grid>
             </Grow>

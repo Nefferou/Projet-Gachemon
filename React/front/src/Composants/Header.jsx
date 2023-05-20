@@ -45,7 +45,7 @@ export default function MenuAppBar({value, changeSearch, user, money, pokemons})
         <Toolbar>
           <div className='headerInfo'>
               <IconButton size="medium" color="inherit">
-                  <img src={Player} onClick={handleClick} />
+                  <img src={Player} alt='player' onClick={handleClick} />
               </IconButton>
               <p>{user.username}</p>
               <Menu id="basic-menu" anchorEl={anchorEl} open={open} onClose={handleClose} color='info'
