@@ -5,7 +5,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 
-function AppBar({value, setValue}) {
+function AppBar({value, setValue, isAdmin}) {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -18,6 +18,7 @@ function AppBar({value, setValue}) {
             <Tab sx={value === 0 ? {color: '#d32f2f'} : {color: '#858585'}} label="Gatcha" />
             <Tab sx={value === 1 ? {color: '#d32f2f'} : {color: '#858585'}} label="Clicker"/>
             <Tab sx={value === 2 ? {color: '#d32f2f'} : {color: '#858585'}} label="Pokedex"/>
+            {isAdmin && <Tab sx={value === 3 ? {color: '#d32f2f'} : {color: '#858585'}} label="Admin"/>}
         </Tabs>
       </Box>
     </div>

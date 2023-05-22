@@ -6,6 +6,7 @@ import AppBar from "./Composants/AppBar"
 import Header from "./Composants/Header"
 import Pokedex from './Page/Pokedex';
 import Clicker from './Page/Clicker';
+import Admin from './Page/Admin';
 
 import { ThemeProvider } from "@emotion/react";
 import theme from "./theme";
@@ -76,7 +77,14 @@ function App() {
         <Pokedex pokemons={items} search={search} value={value} />}
       </div>
 
-      <AppBar value={value} setValue={setValue}/>
+      <div hidden={value !== 3}>
+        {load ? <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <CircularProgress />
+                </Box> :
+        <Admin user={user} token={token}/>}
+      </div>
+
+      <AppBar value={value} setValue={setValue} isAdmin={user.isAdmin}/>
 
       </ThemeProvider>}
     </div>
