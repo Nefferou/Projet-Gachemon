@@ -13,7 +13,6 @@ import Invoque from "../Composants/Invoque";
 
 function Gatcha({pokemons, value, user, token, money, setMoney}) {
 
-    const [rand, setRand] = useState(0);
     const [randS, setRandS] = useState([]);
 
     const [openO, setOpenO] = useState(false);
@@ -71,12 +70,7 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
         user.cryptokemons = money - 10000
         setMoney(money - 10000)
 
-        const random = Math.floor(Math.random() * (897 - 1 + 1)) + 1;
-        setRand(random);
-
-        const pc = JSON.parse(user.pc)
-        pc.push(pokemons[random].id)
-        user.pc = JSON.stringify(pc)
+        invoqueRarity();
 
         postPc();
         updateCrypto();
@@ -87,19 +81,60 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
         user.cryptokemons = money - 55000
         setMoney(money - 55000)
 
-        const pc = JSON.parse(user.pc)
         for(let i = 0; i < 6; i++){
-            const random = Math.floor(Math.random() * (897 - 1 + 1)) + 1;
-            randS.push(<Grid key={random} item xs={4}><Invoque key={random} item={pokemons[random]} /></Grid>)
-            pc.push(pokemons[random].id)
+            invoqueRarity();    
         }
-
-        user.pc = JSON.stringify(pc)
 
         postPc();
         updateCrypto();
         if(randS.length === 6){
             setOpenS(true);
+        }
+    }
+
+    const invoqueRarity = () => {
+        //Invoque Pokemon aléatoire
+        const val = Math.floor(Math.random() * (897 - 1 + 1)) + 1;
+
+        //PC
+        const pc = JSON.parse(user.pc)
+
+        if(pokemons[val].apiEvolutions.length === 0){
+            if(pokemons[val].apiPreEvolution === "none") {
+                //(Seule de sa lignée / Légendaire) Ne possède pas d'évolution et pas de pré évolution
+                const proba = Math.floor(Math.random() * 10);
+                if (proba === 0) {
+                    randS.push(<Invoque key={val} item={pokemons[val]} rarity={3}/>)
+                    pc.push(pokemons[val].id)
+                    user.pc = JSON.stringify(pc)
+                }
+                else{invoqueRarity()}
+            } else {
+                //(Dernier stade d'évolution) Ne possède pas d'évolution mais possède une pré évolution
+                const proba = Math.floor(Math.random() * 5);
+                if (proba === 0) {
+                    randS.push(<Invoque key={val} item={pokemons[val]} rarity={2}/>)
+                    pc.push(pokemons[val].id)
+                    user.pc = JSON.stringify(pc)
+                }
+                else{invoqueRarity()}
+            }
+        } else {
+            if(pokemons[val].apiPreEvolution === "none") {
+                //(1er stade d'évolution) Possède une évolution mais pas de pré évolution
+                randS.push(<Invoque key={val} item={pokemons[val]} rarity={0}/>)
+                pc.push(pokemons[val].id)
+                user.pc = JSON.stringify(pc)
+            } else {
+                //(2e stade d'évolution) Possède une évolution et une pré évolution
+                const proba = Math.floor(Math.random() * 2);
+                if (proba === 0) {
+                    randS.push(<Invoque key={val} item={pokemons[val]} rarity={1}/>)
+                    pc.push(pokemons[val].id)
+                    user.pc = JSON.stringify(pc)
+                }
+                else{invoqueRarity()}
+            }
         }
     }
 
@@ -144,12 +179,16 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
                 </Grow>
             </div>
             <Dialog className="dialogOpen" open={openO} onClose={handleClose} >
-                <Invoque item={pokemons[rand]} />
-                <Button variant="contained" onClick={handleClose}>Close</Button>
+                <Grid container rowSpacing={0} columnSpacing={{ xs: 3, sm: 10, md: 1 }}>
+                    {randS.map(pokemon => <Grid item xs={12}>{pokemon}</Grid>)}
+                    <Grid item xs={12}>
+                        <Button variant="contained" onClick={handleClose}>Close</Button>
+                    </Grid>
+                </Grid>
             </Dialog> 
             <Dialog className="dialogOpen" open={openS} onClose={handleClose} >
                 <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                    {randS.map(pokemon => pokemon)}
+                    {randS.map(pokemon => <Grid item xs={4}>{pokemon}</Grid>)}
                     <Grid item xs={12}>
                         <Button variant="contained" onClick={handleClose}>Close</Button>
                     </Grid>
