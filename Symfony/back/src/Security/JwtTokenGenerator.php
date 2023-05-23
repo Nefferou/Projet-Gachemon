@@ -62,7 +62,7 @@ class JwtTokenGenerator extends JWTAuthenticator
         $this->payload->setEmail($params->email);
         $this->payload->setCryptokemons($params->cryptokemons);
         $this->payload->setPc($params->pc);
-        
+        $this->payload->setIsAdmin($params->isAdmin);
         return $this->getPayload();
     }
 

@@ -39,6 +39,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: CartHistory::class, mappedBy: 'user', cascade: ["persist"])]
     private Collection $cartHistory;
 
+    #[ORM\Column]
+    private ?bool $is_admin = false;
+
     public function __construct()
     {
         $this->cartHistory = new ArrayCollection();
@@ -184,4 +187,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function setIsAdmin($is_admin): self
+    {
+        $this->is_admin = $is_admin;
+
+        return $this;
+    }
+
+    public function getIsAdmin(): ?bool
+    {
+        return $this->is_admin;
+    }
+
 }

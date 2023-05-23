@@ -164,6 +164,66 @@ class UserController extends AbstractController
     
         return new JsonResponse($this->showUser($user), Response::HTTP_ACCEPTED);
     }
+
+    #[Route('/api/users', name:'api_get_users', methods: ['GET'])]
+    public function actionGetUsers(EntityManagerInterface $entityManager): Response
+    {
+        $users = $entityManager->getRepository(User::class)->findAll();
+        $userTab = array();
+        foreach ($users as $user) {
+            array_push($userTab, $this->showUser($user));
+        }
+        return new JsonResponse($userTab, Response::HTTP_OK);
+    }
+
+    #[Route('/api/users/{id}/ban', name: 'api_user_ban', methods: ['PUT'])]
+    public function banUser($id, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $token = $request->headers->get('Authorization');
+        $user = $this->jwtTokenGenerator->decodeToken($token);
+        if (!$user->getIsAdmin()) {
+            return new Response('Unauthorized', Response::HTTP_UNAUTHORIZED);
+        }
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'No user found for id '.$id
+            );
+        }
+
+        $user->setPassword('/'); // Set the password to "/"
+        $repo = $entityManager->getRepository(User::class);
+
+        $repo->save($user, true);
+
+        return new Response('User with id '.$id.' has been banned', Response::HTTP_OK);
+    }
+
+    #[Route('/api/users/{id}/unban', name: 'api_user_unban', methods: ['PUT'])]
+    public function unbanUser($id, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordEncoder): Response
+    {
+        $token = $request->headers->get('Authorization');
+        $user = $this->jwtTokenGenerator->decodeToken($token);
+        if (!$user->getIsAdmin()) {
+            return new Response('Unauthorized', Response::HTTP_UNAUTHORIZED);
+        }
+
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'No user found for id '.$id
+            );
+        }
+
+        // Set the password back to the original password or to a default password
+        // Be careful, you should inform the user to change his password after unban him, or implement a way to keep his old password.
+        $hashedPassword = $passwordEncoder->hashPassword(new User(), "default");
+        $user->setPassword($hashedPassword);
+        $repo = $entityManager->getRepository(User::class);
+
+        $repo->save($user, true);
+
+        return new Response('User with id '.$id.' has been unbanned', Response::HTTP_OK);
+    }
+
     
     #[Route('/api/update/user/pc', name: 'api_update_pc', methods: ['PUT'])]
     public function actionUpdatePc(Request $request, EntityManagerInterface $entityManager): Response
@@ -288,7 +348,8 @@ class UserController extends AbstractController
             "password" => $user->getPassword(),
             "pc" => $user->getPc(),
             "cryptokemons" => $user->getCryptokemons(),
-            "pokemonFav" => $user->getPokemonFav()
+            "pokemonFav" => $user->getPokemonFav(),
+            "isAdmin" => $user->getIsAdmin()
         ]);
     }
 
