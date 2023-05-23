@@ -11,9 +11,6 @@ function Admin({ user, token }) {
         axios.get('https://gachemon.osc-fr1.scalingo.io/api/users', { headers: { Authorization: token[0] } })
             .then(response => {
                 setUsers(response.data);
-                console.log(response);
-                console.log(response.data[0]);
-                console.log(users);
             }
             )
             .catch(error => console.error('Error fetching users:', error));

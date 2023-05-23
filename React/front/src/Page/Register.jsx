@@ -16,12 +16,14 @@ function Register() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState(""); // Add this line
 
     const [emailExists, setEmailExists] = useState(false);
     const [usernameExists, setUsernameExists] = useState(false);
 
     const [errorMessageEmail, setErrorMessageEmail] = useState(null);
     const [errorMessageUsername, setErrorMessageUsername] = useState(null);
+    const [errorMessagePassword, setErrorMessagePassword] = useState(null); // Add this line
 
     const navigate = useNavigate();
 
@@ -65,6 +67,10 @@ function Register() {
 
     const handleRegister = () => {
         if (!emailExists && !usernameExists) {
+            if(password !== confirmPassword){ 
+                setErrorMessagePassword("The passwords do not match."); 
+                return;
+            }
             const data = {
                 username: username,
                 email:email,
@@ -95,7 +101,8 @@ function Register() {
                 <TextField id="outlined-basic" type={"email"} label="Email" variant="outlined" onChange={(e) => setEmail(e.target.value)} onBlur={checkEmailExists}/>
                 {errorMessageEmail && <p className="error">{errorMessageUsername}</p>}
                 <TextField id="outlined-basic" label="Password" variant="outlined" onChange={(e) => setPassword(e.target.value)} type="password" />
-                <TextField id="outlined-basic" label="Confirm password" variant="outlined" type="password" />
+                <TextField id="outlined-basic" label="Confirm password" variant="outlined" onChange={(e) => setConfirmPassword(e.target.value)} type="password" />  // Modify this line
+                {errorMessagePassword && <p className="error">{errorMessagePassword}</p>}
                 <Button variant="contained" onClick={handleRegister}>Create Account</Button>
                 <Link href="/login">Login</Link>
             </ThemeProvider>

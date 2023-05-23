@@ -57,8 +57,6 @@ function Gatcha({pokemons, value, user, token, money, setMoney}) {
             }
         }).then(response => {
             console.log(response);
-            // console.log(jsonBody.pc);
-            // console.log(user.pc);
         })
         .catch(error =>{
             // console.log(error);
