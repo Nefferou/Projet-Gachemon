@@ -101,7 +101,7 @@ function Register() {
                 <TextField id="outlined-basic" type={"email"} label="Email" variant="outlined" onChange={(e) => setEmail(e.target.value)} onBlur={checkEmailExists}/>
                 {errorMessageEmail && <p className="error">{errorMessageUsername}</p>}
                 <TextField id="outlined-basic" label="Password" variant="outlined" onChange={(e) => setPassword(e.target.value)} type="password" />
-                <TextField id="outlined-basic" label="Confirm password" variant="outlined" onChange={(e) => setConfirmPassword(e.target.value)} type="password" />  // Modify this line
+                <TextField id="outlined-basic" label="Confirm password" variant="outlined" onChange={(e) => setConfirmPassword(e.target.value)} type="password" /> 
                 {errorMessagePassword && <p className="error">{errorMessagePassword}</p>}
                 <Button variant="contained" onClick={handleRegister}>Create Account</Button>
                 <Link href="/login">Login</Link>
