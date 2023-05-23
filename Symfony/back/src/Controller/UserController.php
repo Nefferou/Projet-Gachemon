@@ -169,7 +169,9 @@ class UserController extends AbstractController
     public function actionGetUsers(Request $request, EntityManagerInterface $entityManager): Response
     {
         $token = $request->headers->get('Authorization');
+        var_dump($token);
         $user = $this->jwtTokenGenerator->decodeToken($token);
+        var_dump($user);
         if (!$user->getIsAdmin()) {
             return new Response('Unauthorized', Response::HTTP_UNAUTHORIZED);
         }

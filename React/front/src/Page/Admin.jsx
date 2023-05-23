@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button } from '@mui/material';
 import { List , ListItem, ListItemText,ListItemSecondaryAction } from "@mui/material";
+import "../Scss/Admin.scss"
 
 function Admin({ user, token }) {
     const [users, setUsers] = useState([]);
 
     // Fetch users
     useEffect(() => {
-        axios.get('https://gachemon.osc-fr1.scalingo.io/api/users', { headers: { Authorization: `${token}` } }) // replace with your API endpoint
+        axios.get('https://gachemon.osc-fr1.scalingo.io/api/users', { headers: { Authorization: token } })
             .then(response => {
                 setUsers(response.data);
                 console.log(response);
@@ -17,7 +18,7 @@ function Admin({ user, token }) {
             }
             )
             .catch(error => console.error('Error fetching users:', error));
-    }, [token]);
+    });
 
     const deleteUser = (userId) => {
         // Don't allow the current user to delete themselves
@@ -55,7 +56,7 @@ function Admin({ user, token }) {
     };
 
     return (
-    <div>
+    <div class="admin">
             <h1>Admin Page</h1>
             <List>
                 {users.map(user => (

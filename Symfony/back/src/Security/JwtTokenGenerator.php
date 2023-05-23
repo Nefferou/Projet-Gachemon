@@ -37,6 +37,7 @@ class JwtTokenGenerator extends JWTAuthenticator
             'email' => $user->getEmail(),
             'cryptokemons' => $user->getCryptokemons(),
             'pc' => $user->getPc(),
+            'isAdmin' => $user->getIsAdmin(),
         ];
 
         return JWT::encode($payload, $this->jwtSecret,'HS256');
