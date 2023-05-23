@@ -6,10 +6,9 @@ import "../Scss/Admin.scss"
 
 function Admin({ user, token }) {
     const [users, setUsers] = useState([]);
-
     // Fetch users
     useEffect(() => {
-        axios.get('https://gachemon.osc-fr1.scalingo.io/api/users', { headers: { Authorization: token } })
+        axios.get('https://gachemon.osc-fr1.scalingo.io/api/users', { headers: { Authorization: token[0] } })
             .then(response => {
                 setUsers(response.data);
                 console.log(response);
@@ -26,7 +25,7 @@ function Admin({ user, token }) {
             return;
         }
 
-        axios.delete(`https://gachemon.osc-fr1.scalingo.io/api/users/${userId}`, { headers: { Authorization: `${token}` } }) // replace with your API endpoint
+        axios.delete(`https://gachemon.osc-fr1.scalingo.io/api/users/${userId}`, { headers: { Authorization: `${token[0]}` } }) // replace with your API endpoint
             .then(() => {
                 // Update the list of users after deletion
                 setUsers(users.filter(user => user.id !== userId));
@@ -40,7 +39,7 @@ function Admin({ user, token }) {
             return;
         }
 
-        axios.put(`https://gachemon.osc-fr1.scalingo.io/api/users/${userId}/ban`, { password: "/" }, { headers: { Authorization: `${token}` } }) // replace with your API endpoint
+        axios.put(`https://gachemon.osc-fr1.scalingo.io/api/users/${userId}/ban`, { password: "/" }, { headers: { Authorization: `${token[0]}` } }) // replace with your API endpoint
             .then(response => {
                 if (response.status === 200) {
                     // Update the list of users after banning
