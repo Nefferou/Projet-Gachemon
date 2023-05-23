@@ -166,8 +166,13 @@ class UserController extends AbstractController
     }
 
     #[Route('/api/users', name:'api_get_users', methods: ['GET'])]
-    public function actionGetUsers(EntityManagerInterface $entityManager): Response
+    public function actionGetUsers(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $token = $request->headers->get('Authorization');
+        $user = $this->jwtTokenGenerator->decodeToken($token);
+        if (!$user->getIsAdmin()) {
+            return new Response('Unauthorized', Response::HTTP_UNAUTHORIZED);
+        }
         $users = $entityManager->getRepository(User::class)->findAll();
         $userTab = array();
         foreach ($users as $user) {
